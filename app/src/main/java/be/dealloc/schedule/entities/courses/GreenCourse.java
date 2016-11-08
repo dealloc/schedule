@@ -19,10 +19,11 @@ public class GreenCourse implements Course
 	private Date end;
 	private int type;
 	private String url;
+	private String calendar;
 
-	@Generated(hash = 998087611)
+	@Generated(hash = 140562973)
 	public GreenCourse(Long id, String name, String location, Date start, Date end,
-					   int type, String url)
+					   int type, String url, String calendar)
 	{
 		this.id = id;
 		this.name = name;
@@ -31,6 +32,7 @@ public class GreenCourse implements Course
 		this.end = end;
 		this.type = type;
 		this.url = url;
+		this.calendar = calendar;
 	}
 
 	@Generated(hash = 2103233940)
@@ -118,5 +120,17 @@ public class GreenCourse implements Course
 	public void setUrl(String url)
 	{
 		this.url = url;
+	}
+
+	@Override
+	public String getCalendar()
+	{
+		return this.calendar;
+	}
+
+	@Override
+	public void setCalendar(String calendar)
+	{
+		this.calendar = calendar;
 	}
 }
