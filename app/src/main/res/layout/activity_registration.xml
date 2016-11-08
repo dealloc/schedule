@@ -17,4 +17,14 @@
 		android:layout_centerHorizontal="true"
 		android:id="@+id/registration_btnEnterCode"
 		android:layout_width="240dp" />
+
+	<TextView
+		android:text="@string/code_help"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/registration_lblHelp"
+		android:textColor="#0800ff"
+		android:textStyle="normal|bold" />
 </RelativeLayout>
