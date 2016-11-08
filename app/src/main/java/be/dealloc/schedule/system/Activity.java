@@ -8,18 +8,29 @@ import butterknife.ButterKnife;
 
 public class Activity extends AppCompatActivity
 {
+	private boolean injected = false;
+
 	@Override
 	public void onCreate(Bundle saved, PersistableBundle persisted)
 	{
 		super.onCreate(saved, persisted);
-		Application.inject(this);
+		this.inject();
 	}
 
 	@Override
 	protected void onCreate(Bundle saved)
 	{
 		super.onCreate(saved);
-		Application.inject(this);
+		this.inject();
+	}
+
+	private synchronized void inject()
+	{
+		if (!this.injected)
+		{
+			Application.inject(this);
+			this.injected = true;
+		}
 	}
 
 	protected void setLayout(final int layout)
