@@ -1,6 +1,7 @@
 package be.dealloc.schedule.system;
 // Created by dealloc. All rights reserved.
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
@@ -37,5 +38,10 @@ public class Activity extends AppCompatActivity
 	{
 		this.setContentView(layout);
 		ButterKnife.bind(this);
+	}
+
+	protected void navigate(Class<? extends Activity> activity)
+	{
+		startActivity(new Intent(this, activity));
 	}
 }
