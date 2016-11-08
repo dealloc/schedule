@@ -3,7 +3,7 @@ package be.dealloc.schedule.system;
 
 import be.dealloc.schedule.contracts.DaggerServiceProvider;
 import be.dealloc.schedule.contracts.ServiceProvider;
-import be.dealloc.schedule.providers.EntityProvider;
+import be.dealloc.schedule.providers.SystemProvider;
 import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Method;
@@ -28,7 +28,7 @@ public class Application extends android.app.Application
 	private void initServiceProvider()
 	{
 		Application.provider = DaggerServiceProvider.builder()
-				.entityProvider(new EntityProvider(this.getApplicationContext()))
+				.systemProvider(new SystemProvider(this))
 				.build();
 
 		Application.injectors = new HashMap<>();

@@ -10,12 +10,15 @@ import be.dealloc.schedule.entities.courses.GreenCourseManager;
 import dagger.Module;
 import dagger.Provides;
 
+import javax.inject.Inject;
+
 @Module
 public class EntityProvider
 {
 	private static final String DB_NAME = "schedule-db";
 	private final DaoSession session;
 
+	@Inject
 	public EntityProvider(Context context)
 	{
 		DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, DB_NAME);
