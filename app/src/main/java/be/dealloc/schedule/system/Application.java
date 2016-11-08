@@ -54,12 +54,18 @@ public class Application extends android.app.Application
 				Method injector = Application.injectors.get(type);
 
 				injector.invoke(Application.provider, activity);
+
+				Logger.i("Invoked injector for %s", type.getSimpleName());
 			}
 			catch (Exception error)
 			{
 				// Failed injection will most likely cause a fatal crash later on.
 				Logger.e(error, "Injection failed for %s", type.getName());
 			}
+		}
+		else
+		{
+			Logger.w("Attempted to invoke injector for %s, but no injectors were registered.", type.getSimpleName());
 		}
 	}
 }
