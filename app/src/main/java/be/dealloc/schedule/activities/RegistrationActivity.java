@@ -1,8 +1,8 @@
 package be.dealloc.schedule.activities;
 
 import android.os.Bundle;
-import android.widget.Toast;
 import be.dealloc.schedule.R;
+import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Activity;
 import butterknife.OnClick;
 
@@ -18,6 +18,6 @@ public class RegistrationActivity extends Activity
 	@OnClick(R.id.registration_lblHelp)
 	public void onHelpClicked()
 	{
-		Toast.makeText(this, "TODO explain how to get security code", Toast.LENGTH_SHORT).show();
+		Dialog.msgbox(this, R.string.app_name, R.string.todo_calendar_help).show();
 	}
 }

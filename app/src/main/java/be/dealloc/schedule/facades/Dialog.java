@@ -25,4 +25,19 @@ public final class Dialog
 				.setNegativeButton(android.R.string.no, onDeny)
 				.create();
 	}
+
+	public static AlertDialog msgbox(Context context, final int title, final int content, DialogInterface.OnClickListener onClick)
+	{
+		return (new AlertDialog.Builder(context))
+				.setTitle(title)
+				.setIcon(R.mipmap.ic_launcher)
+				.setMessage(content)
+				.setPositiveButton(android.R.string.ok, onClick)
+				.create();
+	}
+
+	public static AlertDialog msgbox(Context context, final int title, final int content)
+	{
+		return msgbox(context, title, content, null);
+	}
 }
