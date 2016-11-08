@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 25
@@ -36,4 +37,6 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
     // Logger
     compile 'com.orhanobut:logger:1.15'
+    // GreenDAO
+    compile 'org.greenrobot:greendao:3.2.0'
 }
