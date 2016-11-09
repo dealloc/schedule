@@ -6,6 +6,9 @@ import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
 import be.dealloc.schedule.greendao.DaoSession;
 import be.dealloc.schedule.greendao.GreenCalendarDao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * GreenCalendarManager class.
  *
@@ -48,5 +51,14 @@ public class GreenCalendarManager implements CalendarManager
 	public void delete(long id)
 	{
 		this.dao.deleteByKey(id);
+	}
+
+	public List<Calendar> getActiveCalendars()
+	{
+		List<GreenCalendar> calendars = this.dao.queryBuilder()
+				.where(GreenCalendarDao.Properties.Active.eq(true))
+				.list();
+
+		return new ArrayList<>(calendars); // Downcast the collection
 	}
 }
