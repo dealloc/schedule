@@ -2,10 +2,8 @@ package be.dealloc.schedule.system;
 // Created by dealloc. All rights reserved.
 
 import android.os.Process;
-import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.DaggerServiceProvider;
 import be.dealloc.schedule.contracts.ServiceProvider;
-import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.providers.EntityProvider;
 import be.dealloc.schedule.providers.NetworkProvider;
 import be.dealloc.schedule.providers.SystemProvider;
@@ -29,7 +27,7 @@ public class Application extends android.app.Application
 
 		Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
 			Logger.e(throwable, "Thread %s has encountered a fatal exception.", thread.getName());
-			Dialog.msgbox(this.getApplicationContext(), R.string.app_name, R.string.fatal_error, (dialogInterface, i) -> Process.killProcess(Process.myPid()));
+			Process.killProcess(Process.myPid());
 		});
 
 		this.initServiceProvider();
