@@ -10,17 +10,16 @@ import org.greenrobot.greendao.annotation.Index;
 @Entity
 public class GreenCalendar implements Calendar
 {
-	@Id private long id;
-	private boolean active;
+	@Id private Long id;
+	private boolean active = false;
 	@Index(unique = true) String securityCode;
 	private static final String DESIDERIUS_URL = "https://desiderius.ehb.be/index.php?application=Chamilo%5CApplication%5CCalendar&go=ICal&security_token=";
 
-	@Generated(hash = 1065246825)
-	public GreenCalendar(long id, boolean active, String securityCode)
-	{
-		this.id = id;
-		this.active = active;
-		this.securityCode = securityCode;
+	@Generated(hash = 1155888100)
+	public GreenCalendar(Long id, boolean active, String securityCode) {
+					this.id = id;
+					this.active = active;
+					this.securityCode = securityCode;
 	}
 
 	@Generated(hash = 2024624522)
@@ -28,7 +27,7 @@ public class GreenCalendar implements Calendar
 	{
 	}
 
-	public long getId()
+	public Long getId()
 	{
 		return this.id;
 	}
@@ -62,5 +61,9 @@ public class GreenCalendar implements Calendar
 	public String getURl()
 	{
 		return DESIDERIUS_URL + this.getSecurityCode();
+	}
+
+	public void setId(Long id) {
+					this.id = id;
 	}
 }
