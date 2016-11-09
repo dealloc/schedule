@@ -48,4 +48,6 @@ dependencies {
     compile 'com.orhanobut:logger:1.15'
     // GreenDAO
     compile 'org.greenrobot:greendao:3.2.0'
+    // Asynchronous http downloader (LoopJ)
+    compile 'com.loopj.android:android-async-http:1.4.9'
 }
