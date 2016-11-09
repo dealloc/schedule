@@ -6,4 +6,5 @@
 	<string name="enter_security_code">Enter a security code</string>
 	<string name="code_help">I don\'t know what my security code is!</string>
 	<string name="todo_calendar_help">TODO: explain how to get security code!</string>
+	<string name="fatal_error">A fatal error occurred and the application has to exit.</string>
 </resources>
