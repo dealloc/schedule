@@ -50,4 +50,6 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.0'
     // Asynchronous http downloader (LoopJ)
     compile 'com.loopj.android:android-async-http:1.4.9'
+    // iCal parser
+    compile 'net.sf.biweekly:biweekly:0.6.0'
 }
