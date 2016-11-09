@@ -14,21 +14,10 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		this.setLayout(R.layout.activity_main);
 
-		Dialog.confirm(this, R.string.no_calendar, R.string.no_calendar_dialog, new DialogInterface.OnClickListener()
+		Dialog.confirm(this, R.string.no_calendar, R.string.no_calendar_dialog, (DialogInterface dialogInterface, int i) ->
 		{
-			@Override
-			public void onClick(DialogInterface dialogInterface, int i)
-			{
-				MainActivity.this.navigate(RegistrationActivity.class);
-				MainActivity.this.finish();
-			}
-		}, new DialogInterface.OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialogInterface, int i)
-			{
-				MainActivity.this.finish();
-			}
-		}).show();
+			this.navigate(RegistrationActivity.class);
+			this.finish();
+		}, (dialogInterface, i) -> this.finish()).show();
 	}
 }
