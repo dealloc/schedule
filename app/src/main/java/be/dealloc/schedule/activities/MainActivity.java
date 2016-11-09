@@ -19,16 +19,14 @@ public class MainActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		this.setLayout(R.layout.activity_main);
 
 		List<Calendar> active = this.manager.getActiveCalendars();
-
+		active.clear(); // I don't wanna clear my db each time
 		if (active.size() == 0)
 		{
 			Dialog.confirm(this, R.string.no_calendar, R.string.no_calendar_dialog, (DialogInterface dialogInterface, int i) ->
 			{
 				this.navigate(RegistrationActivity.class);
-				this.finish();
 			}, (dialogInterface, i) -> this.finish()).show();
 		}
 	}

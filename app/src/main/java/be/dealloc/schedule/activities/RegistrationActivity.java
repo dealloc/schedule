@@ -1,11 +1,15 @@
 package be.dealloc.schedule.activities;
 
 import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.calendars.Calendar;
 import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
 import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Activity;
+import be.dealloc.schedule.tasks.FetchCalendarTask;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 import javax.inject.Inject;
@@ -13,6 +17,8 @@ import javax.inject.Inject;
 public class RegistrationActivity extends Activity
 {
 	@Inject CalendarManager manager;
+	@BindView(R.id.activity_registration) ViewFlipper flipper;
+	@BindView(R.id.register_txtLoadingStatus) TextView lblStatus;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -30,14 +36,19 @@ public class RegistrationActivity extends Activity
 	@OnClick(R.id.registration_btnEnterCode)
 	public void onRegisterClicked()
 	{
-		Dialog.input(this, R.string.app_name, R.string.enter_security_code, (d, content) ->
+		Dialog.input(this, R.string.app_name, R.string.enter_security_code, (d, code) ->
 		{
-			Calendar calendar = this.manager.create();
-			calendar.setSecurityCode(content);
-			calendar.setActive(true);
-			this.manager.save(calendar);
-			this.navigate(MainActivity.class);
-			this.finish();
+			this.flipper.showNext(); // Show the loading part of the view
+			this.createCalendar(code);
 		}, null).show();
+	}
+
+	private void createCalendar(String code)
+	{
+		Calendar calendar = this.manager.create();
+		calendar.setSecurityCode(code);
+		calendar.setActive(true);
+		(new FetchCalendarTask(this.lblStatus)).execute(calendar);
+		this.manager.save(calendar);
 	}
 }

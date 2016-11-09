@@ -42,6 +42,13 @@ public class Activity extends AppCompatActivity
 
 	protected void navigate(Class<? extends Activity> activity)
 	{
+		this.navigate(activity, true);
+	}
+
+	protected void navigate(Class<? extends Activity> activity, boolean finish)
+	{
 		startActivity(new Intent(this, activity));
+		if (finish)
+			this.finish();
 	}
 }

@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class Application extends android.app.Application
 {
+	private static Application instance;
 	private static ServiceProvider provider;
 	private static Map<Class<?>, Method> injectors;
 
@@ -22,6 +23,7 @@ public class Application extends android.app.Application
 	public void onCreate()
 	{
 		super.onCreate();
+		Application.instance = this;
 
 		Logger.init("SCHEDULE-LOG");
 
@@ -77,5 +79,10 @@ public class Application extends android.app.Application
 		{
 			Logger.w("Attempted to invoke injector for %s, but no injectors were registered.", type.getSimpleName());
 		}
+	}
+
+	public static String string(final int resource)
+	{
+		return Application.instance.getApplicationContext().getString(resource);
 	}
 }

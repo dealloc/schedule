@@ -1,6 +1,7 @@
 <resources>
 	<string name="app_name">Schedule</string>
 	<string name="fetching_data">Fetching data…</string>
+	<string name="parsing_data">Parsing calendar events…</string>
 	<string name="no_calendar">No calendar found!</string>
 	<string name="no_calendar_dialog">No calendar was found. Do you wish to set one up now?</string>
 	<string name="enter_security_code">Enter a security code</string>
