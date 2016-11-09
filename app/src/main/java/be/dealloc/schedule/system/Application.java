@@ -1,6 +1,7 @@
 package be.dealloc.schedule.system;
 // Created by dealloc. All rights reserved.
 
+import android.os.Process;
 import be.dealloc.schedule.contracts.DaggerServiceProvider;
 import be.dealloc.schedule.contracts.ServiceProvider;
 import be.dealloc.schedule.providers.SystemProvider;
@@ -21,6 +22,11 @@ public class Application extends android.app.Application
 		super.onCreate();
 
 		Logger.init("SCHEDULE-LOG");
+
+		Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
+			Logger.e(throwable, "Thread %s has encountered a fatal exception.", thread.getName());
+			Process.killProcess(Process.myPid());
+		});
 
 		this.initServiceProvider();
 	}
