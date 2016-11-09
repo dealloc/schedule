@@ -3,6 +3,7 @@ package be.dealloc.schedule.contracts;
 
 import be.dealloc.schedule.activities.MainActivity;
 import be.dealloc.schedule.activities.RegistrationActivity;
+import be.dealloc.schedule.contracts.network.NetworkService;
 import be.dealloc.schedule.providers.EntityProvider;
 import be.dealloc.schedule.providers.NetworkProvider;
 import be.dealloc.schedule.providers.SystemProvider;
@@ -18,4 +19,6 @@ public interface ServiceProvider
 	void inject(MainActivity activity);
 
 	void inject(RegistrationActivity activity);
+
+	NetworkService network();
 }

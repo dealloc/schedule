@@ -8,7 +8,6 @@ import be.dealloc.schedule.contracts.entities.calendars.Calendar;
 import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
 import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Activity;
-import be.dealloc.schedule.tasks.FetchCalendarTask;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -48,7 +47,7 @@ public class RegistrationActivity extends Activity
 		Calendar calendar = this.manager.create();
 		calendar.setSecurityCode(code);
 		calendar.setActive(true);
-		(new FetchCalendarTask(this.lblStatus)).execute(calendar);
+		// Download and parse the calendar to verify it's a valid one.
 		this.manager.save(calendar);
 	}
 }

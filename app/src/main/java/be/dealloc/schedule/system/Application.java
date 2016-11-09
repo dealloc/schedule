@@ -35,6 +35,16 @@ public class Application extends android.app.Application
 		this.initServiceProvider();
 	}
 
+	public static String string(final int resource)
+	{
+		return Application.instance.getApplicationContext().getString(resource);
+	}
+
+	public static ServiceProvider provider()
+	{
+		return Application.provider;
+	}
+
 	private void initServiceProvider()
 	{
 		Application.provider = DaggerServiceProvider.builder()
@@ -79,10 +89,5 @@ public class Application extends android.app.Application
 		{
 			Logger.w("Attempted to invoke injector for %s, but no injectors were registered.", type.getSimpleName());
 		}
-	}
-
-	public static String string(final int resource)
-	{
-		return Application.instance.getApplicationContext().getString(resource);
 	}
 }
