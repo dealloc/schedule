@@ -3,7 +3,9 @@ package be.dealloc.schedule.providers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
 import be.dealloc.schedule.contracts.entities.courses.CourseManager;
+import be.dealloc.schedule.entities.calendars.GreenCalendarManager;
 import be.dealloc.schedule.entities.courses.GreenCourseManager;
 import be.dealloc.schedule.greendao.DaoMaster;
 import be.dealloc.schedule.greendao.DaoSession;
@@ -31,4 +33,11 @@ public class EntityProvider
 	{
 		return new GreenCourseManager(this.session);
 	}
+
+	@Provides
+	public CalendarManager providesCalendarManager()
+	{
+		return new GreenCalendarManager(this.session);
+	}
+
 }
