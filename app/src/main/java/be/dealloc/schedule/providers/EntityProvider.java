@@ -4,9 +4,9 @@ package be.dealloc.schedule.providers;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import be.dealloc.schedule.contracts.entities.courses.CourseManager;
-import be.dealloc.schedule.entities.courses.DaoMaster;
-import be.dealloc.schedule.entities.courses.DaoSession;
 import be.dealloc.schedule.entities.courses.GreenCourseManager;
+import be.dealloc.schedule.greendao.DaoMaster;
+import be.dealloc.schedule.greendao.DaoSession;
 import dagger.Module;
 import dagger.Provides;
 

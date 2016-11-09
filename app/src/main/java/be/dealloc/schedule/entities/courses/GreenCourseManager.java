@@ -3,6 +3,8 @@ package be.dealloc.schedule.entities.courses;
 
 import be.dealloc.schedule.contracts.entities.courses.Course;
 import be.dealloc.schedule.contracts.entities.courses.CourseManager;
+import be.dealloc.schedule.greendao.DaoSession;
+import be.dealloc.schedule.greendao.GreenCourseDao;
 
 import javax.inject.Inject;
 
@@ -36,13 +38,13 @@ public class GreenCourseManager implements CourseManager
 	@Override
 	public void save(Course course)
 	{
-		this.dao.save((GreenCourse)course);
+		this.dao.save((GreenCourse) course);
 	}
 
 	@Override
 	public void delete(Course course)
 	{
-		this.dao.delete((GreenCourse)course);
+		this.dao.delete((GreenCourse) course);
 	}
 
 	@Override
