@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This file contains all strings specific for dialogs -->
+<resources>
+	<string name="no_calendar">No calendar found!</string>
+	<string name="no_calendar_dialog">No calendar was found. Do you wish to set one up now?</string>
+
+	<string name="enter_security_code">Enter a security code</string>
+
+	<string name="todo_calendar_help">TODO: explain how to get security code!</string>
+</resources>
