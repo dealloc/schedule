@@ -8,12 +8,14 @@ import be.dealloc.schedule.contracts.entities.calendars.Calendar;
 import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
 import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Activity;
+import be.dealloc.schedule.system.Application;
+import be.dealloc.schedule.tasks.ProcessCalendarTask;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import javax.inject.Inject;
 
-public class RegistrationActivity extends Activity
+public class RegistrationActivity extends Activity implements ProcessCalendarTask.ProcessCallback
 {
 	@Inject CalendarManager manager;
 	@BindView(R.id.activity_registration) ViewFlipper flipper;
@@ -46,8 +48,25 @@ public class RegistrationActivity extends Activity
 	{
 		Calendar calendar = this.manager.create();
 		calendar.setSecurityCode(code);
-		calendar.setActive(true);
-		// Download and parse the calendar to verify it's a valid one.
-		this.manager.save(calendar);
+		Application.provider().calendarProcessor().execute(calendar, this);
+	}
+
+	@Override
+	public void onProgress(String status)
+	{
+		this.lblStatus.setText(status);
+	}
+
+	@Override
+	public void onFailure(Throwable error)
+	{
+		Dialog.msgbox(this, error.getMessage()).show();
+		this.flipper.showNext();
+	}
+
+	@Override
+	public void onSucces()
+	{
+		// TODO we can now do something with our calendars.
 	}
 }

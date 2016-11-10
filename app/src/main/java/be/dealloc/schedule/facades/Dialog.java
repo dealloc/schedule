@@ -15,7 +15,9 @@ import be.dealloc.schedule.R;
  */
 public final class Dialog
 {
-	private Dialog() { }
+	private Dialog()
+	{
+	}
 
 	public static AlertDialog confirm(Context context, final int title, final int content, DialogInterface.OnClickListener onConfirm, DialogInterface.OnClickListener onDeny)
 	{
@@ -64,6 +66,16 @@ public final class Dialog
 				.setView(input)
 				.setPositiveButton(android.R.string.yes, confirm)
 				.setNegativeButton(android.R.string.no, onDeny)
+				.create();
+	}
+
+	public static AlertDialog msgbox(Context context, String message)
+	{
+		return (new AlertDialog.Builder(context))
+				.setTitle(R.string.app_name)
+				.setIcon(R.mipmap.ic_launcher)
+				.setMessage(message)
+				.setPositiveButton(android.R.string.ok, null)
 				.create();
 	}
 

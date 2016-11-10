@@ -7,6 +7,7 @@ import be.dealloc.schedule.contracts.network.NetworkService;
 import be.dealloc.schedule.providers.EntityProvider;
 import be.dealloc.schedule.providers.NetworkProvider;
 import be.dealloc.schedule.providers.SystemProvider;
+import be.dealloc.schedule.tasks.ProcessCalendarTask;
 import dagger.Component;
 
 @Component(modules = {
@@ -21,4 +22,6 @@ public interface ServiceProvider
 	void inject(RegistrationActivity activity);
 
 	NetworkService network();
+
+	ProcessCalendarTask calendarProcessor();
 }
