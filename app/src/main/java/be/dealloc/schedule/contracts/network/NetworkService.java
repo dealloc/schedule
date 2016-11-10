@@ -5,7 +5,7 @@ public interface NetworkService
 {
 	void download(String url, NetworkCallback callback);
 
-	String downloadSynchronous(String url);
+	void downloadSynchronous(String url, NetworkCallback callback);
 
 	interface NetworkCallback
 	{

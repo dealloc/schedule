@@ -4,6 +4,7 @@ package be.dealloc.schedule.services.network;
 import be.dealloc.schedule.contracts.network.NetworkService;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.SyncHttpClient;
 import cz.msebera.android.httpclient.Header;
 
 import javax.inject.Inject;
@@ -21,25 +22,32 @@ public class LoopNetworkService implements NetworkService
 	@Override
 	public void download(String url, NetworkCallback callback)
 	{
-		this.service.get(url, new AsyncHttpResponseHandler()
+		this.service.get(url, this.wrap(callback));
+	}
+
+	@Override
+	public void downloadSynchronous(String url, NetworkCallback callback)
+	{
+		(new SyncHttpClient()).get(url, this.wrap(callback));
+	}
+
+	private AsyncHttpResponseHandler wrap(NetworkCallback callback)
+	{
+		return (new AsyncHttpResponseHandler()
 		{
 			@Override
 			public void onSuccess(int status, Header[] headers, byte[] body)
 			{
-				callback.onSucces(status, new String(body));
+				String response = (body == null ? "" : new String(body));
+				callback.onSucces(status, response);
 			}
 
 			@Override
 			public void onFailure(int status, Header[] headers, byte[] body, Throwable error)
 			{
-				callback.onFailure(status, new String(body), error);
+				String response = (body == null ? "" : new String(body));
+				callback.onFailure(status, response, error);
 			}
 		});
-	}
-
-	@Override
-	public String downloadSynchronous(String url)
-	{
-		return null;
 	}
 }

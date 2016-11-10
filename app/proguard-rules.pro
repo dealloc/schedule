@@ -17,3 +17,7 @@
 -dontwarn org.greenrobot.greendao.database.**
 # If you do not use RxJava:
 -dontwarn rx.**
+
+# Biweekly
+-dontwarn com.fasterxml.jackson.**
+-dontwarn biweekly.io.json.JCalModule
