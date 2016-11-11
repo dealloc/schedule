@@ -1,5 +1,6 @@
 package be.dealloc.schedule.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import javax.inject.Inject;
 
 public class RegistrationActivity extends Activity implements ProcessCalendarTask.ProcessCallback
 {
+	public static final String SECURITYCODE_INTENT = "be.dealloc.schedule.activities.RegistrationActivity.SECURITY_CODE";
 	@Inject CalendarManager manager;
 	@BindView(R.id.activity_registration) ViewFlipper flipper;
 	@BindView(R.id.register_txtLoadingStatus) TextView lblStatus;
@@ -28,6 +30,14 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 	{
 		super.onCreate(savedInstanceState);
 		this.setLayout(R.layout.activity_registration);
+
+		Intent intention = this.getIntent();
+		if (intention.hasExtra(SECURITYCODE_INTENT))
+		{
+			// The security code has been sent along!
+			this.flipper.showNext();
+			this.createCalendar(intention.getStringExtra(SECURITYCODE_INTENT));
+		}
 	}
 
 	@OnClick(R.id.registration_lblHelp)
@@ -50,7 +60,7 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 	public void onDesideriusClicked()
 	{
 		AlertDialog dialog = Dialog.confirm(this, R.string.app_name, R.string.desiderius_dialog, (d, i) -> {
-			navigate(DesideriusActivity.class, false);
+			navigate(DesideriusActivity.class);
 		}, null);
 		dialog.setIcon(android.R.drawable.ic_dialog_alert);
 		dialog.show();
