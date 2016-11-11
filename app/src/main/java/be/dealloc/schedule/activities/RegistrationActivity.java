@@ -41,7 +41,7 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 	{
 		Dialog.input(this, R.string.app_name, R.string.enter_security_code, (d, code) ->
 		{
-			this.flipper.showNext(); // Show the loading part of the view
+			this.flipper.showNext(); // Show the loading part of the web
 			this.createCalendar(code);
 		}, null).show();
 	}

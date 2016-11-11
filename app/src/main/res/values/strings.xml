@@ -11,4 +11,7 @@
 	<string name="navigation_drawer_close">Close navigation drawer</string>
 	<string name="navigation_header">@string/app_name</string>
 	<string name="navigation_subheader">Developed by Wannes G.</string>
+	<string name="hint_studentmail">Enter your student mail</string>
+	<string name="hint_password">Enter your password</string>
+	<string name="fetch_code">Fetch my security code</string>
 </resources>
