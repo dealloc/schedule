@@ -20,6 +20,7 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 	@Inject CalendarManager manager;
 	@BindView(R.id.activity_registration) ViewFlipper flipper;
 	@BindView(R.id.register_txtLoadingStatus) TextView lblStatus;
+	Calendar calendar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -46,9 +47,9 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 
 	private void createCalendar(String code)
 	{
-		Calendar calendar = this.manager.create();
-		calendar.setSecurityCode(code);
-		Application.provider().calendarProcessor().execute(calendar, this);
+		this.calendar = this.manager.create();
+		this.calendar.setSecurityCode(code);
+		Application.provider().calendarProcessor().execute(this.calendar, this);
 	}
 
 	@Override
@@ -67,6 +68,8 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 	@Override
 	public void onSucces()
 	{
+		this.calendar.setActive(true);
+		this.manager.save(this.calendar);
 		this.navigate(MainActivity.class);
 	}
 }

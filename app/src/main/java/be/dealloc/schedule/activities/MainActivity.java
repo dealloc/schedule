@@ -30,7 +30,7 @@ public class MainActivity extends Activity
 		}
 		else
 		{
-			Dialog.msgbox(this, "You have " + active.size() + " events!");
+			Dialog.msgbox(this, "You have " + active.size() + " calendar!").show();
 		}
 	}
 }
