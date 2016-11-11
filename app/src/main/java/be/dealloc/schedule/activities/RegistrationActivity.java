@@ -1,6 +1,7 @@
 package be.dealloc.schedule.activities;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 import be.dealloc.schedule.R;
@@ -43,6 +44,16 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 			this.flipper.showNext(); // Show the loading part of the view
 			this.createCalendar(code);
 		}, null).show();
+	}
+
+	@OnClick(R.id.registration_btnDesiderius)
+	public void onDesideriusClicked()
+	{
+		AlertDialog dialog = Dialog.confirm(this, R.string.app_name, R.string.desiderius_dialog, (d, i) -> {
+			navigate(DesideriusActivity.class, false);
+		}, null);
+		dialog.setIcon(android.R.drawable.ic_dialog_alert);
+		dialog.show();
 	}
 
 	private void createCalendar(String code)

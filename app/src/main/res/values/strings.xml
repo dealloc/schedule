@@ -1,5 +1,7 @@
 <resources>
 	<string name="app_name">Schedule</string>
+	<string name="enter_security_code">Enter a security code</string>
+	<string name="login_desiderius">Log in with Desiderius</string>
 	<string name="fetching_data">Fetching data…</string>
 	<string name="parsing_data">Parsing calendar events…</string>
 	<string name="code_help">I don\'t know what my security code is!</string>

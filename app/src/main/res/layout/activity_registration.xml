@@ -22,6 +22,14 @@
 			android:id="@+id/registration_btnEnterCode"
 			android:layout_width="240dp" />
 
+		<Button
+			android:text="@string/login_desiderius"
+			android:layout_width="240dp"
+			android:layout_height="wrap_content"
+			android:layout_above="@+id/registration_btnEnterCode"
+			android:layout_centerHorizontal="true"
+			android:id="@+id/registration_btnDesiderius" />
+
 		<TextView
 			android:text="@string/code_help"
 			android:layout_width="wrap_content"
