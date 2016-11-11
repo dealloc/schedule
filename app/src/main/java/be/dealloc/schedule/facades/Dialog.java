@@ -27,6 +27,7 @@ public final class Dialog
 				.setIcon(R.mipmap.ic_launcher)
 				.setPositiveButton(android.R.string.yes, onConfirm)
 				.setNegativeButton(android.R.string.no, onDeny)
+				.setCancelable(false)
 				.create();
 	}
 
@@ -66,6 +67,7 @@ public final class Dialog
 				.setView(input)
 				.setPositiveButton(android.R.string.yes, confirm)
 				.setNegativeButton(android.R.string.no, onDeny)
+				.setCancelable(false)
 				.create();
 	}
 

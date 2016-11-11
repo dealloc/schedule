@@ -14,6 +14,7 @@ public class GreenCourse implements Course
 	@Id
 	private Long id;
 	private String name;
+	private String teacher;
 	private String location;
 	private Date start;
 	private Date end;
@@ -21,18 +22,18 @@ public class GreenCourse implements Course
 	private String url;
 	private String calendar;
 
-	@Generated(hash = 140562973)
-	public GreenCourse(Long id, String name, String location, Date start, Date end,
-					   int type, String url, String calendar)
-	{
-		this.id = id;
-		this.name = name;
-		this.location = location;
-		this.start = start;
-		this.end = end;
-		this.type = type;
-		this.url = url;
-		this.calendar = calendar;
+	@Generated(hash = 1521519760)
+	public GreenCourse(Long id, String name, String teacher, String location,
+									Date start, Date end, int type, String url, String calendar) {
+					this.id = id;
+					this.name = name;
+					this.teacher = teacher;
+					this.location = location;
+					this.start = start;
+					this.end = end;
+					this.type = type;
+					this.url = url;
+					this.calendar = calendar;
 	}
 
 	@Generated(hash = 2103233940)
@@ -96,6 +97,18 @@ public class GreenCourse implements Course
 	public void setLocation(String location)
 	{
 		this.location = location;
+	}
+
+	@Override
+	public String getTeacher()
+	{
+		return this.teacher;
+	}
+
+	@Override
+	public void setTeacher(String teacher)
+	{
+		this.teacher = teacher;
 	}
 
 	@Override

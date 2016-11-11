@@ -5,4 +5,5 @@ import be.dealloc.schedule.contracts.entities.EntityManager;
 
 public interface CourseManager extends EntityManager<Course>
 {
+	Course fromRaw(Object raw);
 }

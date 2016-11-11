@@ -6,10 +6,13 @@ import android.os.Handler;
 import android.os.Looper;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.calendars.Calendar;
+import be.dealloc.schedule.contracts.entities.courses.Course;
+import be.dealloc.schedule.contracts.entities.courses.CourseManager;
 import be.dealloc.schedule.contracts.network.NetworkService;
 import be.dealloc.schedule.system.Application;
 import biweekly.Biweekly;
 import biweekly.ICalendar;
+import biweekly.component.VEvent;
 import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
@@ -17,13 +20,15 @@ import javax.inject.Inject;
 public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 {
 	private final NetworkService service;
+	private final CourseManager courseManager;
 	private ProcessCallback callback;
 	private final String STR_PARSING;
 
 	@Inject
-	public ProcessCalendarTask(NetworkService service)
+	public ProcessCalendarTask(NetworkService service, CourseManager courseManager)
 	{
 		this.service = service;
+		this.courseManager = courseManager;
 		this.STR_PARSING = Application.string(R.string.parsing_data);
 	}
 
@@ -36,6 +41,7 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 	@Override
 	protected Void doInBackground(Calendar... calendars)
 	{
+		Logger.i("Fetching ical file from %s", calendars[0].getURl());
 		this.service.downloadSynchronous(calendars[0].getURl(), new NetworkService.NetworkCallback()
 		{
 			@Override
@@ -45,7 +51,15 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 				if (body.startsWith("BEGIN:VCALENDAR"))
 				{
 					ICalendar calendar = Biweekly.parse(body).first();
-					publishProgress(String.format("Parsed calendar with %d events in!", calendar.getEvents().size()));
+
+					for (VEvent event : calendar.getEvents())
+					{
+						Course course = courseManager.fromRaw(event);
+						if (course != null) // some events may be dropped.
+							courseManager.save(course);
+					}
+
+					System.gc(); // Call a garbage collection to collect all dangling event objects.
 					callback.onSucces();
 				}
 				else

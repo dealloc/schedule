@@ -67,6 +67,6 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 	@Override
 	public void onSucces()
 	{
-		// TODO we can now do something with our calendars.
+		this.navigate(MainActivity.class);
 	}
 }

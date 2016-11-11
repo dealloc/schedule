@@ -15,6 +15,9 @@ public interface Course
 	String getLocation();
 	void setLocation(String location);
 
+	String getTeacher();
+	void setTeacher(String teacher);
+
 	Date getStart();
 	void setStart(Date start);
 
