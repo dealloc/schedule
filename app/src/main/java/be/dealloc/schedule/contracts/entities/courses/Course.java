@@ -5,9 +5,9 @@ import java.util.Date;
 
 public interface Course
 {
-	public static final int PRACTICAL = 1;
-	public static final int THEORETICAL = 2;
-	public static final int OTHER = 3;
+	int PRACTICAL = 1;
+	int THEORETICAL = 2;
+	int OTHER = 3;
 
 	String getName();
 	void setName(String name);
