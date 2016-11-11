@@ -21,7 +21,7 @@
 
 	</android.support.design.widget.AppBarLayout>
 
-	<include layout="@layout/content_calendar" />
+	<include layout="@layout/calendar_content" />
 
 	<android.support.design.widget.FloatingActionButton
 		android:id="@+id/calendar_fab"
