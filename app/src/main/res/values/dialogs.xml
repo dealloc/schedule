@@ -9,4 +9,9 @@
 	<string name="invalid_credentials">Invalid username or password!</string>
 
 	<string name="todo_calendar_help">TODO: explain how to get security code!</string>
+
+	<string name="desiderius_connecting">Connecting to Desiderius…</string>
+	<string name="desiderius_authenticating">Logging in…</string>
+	<string name="desiderius_calendar">Fetching calendar…</string>
+	<string name="desiderius_extracting">Loading credentials…</string>
 </resources>

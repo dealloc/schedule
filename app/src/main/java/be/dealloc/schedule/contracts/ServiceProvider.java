@@ -1,6 +1,7 @@
 package be.dealloc.schedule.contracts;
 // Created by dealloc. All rights reserved.
 
+import android.content.Context;
 import be.dealloc.schedule.activities.MainActivity;
 import be.dealloc.schedule.activities.RegistrationActivity;
 import be.dealloc.schedule.contracts.network.NetworkService;
@@ -24,4 +25,6 @@ public interface ServiceProvider
 	NetworkService network();
 
 	ProcessCalendarTask calendarProcessor();
+
+	Context context();
 }

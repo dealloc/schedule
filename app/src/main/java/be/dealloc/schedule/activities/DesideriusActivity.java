@@ -1,5 +1,6 @@
 package be.dealloc.schedule.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,11 +8,12 @@ import android.support.annotation.RequiresApi;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ViewFlipper;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Activity;
+import be.dealloc.schedule.system.Application;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.orhanobut.logger.Logger;
@@ -27,10 +29,10 @@ public class DesideriusActivity extends Activity
 	private static final String CAS_URL = "https://cas.ehb.be/login?service=https%3A%2F%2Fdesiderius.ehb.be%2F";
 	private static final String CALENDAR_URL = "https://desiderius.ehb.be/index.php?application=Chamilo%5CApplication%5CCalendar&go=ICal";
 
-	@BindView(R.id.desiderius_flipper) ViewFlipper flipper;
-	@BindView(R.id.desiderius_webview) WebView view;
+	@BindView(R.id.desiderius_btnLogin) Button btnLogin;
 	@BindView(R.id.desiderius_txtEmail) EditText txtEmail;
 	@BindView(R.id.desiderius_txtPassword) EditText txtPassword;
+	private ProgressDialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -45,7 +47,9 @@ public class DesideriusActivity extends Activity
 		if (txtEmail.getText().toString().isEmpty() || txtPassword.getText().toString().isEmpty()) // Skip empty fields
 			return;
 
-		flipper.showNext();
+		this.btnLogin.setEnabled(false);
+		this.progressDialog = ProgressDialog.show(this, Application.string(R.string.app_name), Application.string(R.string.desiderius_connecting));
+		WebView view = new WebView(Application.provider().context());
 		view.getSettings().setJavaScriptEnabled(true);
 		view.setWebViewClient(new DesideriusClient());
 		view.loadUrl(CAS_URL); // TODO check if internet fails or something
@@ -53,8 +57,9 @@ public class DesideriusActivity extends Activity
 
 	private void loginFailed()
 	{
-		this.flipper.showNext();
+		this.progressDialog.dismiss();
 		Dialog.msgbox(this, R.string.app_name, R.string.invalid_credentials).show();
+		this.btnLogin.setEnabled(true);
 	}
 
 	private void extractCode(String html)
@@ -63,12 +68,15 @@ public class DesideriusActivity extends Activity
 		if (matcher.find())
 		{
 			String securityCode = matcher.group();
-			this.flipper.showNext();
 
 			Intent intention = new Intent(this, RegistrationActivity.class);
 			intention.putExtra(RegistrationActivity.SECURITYCODE_INTENT, securityCode);
 			startActivity(intention);
 			this.finish();
+		}
+		else
+		{
+			this.loginFailed();
 		}
 	}
 
@@ -95,15 +103,17 @@ public class DesideriusActivity extends Activity
 		public void onPageFinished(WebView view, String url)
 		{
 			super.onPageFinished(view, url);
-			Logger.i("Loaded %s", url);
 			if (url.equals(CAS_URL))
 			{
 				if (++count == 3)
 				{
+					Logger.w("Login page was loaded 3x! Invalid credentials assumed.");
 					loginFailed();
 				}
 				else
 				{
+					progressDialog.setMessage(Application.string(R.string.desiderius_authenticating));
+					Logger.i("Injecting credentials for %s into CAS", txtEmail.getText().toString());
 					String username = "document.getElementById('username').value = '" + txtEmail.getText().toString() + "'";
 					String password = "document.getElementById('password').value = '" + txtPassword.getText().toString() + "'";
 					String submit = "document.querySelector('button[type=submit]').click()";
@@ -112,10 +122,14 @@ public class DesideriusActivity extends Activity
 			}
 			else if (!url.equals(CALENDAR_URL))
 			{
+				Logger.i("Switching to calendar view...");
+				progressDialog.setMessage(Application.string(R.string.desiderius_calendar));
 				view.loadUrl(CALENDAR_URL);
 			}
 			else if (url.equals(CALENDAR_URL))
 			{
+				Logger.i("Executing source extraction");
+				progressDialog.setMessage(Application.string(R.string.desiderius_extracting));
 				view.loadUrl("javascript:this.document.location.href = 'source://' + encodeURI(document.documentElement.outerHTML);");
 			}
 		}
@@ -124,6 +138,7 @@ public class DesideriusActivity extends Activity
 		{
 			if (url.startsWith("source://"))
 			{
+				progressDialog.dismiss();
 				try
 				{
 					String html = URLDecoder.decode(url, "UTF-8").substring(9);
