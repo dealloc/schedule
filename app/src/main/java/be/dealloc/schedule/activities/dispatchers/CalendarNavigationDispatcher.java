@@ -36,9 +36,11 @@ public class CalendarNavigationDispatcher implements NavigationView.OnNavigation
 				break;
 			case R.id.nav_settings:
 				handled = true;
+				this.target.onSettingsClicked();
 				break;
 			case R.id.nav_share:
 				handled = true;
+				this.target.onShareClicked();
 				break;
 		}
 
@@ -51,5 +53,9 @@ public class CalendarNavigationDispatcher implements NavigationView.OnNavigation
 		void onCalendarClicked();
 
 		void onListClicked();
+
+		void onSettingsClicked();
+
+		void onShareClicked();
 	}
 }

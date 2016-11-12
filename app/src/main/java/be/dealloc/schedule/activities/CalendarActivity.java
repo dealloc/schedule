@@ -66,4 +66,16 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	{
 		this.swap(R.id.calendar_content, new ListFragment());
 	}
+
+	@Override
+	public void onSettingsClicked()
+	{
+		this.navigate(SettingsActivity.class, false);
+	}
+
+	@Override
+	public void onShareClicked()
+	{
+		this.navigate(ShareActivity.class, false);
+	}
 }
