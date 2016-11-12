@@ -1,20 +1,26 @@
 <resources>
 	<string name="app_name">Schedule</string>
-	<string name="enter_security_code">Enter a security code</string>
-	<string name="login_desiderius">Log in with Desiderius</string>
-	<string name="fetching_data">Fetching data…</string>
-	<string name="parsing_data">Parsing calendar events…</string>
-	<string name="code_help">I don\'t know what my security code is!</string>
 
 	<!-- navigation drawer -->
 	<string name="navigation_drawer_open">Open navigation drawer</string>
 	<string name="navigation_drawer_close">Close navigation drawer</string>
 	<string name="navigation_header">@string/app_name</string>
 	<string name="navigation_subheader">Developed by Wannes G.</string>
+
+	<!-- registration -->
+	<string name="login_desiderius">Log in with Desiderius</string>
+	<string name="fetching_data">Fetching data…</string>
+	<string name="parsing_data">Parsing calendar events…</string>
+	<string name="code_help">I don\'t know what my security code is!</string>
+	<string name="enter_security_code">Enter a security code</string>
 	<string name="hint_studentmail">Enter your student mail</string>
 	<string name="hint_password">Enter your password</string>
 	<string name="fetch_code">Fetch my security code</string>
 
-	<!-- TODO: Remove or change this placeholder text -->
-	<string name="hello_blank_fragment">Hello blank fragment</string>
+	<!-- menu items -->
+	<string name="menu_calendar">Calendar</string>
+	<string name="menu_list">List of events</string>
+	<string name="menu_subheader">System</string>
+	<string name="menu_settings">Configuration</string>
+	<string name="menu_share">Share</string>
 </resources>
