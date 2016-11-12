@@ -6,5 +6,7 @@
 
 	<string name="desiderius_dialog">This functionality will log in on your account in Desiderius to extract your calendar for you. If you don\'t want to allow this software to access your account please choose the security code option.</string>
 
+	<string name="invalid_credentials">Invalid username or password!</string>
+
 	<string name="todo_calendar_help">TODO: explain how to get security code!</string>
 </resources>

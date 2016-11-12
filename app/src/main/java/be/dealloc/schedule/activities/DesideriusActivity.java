@@ -10,6 +10,7 @@ import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ViewFlipper;
 import be.dealloc.schedule.R;
+import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Activity;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,6 +51,12 @@ public class DesideriusActivity extends Activity
 		view.loadUrl(CAS_URL); // TODO check if internet fails or something
 	}
 
+	private void loginFailed()
+	{
+		this.flipper.showNext();
+		Dialog.msgbox(this, R.string.app_name, R.string.invalid_credentials).show();
+	}
+
 	private void extractCode(String html)
 	{
 		Matcher matcher = Pattern.compile("[a-z0-9]{40}").matcher(html);
@@ -67,6 +74,8 @@ public class DesideriusActivity extends Activity
 
 	private class DesideriusClient extends WebViewClient
 	{
+		private int count = 0; // If login page loads 3x we have invalid login!
+
 		@Override
 		@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 		public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request)
@@ -89,10 +98,17 @@ public class DesideriusActivity extends Activity
 			Logger.i("Loaded %s", url);
 			if (url.equals(CAS_URL))
 			{
-				String username = "document.getElementById('username').value = '" + txtEmail.getText().toString() + "'";
-				String password = "document.getElementById('password').value = '" + txtPassword.getText().toString() + "'";
-				String submit = "document.querySelector('button[type=submit]').click()";
-				view.loadUrl(String.format(Locale.ENGLISH, "javascript:%s;%s;%s", username, password, submit));
+				if (++count == 3)
+				{
+					loginFailed();
+				}
+				else
+				{
+					String username = "document.getElementById('username').value = '" + txtEmail.getText().toString() + "'";
+					String password = "document.getElementById('password').value = '" + txtPassword.getText().toString() + "'";
+					String submit = "document.querySelector('button[type=submit]').click()";
+					view.loadUrl(String.format(Locale.ENGLISH, "javascript:%s;%s;%s", username, password, submit));
+				}
 			}
 			else if (!url.equals(CALENDAR_URL))
 			{
