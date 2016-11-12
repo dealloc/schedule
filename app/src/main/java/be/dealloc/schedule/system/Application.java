@@ -65,9 +65,9 @@ public class Application extends android.app.Application
 		Logger.i("Initialized injector cache with %d methods.", injectors.size());
 	}
 
-	public static <T extends Activity> void inject(T activity)
+	public static <T> void inject(T activity)
 	{
-		Class<? extends Activity> type = activity.getClass();
+		Class<?> type = activity.getClass();
 
 		if (Application.injectors.containsKey(type))
 		{
