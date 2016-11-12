@@ -23,7 +23,7 @@ public class Fragment extends android.support.v4.app.Fragment
 	{
 		View view = inflater.inflate(layout, group, false);
 
-		ButterKnife.bind(view);
+		ButterKnife.bind(this, view);
 
 		return view;
 	}
