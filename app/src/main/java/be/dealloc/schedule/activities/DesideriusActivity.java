@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.webkit.*;
 import android.widget.Button;
 import android.widget.EditText;
 import be.dealloc.schedule.R;
@@ -49,6 +47,7 @@ public class DesideriusActivity extends Activity
 
 		this.btnLogin.setEnabled(false);
 		this.progressDialog = ProgressDialog.show(this, Application.string(R.string.app_name), Application.string(R.string.desiderius_connecting));
+		this.killWebJunk();
 		WebView view = new WebView(Application.provider().context());
 		view.getSettings().setJavaScriptEnabled(true);
 		view.setWebViewClient(new DesideriusClient());
@@ -57,6 +56,7 @@ public class DesideriusActivity extends Activity
 
 	private void loginFailed()
 	{
+		this.killWebJunk();
 		this.progressDialog.dismiss();
 		Dialog.msgbox(this, R.string.app_name, R.string.invalid_credentials).show();
 		this.btnLogin.setEnabled(true);
@@ -67,6 +67,7 @@ public class DesideriusActivity extends Activity
 		Matcher matcher = Pattern.compile("[a-z0-9]{40}").matcher(html);
 		if (matcher.find())
 		{
+			this.killWebJunk();
 			String securityCode = matcher.group();
 
 			Intent intention = new Intent(this, RegistrationActivity.class);
@@ -78,6 +79,26 @@ public class DesideriusActivity extends Activity
 		{
 			this.loginFailed();
 		}
+	}
+
+	// Kill all cache and junk created by using webview
+	private void killWebJunk()
+	{
+		Logger.i("Killing all webview cache.");
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+		{
+			CookieManager.getInstance().removeAllCookies(null);
+			CookieManager.getInstance().removeSessionCookies(null);
+		}
+		else
+		{
+			CookieSyncManager.createInstance(Application.provider().context());
+			CookieManager.getInstance().removeAllCookie();
+			CookieManager.getInstance().removeSessionCookie();
+		}
+
+		Application.provider().context().deleteDatabase("webview.db");
+		Application.provider().context().deleteDatabase("webviewCookiesChromium.db.db");
 	}
 
 	private class DesideriusClient extends WebViewClient
