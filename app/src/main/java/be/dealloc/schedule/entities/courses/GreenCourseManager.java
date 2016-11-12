@@ -8,7 +8,10 @@ import be.dealloc.schedule.greendao.GreenCourseDao;
 import biweekly.component.VEvent;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * GreenCourseManager class.
@@ -86,5 +89,24 @@ public class GreenCourseManager implements CourseManager
 		course.setEnd(end);
 		course.setType(type);
 		return course;
+	}
+
+	@Override
+	public List<Course> forMonth(int year, int month)
+	{
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, year);
+		calendar.set(Calendar.MONTH, month);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+		Date begin = calendar.getTime(); // begin of the month
+		calendar.set(Calendar.DAY_OF_MONTH, 31);
+		Date end= calendar.getTime();
+
+		List<GreenCourse> courses = this.dao.queryBuilder()
+				.where(GreenCourseDao.Properties.Start.between(begin, end))
+				.list();
+
+		return new ArrayList<>(courses);
 	}
 }

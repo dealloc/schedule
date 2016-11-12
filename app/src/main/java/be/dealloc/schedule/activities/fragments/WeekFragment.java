@@ -6,13 +6,56 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import be.dealloc.schedule.R;
+import be.dealloc.schedule.contracts.entities.courses.Course;
+import be.dealloc.schedule.contracts.entities.courses.CourseManager;
 import be.dealloc.schedule.system.Fragment;
+import butterknife.BindView;
+import com.alamkanak.weekview.MonthLoader;
+import com.alamkanak.weekview.WeekView;
+import com.alamkanak.weekview.WeekViewEvent;
+import com.orhanobut.logger.Logger;
 
-public class WeekFragment extends Fragment
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+public class WeekFragment extends Fragment implements MonthLoader.MonthChangeListener
 {
+	@BindView(R.id.week_calendar) WeekView calendar;
+	@Inject CourseManager manager;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		return this.setLayout(inflater, container, R.layout.fragment_week);
+		View layout = this.setLayout(inflater, container, R.layout.fragment_week);
+
+		this.calendar.setMonthChangeListener(this);
+
+		return layout;
+	}
+
+	@Override
+	public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth)
+	{
+		List<Course> courses = this.manager.forMonth(newYear, newMonth);
+		List<WeekViewEvent> events = new ArrayList<>();
+
+		Logger.i("Loading %d courses for %d/%d", courses.size(), newMonth, newYear);
+		for (Course course : courses)
+		{
+			WeekViewEvent event = new WeekViewEvent();
+			Calendar start = Calendar.getInstance(); start.setTime(course.getStart());
+			Calendar end = Calendar.getInstance(); end.setTime(course.getEnd());
+
+			event.setName(course.getName());
+			event.setStartTime(start);
+			event.setEndTime(end);
+			event.setLocation(course.getLocation());
+
+			events.add(event);
+		}
+
+		return events;
 	}
 }
