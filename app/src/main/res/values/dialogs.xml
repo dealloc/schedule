@@ -4,7 +4,11 @@
 	<string name="no_calendar">No calendar found!</string>
 	<string name="no_calendar_dialog">No calendar was found. Do you wish to set one up now?</string>
 
-	<string name="desiderius_dialog">This functionality will log in on your account in Desiderius to extract your calendar for you. If you don\'t want to allow this software to access your account please choose the security code option.</string>
+	<string name="desiderius_dialog">
+		This will log in on Desiderius on your behalf.
+		Your credentials will not be stored in any way.
+		If you do not agree, you can cancel now.
+	</string>
 
 	<string name="invalid_credentials">Invalid username or password!</string>
 
