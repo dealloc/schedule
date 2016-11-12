@@ -65,7 +65,7 @@ public class GreenCourseManager implements CourseManager
 			throw new RuntimeException("Invalid event type passed to manager.");
 
 		VEvent event = (VEvent)raw;
-		if (!event.getSummary().getValue().startsWith("[H]") || event.getSummary().getValue().startsWith("[W]")) // Drop non courses
+		if (!event.getSummary().getValue().startsWith("[H]") && !event.getSummary().getValue().startsWith("[W]")) // Drop non courses
 			return null; // TODO build support for non-course entries (they're usually deadlines)
 
 		Course course = this.create();

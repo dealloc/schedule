@@ -61,6 +61,10 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 							course.setCalendar(calendars[0].getSecurityCode());
 							courseManager.save(course);
 						}
+						else
+						{
+							Logger.w("Skipping '%s'", event.getSummary().getValue());
+						}
 					}
 
 					System.gc(); // Call a garbage collection to collect all dangling event objects.
