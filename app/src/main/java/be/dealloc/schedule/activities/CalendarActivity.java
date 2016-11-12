@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.activities.dispatchers.CalendarNavigationDispatcher;
+import be.dealloc.schedule.activities.fragments.WeekFragment;
 import be.dealloc.schedule.system.Activity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +35,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 		toggle.syncState();
 
 		ButterKnife.<NavigationView>findById(this, R.id.calendar_navview).setNavigationItemSelectedListener(new CalendarNavigationDispatcher(this, drawer));
+		this.swap(R.id.calendar_content, new WeekFragment());
 	}
 
 	@Override

@@ -51,4 +51,13 @@ public class Activity extends AppCompatActivity
 		if (finish)
 			this.finish();
 	}
+
+	protected void swap(final int container, Fragment fragment)
+	{
+		getSupportFragmentManager()
+				.beginTransaction()
+					.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+					.replace(container, fragment)
+				.commit();
+	}
 }
