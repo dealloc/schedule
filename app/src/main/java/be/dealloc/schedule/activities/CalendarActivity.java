@@ -51,7 +51,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	@OnClick(R.id.calendar_fab)
 	public void onFloatingButtonClicked(FloatingActionButton button)
 	{
-		Snackbar.make(button, "Replace with your own action", Snackbar.LENGTH_LONG)
+		Snackbar.make(button, "TODO: refresh calendar...", Snackbar.LENGTH_LONG)
 				.setAction("Action", null).show();
 	}
 
