@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.activities.dispatchers.CalendarNavigationDispatcher;
+import be.dealloc.schedule.activities.fragments.ListFragment;
 import be.dealloc.schedule.activities.fragments.WeekFragment;
 import be.dealloc.schedule.system.Activity;
 import butterknife.BindView;
@@ -52,5 +53,17 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	{
 		Snackbar.make(button, "Replace with your own action", Snackbar.LENGTH_LONG)
 				.setAction("Action", null).show();
+	}
+
+	@Override
+	public void onCalendarClicked()
+	{
+		this.swap(R.id.calendar_content, new WeekFragment());
+	}
+
+	@Override
+	public void onListClicked()
+	{
+		this.swap(R.id.calendar_content, new ListFragment());
 	}
 }

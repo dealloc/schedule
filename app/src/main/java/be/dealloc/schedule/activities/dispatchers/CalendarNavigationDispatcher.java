@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
+import be.dealloc.schedule.R;
 
 public class CalendarNavigationDispatcher implements NavigationView.OnNavigationItemSelectedListener
 {
@@ -21,12 +22,34 @@ public class CalendarNavigationDispatcher implements NavigationView.OnNavigation
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item)
 	{
-		// Handle navigation clicks.
+		boolean handled = false;
+
+		switch (item.getItemId())
+		{
+			case R.id.nav_calendar:
+				handled = true;
+				this.target.onCalendarClicked();
+				break;
+			case R.id.nav_list:
+				handled = true;
+				this.target.onListClicked();
+				break;
+			case R.id.nav_settings:
+				handled = true;
+				break;
+			case R.id.nav_share:
+				handled = true;
+				break;
+		}
+
 		this.drawer.closeDrawer(GravityCompat.START);
-		return false;
+		return handled;
 	}
 
 	public interface DispatcherTarget
 	{
+		void onCalendarClicked();
+
+		void onListClicked();
 	}
 }
