@@ -2,6 +2,7 @@ package be.dealloc.schedule.system;
 // Created by dealloc. All rights reserved.
 
 import android.os.Process;
+import android.support.v4.content.ContextCompat;
 import be.dealloc.schedule.contracts.DaggerServiceProvider;
 import be.dealloc.schedule.contracts.ServiceProvider;
 import be.dealloc.schedule.providers.EntityProvider;
@@ -89,5 +90,10 @@ public class Application extends android.app.Application
 		{
 			Logger.w("Attempted to invoke injector for %s, but no injectors were registered.", type.getSimpleName());
 		}
+	}
+
+	public static int color(final int color)
+	{
+		return ContextCompat.getColor(Application.instance, color);
 	}
 }
