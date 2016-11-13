@@ -52,7 +52,7 @@ public class DesideriusActivity extends Activity
 		WebView view = new WebView(Application.provider().context());
 		view.getSettings().setJavaScriptEnabled(true);
 		view.setWebViewClient(new DesideriusClient());
-		view.loadUrl(CAS_URL); // TODO check if internet fails or something
+		view.loadUrl(CAS_URL);
 	}
 
 	private void loginFailed()

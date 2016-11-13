@@ -90,7 +90,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
 		public void setTeachers(String teacher)
 		{
-			// TODO If length >= 40 we should add '...' to prevent overflow!
 			this.txtTeachers.setText(teacher);
 		}
 
