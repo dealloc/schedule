@@ -13,6 +13,7 @@ import be.dealloc.schedule.activities.dispatchers.CalendarNavigationDispatcher;
 import be.dealloc.schedule.activities.fragments.ListFragment;
 import be.dealloc.schedule.activities.fragments.WeekFragment;
 import be.dealloc.schedule.system.Activity;
+import be.dealloc.schedule.system.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,6 +23,7 @@ import static butterknife.ButterKnife.findById;
 public class CalendarActivity extends Activity implements CalendarNavigationDispatcher.DispatcherTarget
 {
 	@BindView(R.id.calendar_drawer) DrawerLayout drawer;
+	private Fragment current = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -36,7 +38,9 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 		toggle.syncState();
 
 		ButterKnife.<NavigationView>findById(this, R.id.calendar_navview).setNavigationItemSelectedListener(new CalendarNavigationDispatcher(this, drawer));
-		this.swap(R.id.calendar_content, new WeekFragment());
+
+		if (this.current == null)
+			this.swap(R.id.calendar_content, new WeekFragment());
 	}
 
 	@Override
@@ -58,13 +62,21 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	@Override
 	public void onCalendarClicked()
 	{
-		this.swap(R.id.calendar_content, new WeekFragment());
+		if (!(this.current instanceof WeekFragment))
+		{
+			this.current = new WeekFragment();
+			this.swap(R.id.calendar_content, this.current);
+		}
 	}
 
 	@Override
 	public void onListClicked()
 	{
-		this.swap(R.id.calendar_content, new ListFragment());
+		if (!(this.current instanceof ListFragment))
+		{
+			this.current = new ListFragment();
+			this.swap(R.id.calendar_content, this.current);
+		}
 	}
 
 	@Override

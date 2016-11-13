@@ -12,7 +12,6 @@ public class CalendarNavigationDispatcher implements NavigationView.OnNavigation
 {
 	private final DispatcherTarget target;
 	private final DrawerLayout drawer;
-	private int current = -1;
 
 	public CalendarNavigationDispatcher(DispatcherTarget target, DrawerLayout drawer)
 	{
@@ -23,31 +22,26 @@ public class CalendarNavigationDispatcher implements NavigationView.OnNavigation
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item)
 	{
-		boolean handled = (item.getItemId() == this.current);
+		boolean handled = false;
 
-		if (!handled)
+		switch (item.getItemId())
 		{
-			switch (item.getItemId())
-			{
-				case R.id.nav_calendar:
-					handled = true;
-					this.target.onCalendarClicked();
-					break;
-				case R.id.nav_list:
-					handled = true;
-					this.target.onListClicked();
-					break;
-				case R.id.nav_settings:
-					handled = true;
-					this.target.onSettingsClicked();
-					break;
-				case R.id.nav_share:
-					handled = true;
-					this.target.onShareClicked();
-					break;
-			}
-
-			this.current = item.getItemId();
+			case R.id.nav_calendar:
+				handled = true;
+				this.target.onCalendarClicked();
+				break;
+			case R.id.nav_list:
+				handled = true;
+				this.target.onListClicked();
+				break;
+			case R.id.nav_settings:
+				handled = true;
+				this.target.onSettingsClicked();
+				break;
+			case R.id.nav_share:
+				handled = true;
+				this.target.onShareClicked();
+				break;
 		}
 
 		this.drawer.closeDrawer(GravityCompat.START);
