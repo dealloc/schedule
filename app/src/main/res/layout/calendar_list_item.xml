@@ -2,18 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content">
+	android:layout_height="wrap_content"
+	android:layout_marginBottom="@dimen/course_icon_margin">
 
 	<ImageView
 		app:srcCompat="@mipmap/ic_launcher"
 		android:layout_centerVertical="true"
 		android:layout_alignParentLeft="true"
 		android:layout_alignParentStart="true"
-		android:layout_width="60dp"
-		android:layout_height="60dp"
-		android:layout_marginEnd="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_marginBottom="10dp"
+		android:layout_width="@dimen/course_icon_size"
+		android:layout_height="@dimen/course_icon_size"
+		android:layout_marginEnd="@dimen/course_icon_margin"
+		android:layout_marginRight="@dimen/course_icon_margin"
 		android:id="@+id/list_imgType"
 		android:contentDescription="@string/app_name" />
 

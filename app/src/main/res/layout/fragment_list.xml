@@ -2,8 +2,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:paddingTop="10dp"
-	android:paddingBottom="10dp"
+	android:layout_margin="0dp"
 	tools:context="be.dealloc.schedule.activities.fragments.ListFragment">
 
 	<android.support.v7.widget.RecyclerView
