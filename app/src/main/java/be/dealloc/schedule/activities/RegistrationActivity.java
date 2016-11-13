@@ -59,9 +59,9 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 	@OnClick(R.id.registration_btnDesiderius)
 	public void onDesideriusClicked()
 	{
-		AlertDialog dialog = Dialog.confirm(this, R.string.app_name, R.string.desiderius_dialog, (d, i) -> {
+		AlertDialog dialog = Dialog.warning(this,R.string.desiderius_dialog, (d, i) -> {
 			navigate(DesideriusActivity.class);
-		}, null);
+		});
 		dialog.setIcon(android.R.drawable.ic_dialog_alert);
 		dialog.show();
 	}

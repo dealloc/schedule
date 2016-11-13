@@ -101,6 +101,16 @@ public final class Dialog
 				.create();
 	}
 
+	public static AlertDialog warning(Context context, final int error_msg, DialogInterface.OnClickListener onClick)
+	{
+		return (new AlertDialog.Builder(context))
+				.setTitle(R.string.app_name)
+				.setIcon(R.mipmap.ic_warning)
+				.setMessage(error_msg)
+				.setPositiveButton(android.R.string.ok, onClick)
+				.create();
+	}
+
 	public interface TextDialogCallback
 	{
 		void confirm(DialogInterface dialog, String content);

@@ -187,6 +187,7 @@ public class DesideriusActivity extends Activity
 				}
 				catch (UnsupportedEncodingException ignored)
 				{
+					Dialog.error(DesideriusActivity.this, R.string.generic_web_error).show();
 					Logger.e(ignored, "Failed to decode HTML");
 				}
 				return true;
@@ -197,17 +198,18 @@ public class DesideriusActivity extends Activity
 
 		private void handleError(String url, String error)
 		{
-			if (error.contains("Couldn't find the URL"))
-				Dialog.msgbox(DesideriusActivity.this, R.string.app_name, R.string.internet_failure).show();
-			else if (error.contains("The connection to the server timed out."))
-				Dialog.msgbox(DesideriusActivity.this, R.string.app_name, R.string.internet_timedout).show();
-			else
-				Dialog.msgbox(DesideriusActivity.this, R.string.app_name, R.string.generic_web_error).show();
-
+			this.failed = true;
 			progressDialog.dismiss();
+
+			if (error.contains("Couldn't find the URL"))
+				Dialog.error(DesideriusActivity.this, R.string.internet_failure).show();
+			else if (error.contains("The connection to the server timed out."))
+				Dialog.error(DesideriusActivity.this, R.string.internet_timedout).show();
+			else
+				Dialog.error(DesideriusActivity.this, R.string.generic_web_error).show();
+
 			btnLogin.setEnabled(true);
 			Logger.e("Failed to load %s due to error %s", url, error);
-			this.failed = true;
 		}
 	}
 }
