@@ -79,7 +79,7 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 	@Override
 	public void onFailure(Throwable error)
 	{
-		Dialog.msgbox(this, error.getMessage());
+		Dialog.msgbox(this, error.getMessage()); // TODO convert to error dialog
 		this.flipper.showNext();
 	}
 
