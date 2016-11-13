@@ -23,4 +23,9 @@
 	<string name="menu_subheader">System</string>
 	<string name="menu_settings">Configuration</string>
 	<string name="menu_share">Share</string>
+
+	<!-- Calendar list image letters -->
+	<string name="practical_letter">P</string>
+	<string name="theoretical_letter">T</string>
+	<string name="other_letter">O</string>
 </resources>
