@@ -64,7 +64,7 @@ public class GreenCourseManager implements CourseManager
 		if (!(raw instanceof VEvent))
 			throw new RuntimeException("Invalid event type passed to manager.");
 
-		VEvent event = (VEvent)raw;
+		VEvent event = (VEvent) raw;
 		if (!event.getSummary().getValue().startsWith("[H]") && !event.getSummary().getValue().startsWith("[W]")) // Drop non courses
 			return null; // TODO build support for non-course entries (they're usually deadlines)
 
@@ -101,7 +101,7 @@ public class GreenCourseManager implements CourseManager
 
 		Date begin = calendar.getTime(); // begin of the month
 		calendar.set(Calendar.DAY_OF_MONTH, 31);
-		Date end= calendar.getTime();
+		Date end = calendar.getTime();
 
 		List<GreenCourse> courses = this.dao.queryBuilder()
 				.where(GreenCourseDao.Properties.Start.between(begin, end))

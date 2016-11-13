@@ -16,12 +16,14 @@ public class SystemProvider
 		this.app = app;
 	}
 
-	@Provides public Application providesApplication()
+	@Provides
+	public Application providesApplication()
 	{
 		return this.app;
 	}
 
-	@Provides public Context providesContext()
+	@Provides
+	public Context providesContext()
 	{
 		return this.app.getApplicationContext();
 	}

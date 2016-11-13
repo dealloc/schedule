@@ -4,9 +4,11 @@ package be.dealloc.schedule.contracts.entities.calendars;
 public interface Calendar
 {
 	boolean getActive();
+
 	void setActive(boolean value);
 
 	String getSecurityCode();
+
 	void setSecurityCode(String value);
 
 	String getURl();

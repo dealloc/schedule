@@ -46,8 +46,10 @@ public class WeekFragment extends Fragment implements MonthLoader.MonthChangeLis
 		for (Course course : courses)
 		{
 			WeekViewEvent event = new WeekViewEvent();
-			Calendar start = Calendar.getInstance(); start.setTime(course.getStart());
-			Calendar end = Calendar.getInstance(); end.setTime(course.getEnd());
+			Calendar start = Calendar.getInstance();
+			start.setTime(course.getStart());
+			Calendar end = Calendar.getInstance();
+			end.setTime(course.getEnd());
 
 			if (course.getType() == Course.PRACTICAL)
 				event.setColor(Application.color(R.color.primary_dark));

@@ -29,7 +29,7 @@ public final class Dialog
 				.setNegativeButton(android.R.string.no, onDeny)
 				.setCancelable(false)
 				.create()
-		.show();
+				.show();
 	}
 
 	public static void msgbox(Context context, final int title, final int content, DialogInterface.OnClickListener onClick)
@@ -40,7 +40,7 @@ public final class Dialog
 				.setMessage(content)
 				.setPositiveButton(android.R.string.ok, onClick)
 				.create()
-		.show();
+				.show();
 	}
 
 	public static void msgbox(Context context, final int title, final int content)
@@ -71,7 +71,7 @@ public final class Dialog
 				.setNegativeButton(android.R.string.no, onDeny)
 				.setCancelable(false)
 				.create()
-		.show();
+				.show();
 	}
 
 	public static void msgbox(Context context, String message)
@@ -82,7 +82,7 @@ public final class Dialog
 				.setMessage(message)
 				.setPositiveButton(android.R.string.ok, null)
 				.create()
-		.show();
+				.show();
 	}
 
 	public static void error(Context context, final int error_msg)
@@ -93,7 +93,7 @@ public final class Dialog
 				.setMessage(error_msg)
 				.setPositiveButton(android.R.string.ok, null)
 				.create()
-		.show();
+				.show();
 	}
 
 	public static void warning(Context context, final int error_msg)
@@ -104,7 +104,7 @@ public final class Dialog
 				.setMessage(error_msg)
 				.setPositiveButton(android.R.string.ok, null)
 				.create()
-		.show();
+				.show();
 	}
 
 	public static void warning(Context context, final int error_msg, DialogInterface.OnClickListener onClick)
@@ -115,7 +115,7 @@ public final class Dialog
 				.setMessage(error_msg)
 				.setPositiveButton(android.R.string.ok, onClick)
 				.create()
-		.show();
+				.show();
 	}
 
 	public interface TextDialogCallback

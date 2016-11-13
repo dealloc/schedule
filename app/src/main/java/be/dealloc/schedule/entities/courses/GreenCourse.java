@@ -24,16 +24,17 @@ public class GreenCourse implements Course
 
 	@Generated(hash = 1521519760)
 	public GreenCourse(Long id, String name, String teacher, String location,
-									Date start, Date end, int type, String url, String calendar) {
-					this.id = id;
-					this.name = name;
-					this.teacher = teacher;
-					this.location = location;
-					this.start = start;
-					this.end = end;
-					this.type = type;
-					this.url = url;
-					this.calendar = calendar;
+					   Date start, Date end, int type, String url, String calendar)
+	{
+		this.id = id;
+		this.name = name;
+		this.teacher = teacher;
+		this.location = location;
+		this.start = start;
+		this.end = end;
+		this.type = type;
+		this.url = url;
+		this.calendar = calendar;
 	}
 
 	@Generated(hash = 2103233940)

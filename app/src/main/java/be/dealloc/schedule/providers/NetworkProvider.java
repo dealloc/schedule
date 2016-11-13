@@ -9,7 +9,8 @@ import dagger.Provides;
 @Module
 public class NetworkProvider
 {
-	@Provides public NetworkService providesNetworkService(LoopNetworkService service)
+	@Provides
+	public NetworkService providesNetworkService(LoopNetworkService service)
 	{
 		return service;
 	}

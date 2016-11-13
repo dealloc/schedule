@@ -56,8 +56,8 @@ public class Activity extends AppCompatActivity
 	{
 		getSupportFragmentManager()
 				.beginTransaction()
-					.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-					.replace(container, fragment)
+				.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+				.replace(container, fragment)
 				.commit();
 	}
 }

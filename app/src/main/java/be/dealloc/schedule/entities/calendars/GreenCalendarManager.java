@@ -38,13 +38,13 @@ public class GreenCalendarManager implements CalendarManager
 	@Override
 	public void save(Calendar calendar)
 	{
-		this.dao.save((GreenCalendar)calendar);
+		this.dao.save((GreenCalendar) calendar);
 	}
 
 	@Override
 	public void delete(Calendar calendar)
 	{
-		this.dao.delete((GreenCalendar)calendar);
+		this.dao.delete((GreenCalendar) calendar);
 	}
 
 	@Override

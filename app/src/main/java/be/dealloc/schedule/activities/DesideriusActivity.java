@@ -59,7 +59,7 @@ public class DesideriusActivity extends Activity
 	{
 		this.killWebJunk();
 		this.progressDialog.dismiss();
-		Dialog.msgbox(this, R.string.app_name, R.string.invalid_credentials);
+		Dialog.error(this, R.string.invalid_credentials);
 		this.btnLogin.setEnabled(true);
 	}
 

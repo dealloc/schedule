@@ -10,26 +10,34 @@ public interface Course
 	int OTHER = 3;
 
 	String getName();
+
 	void setName(String name);
 
 	String getLocation();
+
 	void setLocation(String location);
 
 	String getTeacher();
+
 	void setTeacher(String teacher);
 
 	Date getStart();
+
 	void setStart(Date start);
 
 	Date getEnd();
+
 	void setEnd(Date end);
 
 	int getType();
+
 	void setType(int type);
 
 	String getUrl();
+
 	void setUrl(String url);
 
 	String getCalendar();
+
 	void setCalendar(String calendar);
 }

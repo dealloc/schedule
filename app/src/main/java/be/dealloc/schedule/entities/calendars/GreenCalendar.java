@@ -16,10 +16,11 @@ public class GreenCalendar implements Calendar
 	private static final String DESIDERIUS_URL = "https://desiderius.ehb.be/index.php?application=Chamilo%5CApplication%5CCalendar&go=ICal&security_token=";
 
 	@Generated(hash = 1155888100)
-	public GreenCalendar(Long id, boolean active, String securityCode) {
-					this.id = id;
-					this.active = active;
-					this.securityCode = securityCode;
+	public GreenCalendar(Long id, boolean active, String securityCode)
+	{
+		this.id = id;
+		this.active = active;
+		this.securityCode = securityCode;
 	}
 
 	@Generated(hash = 2024624522)
@@ -63,7 +64,8 @@ public class GreenCalendar implements Calendar
 		return DESIDERIUS_URL + this.getSecurityCode();
 	}
 
-	public void setId(Long id) {
-					this.id = id;
+	public void setId(Long id)
+	{
+		this.id = id;
 	}
 }
