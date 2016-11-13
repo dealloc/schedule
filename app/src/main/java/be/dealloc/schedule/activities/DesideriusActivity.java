@@ -1,5 +1,6 @@
 package be.dealloc.schedule.activities;
 
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
@@ -33,7 +34,7 @@ public class DesideriusActivity extends Activity
 	private ProgressDialog progressDialog;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void onCreate(Bundle savedInstanceState) // TODO buttons should not enable themselves when orientation changes etc.
 	{
 		super.onCreate(savedInstanceState);
 		this.setLayout(R.layout.activity_desiderius);
@@ -104,6 +105,7 @@ public class DesideriusActivity extends Activity
 	private class DesideriusClient extends WebViewClient
 	{
 		private int count = 0; // If login page loads 3x we have invalid login!
+		private boolean failed = false;
 
 		@Override
 		@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -123,6 +125,9 @@ public class DesideriusActivity extends Activity
 		@Override
 		public void onPageFinished(WebView view, String url)
 		{
+			if (this.failed)
+				return;
+
 			super.onPageFinished(view, url);
 			if (url.equals(CAS_URL))
 			{
@@ -155,6 +160,21 @@ public class DesideriusActivity extends Activity
 			}
 		}
 
+		@Override
+		@TargetApi(Build.VERSION_CODES.N)
+		public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error)
+		{
+			super.onReceivedError(view, request, error);
+			this.handleError(request.getUrl().toString(), error.getDescription().toString());
+		}
+
+		@Override
+		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl)
+		{
+			super.onReceivedError(view, errorCode, description, failingUrl);
+			this.handleError(failingUrl, description);
+		}
+
 		private boolean extractCodeFromUrl(String url)
 		{
 			if (url.startsWith("source://"))
@@ -173,6 +193,21 @@ public class DesideriusActivity extends Activity
 			}
 
 			return false;
+		}
+
+		private void handleError(String url, String error)
+		{
+			if (error.contains("Couldn't find the URL"))
+				Dialog.msgbox(DesideriusActivity.this, R.string.app_name, R.string.internet_failure).show();
+			else if (error.contains("The connection to the server timed out."))
+				Dialog.msgbox(DesideriusActivity.this, R.string.app_name, R.string.internet_timedout).show();
+			else
+				Dialog.msgbox(DesideriusActivity.this, R.string.app_name, R.string.generic_web_error).show();
+
+			progressDialog.dismiss();
+			btnLogin.setEnabled(true);
+			Logger.e("Failed to load %s due to error %s", url, error);
+			this.failed = true;
 		}
 	}
 }

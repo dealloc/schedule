@@ -18,4 +18,8 @@
 	<string name="desiderius_authenticating">Logging in…</string>
 	<string name="desiderius_calendar">Fetching calendar…</string>
 	<string name="desiderius_extracting">Loading credentials…</string>
+
+	<string name="internet_failure">Couldn\'t connect to the server. Check your connection and try again.</string>
+	<string name="generic_web_error">Something went wrong when performing the login. Try again later.</string>
+	<string name="internet_timedout">Connection timed out, that\'s all we know.</string>
 </resources>
