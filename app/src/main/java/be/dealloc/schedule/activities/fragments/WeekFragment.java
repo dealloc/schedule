@@ -54,7 +54,7 @@ public class WeekFragment extends Fragment implements MonthLoader.MonthChangeLis
 			if (course.getType() == Course.PRACTICAL)
 				event.setColor(Application.color(R.color.primary_dark));
 			else if (course.getType() == Course.THEORETICAL)
-				event.setColor(Application.color(R.color.primary_light));
+				event.setColor(Application.color(R.color.primary));
 			else
 				event.setColor(Application.color(R.color.accent));
 			event.setName(course.getName());

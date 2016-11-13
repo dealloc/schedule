@@ -28,7 +28,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 	{
 		this.courses = courses;
 		DRAWABLE_PRACTICAL = TextDrawable.builder().buildRound(Application.string(R.string.practical_letter), Application.color(R.color.primary_dark));
-		DRAWABLE_THEORETICAL = TextDrawable.builder().buildRound(Application.string(R.string.theoretical_letter), Application.color(R.color.primary_light));
+		DRAWABLE_THEORETICAL = TextDrawable.builder().buildRound(Application.string(R.string.theoretical_letter), Application.color(R.color.primary));
 		DRAWABLE_OTHER = TextDrawable.builder().buildRound(Application.string(R.string.other_letter), Application.color(R.color.accent));
 	}
 
