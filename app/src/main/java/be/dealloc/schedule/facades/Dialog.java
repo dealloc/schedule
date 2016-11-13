@@ -19,34 +19,36 @@ public final class Dialog
 	{
 	}
 
-	public static AlertDialog confirm(Context context, final int title, final int content, DialogInterface.OnClickListener onConfirm, DialogInterface.OnClickListener onDeny)
+	public static void confirm(Context context, final int title, final int content, DialogInterface.OnClickListener onConfirm, DialogInterface.OnClickListener onDeny)
 	{
-		return (new AlertDialog.Builder(context))
+		(new AlertDialog.Builder(context))
 				.setTitle(title)
 				.setMessage(content)
 				.setIcon(R.mipmap.ic_launcher)
 				.setPositiveButton(android.R.string.yes, onConfirm)
 				.setNegativeButton(android.R.string.no, onDeny)
 				.setCancelable(false)
-				.create();
+				.create()
+		.show();
 	}
 
-	public static AlertDialog msgbox(Context context, final int title, final int content, DialogInterface.OnClickListener onClick)
+	public static void msgbox(Context context, final int title, final int content, DialogInterface.OnClickListener onClick)
 	{
-		return (new AlertDialog.Builder(context))
+		(new AlertDialog.Builder(context))
 				.setTitle(title)
 				.setIcon(R.mipmap.ic_launcher)
 				.setMessage(content)
 				.setPositiveButton(android.R.string.ok, onClick)
-				.create();
+				.create()
+		.show();
 	}
 
-	public static AlertDialog msgbox(Context context, final int title, final int content)
+	public static void msgbox(Context context, final int title, final int content)
 	{
-		return msgbox(context, title, content, null);
+		msgbox(context, title, content, null);
 	}
 
-	public static AlertDialog input(Context context, final int title, final int content, final TextDialogCallback onConfirm, DialogInterface.OnClickListener onDeny)
+	public static void input(Context context, final int title, final int content, final TextDialogCallback onConfirm, DialogInterface.OnClickListener onDeny)
 	{
 		final EditText input = new EditText(context);
 		input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -60,7 +62,7 @@ public final class Dialog
 			}
 		});
 
-		return (new AlertDialog.Builder(context))
+		(new AlertDialog.Builder(context))
 				.setIcon(R.mipmap.ic_launcher)
 				.setTitle(title)
 				.setMessage(content)
@@ -68,47 +70,52 @@ public final class Dialog
 				.setPositiveButton(android.R.string.yes, confirm)
 				.setNegativeButton(android.R.string.no, onDeny)
 				.setCancelable(false)
-				.create();
+				.create()
+		.show();
 	}
 
-	public static AlertDialog msgbox(Context context, String message)
+	public static void msgbox(Context context, String message)
 	{
-		return (new AlertDialog.Builder(context))
+		(new AlertDialog.Builder(context))
 				.setTitle(R.string.app_name)
 				.setIcon(R.mipmap.ic_launcher)
 				.setMessage(message)
 				.setPositiveButton(android.R.string.ok, null)
-				.create();
+				.create()
+		.show();
 	}
 
-	public static AlertDialog error(Context context, final int error_msg)
+	public static void error(Context context, final int error_msg)
 	{
-		return (new AlertDialog.Builder(context))
+		(new AlertDialog.Builder(context))
 				.setTitle(R.string.app_name)
 				.setIcon(R.mipmap.ic_error)
 				.setMessage(error_msg)
 				.setPositiveButton(android.R.string.ok, null)
-				.create();
+				.create()
+		.show();
 	}
 
-	public static AlertDialog warning(Context context, final int error_msg)
+	public static void warning(Context context, final int error_msg)
 	{
-		return (new AlertDialog.Builder(context))
+		(new AlertDialog.Builder(context))
 				.setTitle(R.string.app_name)
 				.setIcon(R.mipmap.ic_warning)
 				.setMessage(error_msg)
 				.setPositiveButton(android.R.string.ok, null)
-				.create();
+				.create()
+		.show();
 	}
 
-	public static AlertDialog warning(Context context, final int error_msg, DialogInterface.OnClickListener onClick)
+	public static void warning(Context context, final int error_msg, DialogInterface.OnClickListener onClick)
 	{
-		return (new AlertDialog.Builder(context))
+		(new AlertDialog.Builder(context))
 				.setTitle(R.string.app_name)
 				.setIcon(R.mipmap.ic_warning)
 				.setMessage(error_msg)
 				.setPositiveButton(android.R.string.ok, onClick)
-				.create();
+				.create()
+		.show();
 	}
 
 	public interface TextDialogCallback

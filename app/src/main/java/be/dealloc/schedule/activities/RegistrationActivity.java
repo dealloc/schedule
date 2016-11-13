@@ -2,7 +2,6 @@ package be.dealloc.schedule.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 import be.dealloc.schedule.R;
@@ -43,7 +42,7 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 	@OnClick(R.id.registration_lblHelp)
 	public void onHelpClicked()
 	{
-		Dialog.msgbox(this, R.string.app_name, R.string.todo_calendar_help).show();
+		Dialog.msgbox(this, R.string.app_name, R.string.todo_calendar_help);
 	}
 
 	@OnClick(R.id.registration_btnEnterCode)
@@ -53,17 +52,15 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 		{
 			this.flipper.showNext(); // Show the loading part of the web
 			this.createCalendar(code);
-		}, null).show();
+		}, null);
 	}
 
 	@OnClick(R.id.registration_btnDesiderius)
 	public void onDesideriusClicked()
 	{
-		AlertDialog dialog = Dialog.warning(this,R.string.desiderius_dialog, (d, i) -> {
+		Dialog.warning(this, R.string.desiderius_dialog, (d, i) -> {
 			navigate(DesideriusActivity.class);
 		});
-		dialog.setIcon(android.R.drawable.ic_dialog_alert);
-		dialog.show();
 	}
 
 	private void createCalendar(String code)
@@ -82,7 +79,7 @@ public class RegistrationActivity extends Activity implements ProcessCalendarTas
 	@Override
 	public void onFailure(Throwable error)
 	{
-		Dialog.msgbox(this, error.getMessage()).show();
+		Dialog.msgbox(this, error.getMessage());
 		this.flipper.showNext();
 	}
 

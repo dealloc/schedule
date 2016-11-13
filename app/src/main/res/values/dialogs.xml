@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- This file contains all strings specific for dialogs -->
 <resources>
-	<string name="no_calendar">No calendar found!</string>
-	<string name="no_calendar_dialog">No calendar was found. Do you wish to set one up now?</string>
-
 	<string name="desiderius_dialog">
 		This will log in on Desiderius on your behalf.
 		Your credentials will not be stored in any way.
