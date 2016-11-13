@@ -71,7 +71,7 @@ public class GreenCourseManager implements CourseManager
 		Course course = this.create();
 
 		// Summary contains meta data like [H] and the location. The regex below strips the meta data leaving only the classname
-		String name = event.getSummary().getValue().replaceAll("((\\[(W|H)\\])\\s|\\s\\((DT\\/([A-Z0-9]\\.?)*)\\))", "");
+		String name = event.getSummary().getValue().replaceAll("((\\[(W|H)\\])\\s|\\s\\((DT\\/([A-Z0-9]\\.?)*\\s?([a-z]*)?)\\))", "");
 		String teacher = event.getDescription().getValue().split("\n")[1].replace("door", "").trim();
 		String location = event.getLocation().getValue();
 		Date start = event.getDateStart().getValue().getRawComponents().toDate();
