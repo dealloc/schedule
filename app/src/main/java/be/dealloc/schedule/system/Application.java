@@ -1,8 +1,13 @@
 package be.dealloc.schedule.system;
 // Created by dealloc. All rights reserved.
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Process;
 import android.support.v4.content.ContextCompat;
+import be.dealloc.schedule.activities.MainActivity;
 import be.dealloc.schedule.contracts.DaggerServiceProvider;
 import be.dealloc.schedule.contracts.ServiceProvider;
 import be.dealloc.schedule.providers.EntityProvider;
@@ -30,7 +35,7 @@ public class Application extends android.app.Application
 
 		Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
 			Logger.e(throwable, "Thread %s has encountered a fatal exception.", thread.getName());
-			Process.killProcess(Process.myPid());
+			Application.exit();
 		});
 
 		this.initServiceProvider();
@@ -95,5 +100,19 @@ public class Application extends android.app.Application
 	public static int color(final int color)
 	{
 		return ContextCompat.getColor(Application.instance, color);
+	}
+
+	public static void restart()
+	{
+		Intent intent = new Intent(instance.getApplicationContext(), MainActivity.class);
+		PendingIntent future = PendingIntent.getActivity(instance.getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		AlarmManager manager = (AlarmManager) instance.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+		manager.set(AlarmManager.RTC, System.currentTimeMillis() + 100, future);
+		Application.exit();
+	}
+
+	private static void exit()
+	{
+		Process.killProcess(Process.myPid());
 	}
 }

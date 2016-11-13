@@ -17,7 +17,7 @@ import javax.inject.Inject;
 @Module
 public class EntityProvider
 {
-	private static final String DB_NAME = "schedule-db";
+	public static final String DB_NAME = "schedule-db";
 	private final DaoSession session;
 
 	@Inject

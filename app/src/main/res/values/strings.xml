@@ -28,4 +28,7 @@
 	<string name="practical_letter">P</string>
 	<string name="theoretical_letter">T</string>
 	<string name="other_letter">O</string>
+
+	<!-- Settings -->
+	<string name="reset_all">Reset all data</string>
 </resources>
