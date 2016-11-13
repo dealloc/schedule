@@ -109,4 +109,16 @@ public class GreenCourseManager implements CourseManager
 
 		return new ArrayList<>(courses);
 	}
+
+	@Override
+	public List<Course> getUpcoming()
+	{
+		Date now = new Date();
+
+		List<GreenCourse> courses = this.dao.queryBuilder()
+				.where(GreenCourseDao.Properties.Start.lt(now))
+				.list();
+
+		return new ArrayList<>(courses);
+	}
 }

@@ -10,4 +10,6 @@ public interface CourseManager extends EntityManager<Course>
 	Course fromRaw(Object raw);
 
 	List<Course> forMonth(final int year, final int month);
+
+	List<Course> getUpcoming();
 }
