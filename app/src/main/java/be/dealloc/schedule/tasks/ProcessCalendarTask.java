@@ -57,13 +57,8 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 						Course course = courseManager.fromRaw(event);
 						if (course != null) // some events may be dropped.
 						{
-							Logger.i("Saving %s", course.getName());
 							course.setCalendar(calendars[0].getSecurityCode());
 							courseManager.save(course);
-						}
-						else
-						{
-							Logger.w("Skipping '%s'", event.getSummary().getValue());
 						}
 					}
 
