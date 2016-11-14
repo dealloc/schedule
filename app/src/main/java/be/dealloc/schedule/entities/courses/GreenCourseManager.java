@@ -121,4 +121,14 @@ public class GreenCourseManager implements CourseManager
 
 		return new ArrayList<>(courses);
 	}
+
+	@Override
+	public void purge(String code)
+	{
+		this.dao.queryBuilder()
+				.where(GreenCourseDao.Properties.Calendar.eq(code))
+				.buildDelete()
+				.forCurrentThread()
+				.executeDeleteWithoutDetachingEntities();
+	}
 }

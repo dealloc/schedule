@@ -12,4 +12,6 @@ public interface CourseManager extends EntityManager<Course>
 	List<Course> forMonth(final int year, final int month);
 
 	List<Course> getUpcoming();
+
+	void purge(String code);
 }

@@ -23,6 +23,7 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 	private final CourseManager courseManager;
 	private ProcessCallback callback;
 	private final String STR_PARSING;
+	private final String STR_CONNECTING;
 
 	@Inject
 	public ProcessCalendarTask(NetworkService service, CourseManager courseManager)
@@ -30,6 +31,7 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 		this.service = service;
 		this.courseManager = courseManager;
 		this.STR_PARSING = Application.string(R.string.parsing_data);
+		this.STR_CONNECTING = Application.string(R.string.fetching_data);
 	}
 
 	public void execute(Calendar calendar, ProcessCallback callback)
@@ -41,6 +43,9 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 	@Override
 	protected Void doInBackground(Calendar... calendars)
 	{
+		this.publishProgress(STR_CONNECTING);
+		Logger.i("Purging old entries from calendar %s", calendars[0].getSecurityCode());
+		this.courseManager.purge(calendars[0].getSecurityCode());
 		Logger.i("Fetching ical file from %s", calendars[0].getURl());
 		this.service.downloadSynchronous(calendars[0].getURl(), new NetworkService.NetworkCallback()
 		{

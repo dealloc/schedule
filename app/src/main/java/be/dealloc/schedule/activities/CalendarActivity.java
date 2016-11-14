@@ -33,6 +33,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	@Inject CalendarManager manager;
 	@BindView(R.id.calendar_drawer) DrawerLayout drawer;
 	private Fragment current = null;
+	private Snackbar snackbar = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -64,6 +65,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	@OnClick(R.id.calendar_fab)
 	public void onFloatingButtonClicked(FloatingActionButton button)
 	{
+		button.setEnabled(false);
 		Calendar calendar = this.manager.getActiveCalendars().get(0);
 
 		Application.provider().calendarProcessor().execute(calendar, new ProcessCalendarTask.ProcessCallback()
@@ -71,12 +73,19 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 			@Override
 			public void onProgress(String status)
 			{
-				Snackbar.make(button, status, Snackbar.LENGTH_SHORT).show();
+				if (snackbar != null)
+					snackbar.dismiss();
+
+				snackbar = Snackbar.make(button, status, Snackbar.LENGTH_INDEFINITE);
+				snackbar.show();
 			}
 
 			@Override
 			public void onFailure(Throwable error)
 			{
+				if (snackbar != null)
+					snackbar.dismiss();
+				button.setEnabled(true);
 				Logger.e(error, "Failed to refresh %s", calendar.getSecurityCode());
 				Dialog.error(CalendarActivity.this, R.string.generic_web_error);
 			}
@@ -84,7 +93,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 			@Override
 			public void onSucces()
 			{
-				recreate(); // Restart the acivity. Easiest
+				recreate(); // Restart the acivity. Easiest way to reload everything
 			}
 		});
 	}
