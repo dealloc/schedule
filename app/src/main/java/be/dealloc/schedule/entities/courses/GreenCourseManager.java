@@ -116,7 +116,7 @@ public class GreenCourseManager implements CourseManager
 		Date now = new Date();
 
 		List<GreenCourse> courses = this.dao.queryBuilder()
-				.where(GreenCourseDao.Properties.Start.lt(now))
+				.where(GreenCourseDao.Properties.Start.gt(now))
 				.list();
 
 		return new ArrayList<>(courses);
