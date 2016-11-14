@@ -10,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.courses.Course;
-import be.dealloc.schedule.system.Application;
-import com.amulyakhare.textdrawable.TextDrawable;
 
 import java.util.List;
 
@@ -20,16 +18,10 @@ import static butterknife.ButterKnife.findById;
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder>
 {
 	private List<Course> courses;
-	private final Drawable DRAWABLE_PRACTICAL;
-	private final Drawable DRAWABLE_THEORETICAL;
-	private final Drawable DRAWABLE_OTHER;
 
 	public CourseAdapter(List<Course> courses)
 	{
 		this.courses = courses;
-		DRAWABLE_PRACTICAL = TextDrawable.builder().buildRound(Application.string(R.string.practical_letter), Application.color(R.color.primary_dark));
-		DRAWABLE_THEORETICAL = TextDrawable.builder().buildRound(Application.string(R.string.theoretical_letter), Application.color(R.color.primary));
-		DRAWABLE_OTHER = TextDrawable.builder().buildRound(Application.string(R.string.other_letter), Application.color(R.color.accent));
 	}
 
 	@Override
@@ -47,13 +39,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 		holder.setName(course.getName());
 		holder.setTeachers(course.getTeacher());
 		holder.setLocation(course.getLocation());
-
-		if (course.getType() == Course.PRACTICAL)
-			holder.setImage(DRAWABLE_PRACTICAL);
-		else if (course.getType() == Course.THEORETICAL)
-			holder.setImage(DRAWABLE_THEORETICAL);
-		else
-			holder.setImage(DRAWABLE_OTHER);
+		holder.setImage(course.getIcon());
 	}
 
 	@Override
