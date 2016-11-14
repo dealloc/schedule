@@ -55,4 +55,15 @@
 		android:textAlignment="center"
 		android:id="@+id/detail_txtTeacher" />
 
+	<TextView
+		android:text="@string/app_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/detail_txtWhen"
+		android:layout_above="@+id/detail_txtTeacher"
+		android:layout_toRightOf="@+id/detail_imgType"
+		android:layout_toEndOf="@+id/detail_imgType"
+		android:layout_marginStart="@dimen/course_icon_margin"
+		android:layout_marginLeft="@dimen/course_icon_margin" />
+
 </RelativeLayout>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +15,8 @@ import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.courses.Course;
 import be.dealloc.schedule.system.Fragment;
 import butterknife.ButterKnife;
+
+import java.text.SimpleDateFormat;
 
 /**
  * Dialog class.
@@ -129,10 +132,15 @@ public final class Dialog
 	{
 		LayoutInflater inflater = fragment.getLayoutInflater(null);
 		View layout = inflater.inflate(R.layout.dialog_coursedetail, null);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+		String relative = DateUtils.getRelativeTimeSpanString(course.getStart().getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+		String when = String.format("%s-%s (%s)", dateFormat.format(course.getStart()), dateFormat.format(course.getEnd()), relative);
+
 		ButterKnife.<ImageView>findById(layout, R.id.detail_imgType).setImageDrawable(course.getIcon());
 		ButterKnife.<TextView>findById(layout, R.id.detail_txtName).setText(course.getName());
 		ButterKnife.<TextView>findById(layout, R.id.detail_txtLocation).setText(course.getLocation());
 		ButterKnife.<TextView>findById(layout, R.id.detail_txtTeacher).setText(course.getTeacher());
+		ButterKnife.<TextView>findById(layout, R.id.detail_txtWhen).setText(when);
 
 		(new AlertDialog.Builder(fragment.getActivity()))
 				.setView(layout)
