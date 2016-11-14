@@ -2,6 +2,7 @@ package be.dealloc.schedule.contracts;
 // Created by dealloc. All rights reserved.
 
 import android.content.Context;
+import be.dealloc.schedule.activities.CalendarActivity;
 import be.dealloc.schedule.activities.MainActivity;
 import be.dealloc.schedule.activities.RegistrationActivity;
 import be.dealloc.schedule.activities.fragments.ListFragment;
@@ -23,6 +24,8 @@ public interface ServiceProvider
 	void inject(MainActivity activity);
 
 	void inject(RegistrationActivity activity);
+
+	void inject(CalendarActivity activity);
 
 	void inject(WeekFragment activity);
 

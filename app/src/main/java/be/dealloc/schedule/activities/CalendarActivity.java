@@ -12,16 +12,25 @@ import be.dealloc.schedule.R;
 import be.dealloc.schedule.activities.dispatchers.CalendarNavigationDispatcher;
 import be.dealloc.schedule.activities.fragments.ListFragment;
 import be.dealloc.schedule.activities.fragments.WeekFragment;
+import be.dealloc.schedule.contracts.entities.calendars.Calendar;
+import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
+import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Activity;
+import be.dealloc.schedule.system.Application;
 import be.dealloc.schedule.system.Fragment;
+import be.dealloc.schedule.tasks.ProcessCalendarTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.orhanobut.logger.Logger;
+
+import javax.inject.Inject;
 
 import static butterknife.ButterKnife.findById;
 
 public class CalendarActivity extends Activity implements CalendarNavigationDispatcher.DispatcherTarget
 {
+	@Inject CalendarManager manager;
 	@BindView(R.id.calendar_drawer) DrawerLayout drawer;
 	private Fragment current = null;
 
@@ -55,8 +64,29 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	@OnClick(R.id.calendar_fab)
 	public void onFloatingButtonClicked(FloatingActionButton button)
 	{
-		Snackbar.make(button, "TODO: refresh calendar...", Snackbar.LENGTH_LONG)
-				.setAction("Action", null).show();
+		Calendar calendar = this.manager.getActiveCalendars().get(0);
+
+		Application.provider().calendarProcessor().execute(calendar, new ProcessCalendarTask.ProcessCallback()
+		{
+			@Override
+			public void onProgress(String status)
+			{
+				Snackbar.make(button, status, Snackbar.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onFailure(Throwable error)
+			{
+				Logger.e(error, "Failed to refresh %s", calendar.getSecurityCode());
+				Dialog.error(CalendarActivity.this, R.string.generic_web_error);
+			}
+
+			@Override
+			public void onSucces()
+			{
+				recreate(); // Restart the acivity. Easiest
+			}
+		});
 	}
 
 	@Override

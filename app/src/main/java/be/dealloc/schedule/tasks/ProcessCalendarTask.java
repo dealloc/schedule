@@ -63,7 +63,7 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 					}
 
 					System.gc(); // Call a garbage collection to collect all dangling event objects.
-					callback.onSucces();
+					(new Handler(Looper.getMainLooper())).post(callback::onSucces);
 				}
 				else
 				{
