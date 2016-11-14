@@ -25,7 +25,7 @@ public class WeekFragment extends Fragment implements MonthLoader.MonthChangeLis
 {
 	@BindView(R.id.week_calendar) WeekView calendar;
 	@Inject CourseManager manager;
-	private Map<WeekViewEvent, Course> courseMap = new HashMap<>();
+	private Map<Long, Course> courseMap = new LinkedHashMap<>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -41,7 +41,6 @@ public class WeekFragment extends Fragment implements MonthLoader.MonthChangeLis
 	@Override
 	public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth)
 	{
-		this.courseMap.clear();
 		List<Course> courses = this.manager.forMonth(newYear, newMonth);
 		List<WeekViewEvent> events = new ArrayList<>();
 
@@ -64,9 +63,10 @@ public class WeekFragment extends Fragment implements MonthLoader.MonthChangeLis
 			event.setStartTime(start);
 			event.setEndTime(end);
 			event.setLocation(course.getLocation());
+			event.setId(course.getId());
 
 			events.add(event);
-			this.courseMap.put(event, course);
+			this.courseMap.put(event.getId(), course);
 		}
 
 		return events;
@@ -75,7 +75,7 @@ public class WeekFragment extends Fragment implements MonthLoader.MonthChangeLis
 	@Override
 	public void onEventClick(WeekViewEvent event, RectF eventRect)
 	{
-		Course course = this.courseMap.get(event);
+		Course course = this.courseMap.get(event.getId());
 
 		Dialog.course(this, course);
 	}

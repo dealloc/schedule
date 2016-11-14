@@ -44,4 +44,6 @@ public interface Course
 	void setCalendar(String calendar);
 
 	Drawable getIcon();
+
+	Long getId();
 }
