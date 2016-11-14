@@ -1,6 +1,7 @@
 package be.dealloc.schedule.activities.fragments;
 
 
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.courses.Course;
 import be.dealloc.schedule.contracts.entities.courses.CourseManager;
+import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Application;
 import be.dealloc.schedule.system.Fragment;
 import butterknife.BindView;
@@ -17,14 +19,13 @@ import com.alamkanak.weekview.WeekViewEvent;
 import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
-public class WeekFragment extends Fragment implements MonthLoader.MonthChangeListener
+public class WeekFragment extends Fragment implements MonthLoader.MonthChangeListener, WeekView.EventClickListener
 {
 	@BindView(R.id.week_calendar) WeekView calendar;
 	@Inject CourseManager manager;
+	private Map<WeekViewEvent, Course> courseMap = new HashMap<>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -32,6 +33,7 @@ public class WeekFragment extends Fragment implements MonthLoader.MonthChangeLis
 		View layout = this.setLayout(inflater, container, R.layout.fragment_week);
 
 		this.calendar.setMonthChangeListener(this);
+		this.calendar.setOnEventClickListener(this);
 
 		return layout;
 	}
@@ -39,6 +41,7 @@ public class WeekFragment extends Fragment implements MonthLoader.MonthChangeLis
 	@Override
 	public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth)
 	{
+		this.courseMap.clear();
 		List<Course> courses = this.manager.forMonth(newYear, newMonth);
 		List<WeekViewEvent> events = new ArrayList<>();
 
@@ -63,8 +66,17 @@ public class WeekFragment extends Fragment implements MonthLoader.MonthChangeLis
 			event.setLocation(course.getLocation());
 
 			events.add(event);
+			this.courseMap.put(event, course);
 		}
 
 		return events;
+	}
+
+	@Override
+	public void onEventClick(WeekViewEvent event, RectF eventRect)
+	{
+		Course course = this.courseMap.get(event);
+
+		Dialog.course(this, course);
 	}
 }

@@ -5,8 +5,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import be.dealloc.schedule.R;
+import be.dealloc.schedule.contracts.entities.courses.Course;
+import be.dealloc.schedule.system.Fragment;
+import butterknife.ButterKnife;
 
 /**
  * Dialog class.
@@ -114,6 +121,23 @@ public final class Dialog
 				.setIcon(R.mipmap.ic_warning)
 				.setMessage(error_msg)
 				.setPositiveButton(android.R.string.ok, onClick)
+				.create()
+				.show();
+	}
+
+	public static void course(Fragment fragment, Course course)
+	{
+		LayoutInflater inflater = fragment.getLayoutInflater(null);
+		View layout = inflater.inflate(R.layout.dialog_coursedetail, null);
+		ButterKnife.<ImageView>findById(layout, R.id.detail_imgType).setImageDrawable(course.getIcon());
+		ButterKnife.<TextView>findById(layout, R.id.detail_txtName).setText(course.getName());
+		ButterKnife.<TextView>findById(layout, R.id.detail_txtLocation).setText(course.getLocation());
+		ButterKnife.<TextView>findById(layout, R.id.detail_txtTeacher).setText(course.getTeacher());
+
+		(new AlertDialog.Builder(fragment.getActivity()))
+				.setTitle(R.string.app_name)
+				.setView(layout)
+				.setPositiveButton(android.R.string.ok, null)
 				.create()
 				.show();
 	}
