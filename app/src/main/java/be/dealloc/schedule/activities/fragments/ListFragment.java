@@ -27,7 +27,7 @@ public class ListFragment extends Fragment
 	{
 		View view = this.setLayout(inflater, container, R.layout.fragment_list);
 
-		CourseAdapter adapter = new CourseAdapter(this.manager.getUpcoming());
+		CourseAdapter adapter = new CourseAdapter(this, this.manager.getUpcoming());
 		RecyclerView.LayoutManager manager = new LinearLayoutManager(Application.provider().context());
 		this.recyclerView.setLayoutManager(manager);
 		this.recyclerView.setItemAnimator(new DefaultItemAnimator());

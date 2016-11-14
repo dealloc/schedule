@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.courses.Course;
+import be.dealloc.schedule.facades.Dialog;
+import be.dealloc.schedule.system.Fragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,9 +22,11 @@ import static butterknife.ButterKnife.findById;
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder>
 {
 	private List<Course> courses;
+	private Fragment fragment;
 
-	public CourseAdapter(List<Course> courses)
+	public CourseAdapter(Fragment fragment, List<Course> courses)
 	{
+		this.fragment = fragment;
 		this.courses = courses;
 	}
 
@@ -43,6 +47,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 		holder.setLocation(course.getLocation());
 		holder.setImage(course.getIcon());
 		holder.setWhen(course.getStart(), course.getEnd());
+		holder.setCourse(course);
 	}
 
 	@Override
@@ -58,6 +63,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 		private TextView txtTeachers;
 		private TextView txtLocation;
 		private TextView txtWhen;
+		private Course course;
 
 		public CourseViewHolder(View view)
 		{
@@ -67,6 +73,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 			this.txtTeachers = findById(view, R.id.list_txtTeachers);
 			this.txtLocation = findById(view, R.id.list_txtLocation);
 			this.txtWhen = findById(view, R.id.list_txtWhen);
+			view.setOnClickListener(view1 -> Dialog.course(fragment, this.course));
 		}
 
 		public void setImage(Drawable image)
@@ -95,6 +102,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 			String when = String.format("%s-%s", dateFormat.format(start), dateFormat.format(end));
 
 			this.txtWhen.setText(when);
+		}
+
+		public void setCourse(Course course)
+		{
+			this.course = course;
 		}
 	}
 }
