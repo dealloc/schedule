@@ -135,7 +135,6 @@ public final class Dialog
 		ButterKnife.<TextView>findById(layout, R.id.detail_txtTeacher).setText(course.getTeacher());
 
 		(new AlertDialog.Builder(fragment.getActivity()))
-				.setTitle(R.string.app_name)
 				.setView(layout)
 				.setPositiveButton(android.R.string.ok, null)
 				.create()
