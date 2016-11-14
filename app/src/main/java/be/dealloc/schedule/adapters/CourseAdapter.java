@@ -11,6 +11,8 @@ import android.widget.TextView;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.courses.Course;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static butterknife.ButterKnife.findById;
@@ -40,6 +42,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 		holder.setTeachers(course.getTeacher());
 		holder.setLocation(course.getLocation());
 		holder.setImage(course.getIcon());
+		holder.setWhen(course.getStart(), course.getEnd());
 	}
 
 	@Override
@@ -54,6 +57,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 		private TextView txtName;
 		private TextView txtTeachers;
 		private TextView txtLocation;
+		private TextView txtWhen;
 
 		public CourseViewHolder(View view)
 		{
@@ -62,6 +66,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 			this.txtName = findById(view, R.id.list_txtName);
 			this.txtTeachers = findById(view, R.id.list_txtTeachers);
 			this.txtLocation = findById(view, R.id.list_txtLocation);
+			this.txtWhen = findById(view, R.id.list_txtWhen);
 		}
 
 		public void setImage(Drawable image)
@@ -82,6 +87,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 		public void setLocation(String location)
 		{
 			this.txtLocation.setText(location);
+		}
+
+		public void setWhen(Date start, Date end)
+		{
+			SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+			String when = String.format("%s-%s", dateFormat.format(start), dateFormat.format(end));
+
+			this.txtWhen.setText(when);
 		}
 	}
 }

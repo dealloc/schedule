@@ -47,4 +47,13 @@
 		android:layout_toRightOf="@+id/list_imgType"
 		android:layout_toEndOf="@+id/list_imgType" />
 
+	<TextView
+		android:text="@string/app_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/list_txtLocation"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentEnd="true"
+		android:id="@+id/list_txtWhen" />
+
 </RelativeLayout>
