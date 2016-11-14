@@ -1,7 +1,11 @@
 package be.dealloc.schedule.entities.courses;
 // Created by dealloc. All rights reserved.
 
+import android.graphics.drawable.Drawable;
+import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.courses.Course;
+import be.dealloc.schedule.system.Application;
+import com.amulyakhare.textdrawable.TextDrawable;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -146,5 +150,16 @@ public class GreenCourse implements Course
 	public void setCalendar(String calendar)
 	{
 		this.calendar = calendar;
+	}
+
+	@Override
+	public Drawable getIcon()
+	{
+		if (this.getType() == Course.PRACTICAL)
+			return TextDrawable.builder().buildRound(Application.string(R.string.practical_letter), Application.color(R.color.primary_dark));
+		else if (this.getType() == Course.THEORETICAL)
+			return TextDrawable.builder().buildRound(Application.string(R.string.theoretical_letter), Application.color(R.color.primary));
+		else
+			return TextDrawable.builder().buildRound(Application.string(R.string.other_letter), Application.color(R.color.accent));
 	}
 }

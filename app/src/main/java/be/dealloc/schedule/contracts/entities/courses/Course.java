@@ -1,6 +1,8 @@
 package be.dealloc.schedule.contracts.entities.courses;
 // Created by dealloc. All rights reserved.
 
+import android.graphics.drawable.Drawable;
+
 import java.util.Date;
 
 public interface Course
@@ -40,4 +42,6 @@ public interface Course
 	String getCalendar();
 
 	void setCalendar(String calendar);
+
+	Drawable getIcon();
 }
