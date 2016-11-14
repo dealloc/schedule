@@ -21,3 +21,11 @@
 # Biweekly
 -dontwarn com.fasterxml.jackson.**
 -dontwarn biweekly.io.json.JCalModule
+
+# Remove log calls
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** v(...);
+    public static *** i(...);
+    public static *** w(...);
+}
