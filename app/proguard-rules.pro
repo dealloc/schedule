@@ -1,5 +1,3 @@
--keepattributes SourceFile,LineNumberTable
-
 ### Dagger inject methods
 -keep class be.dealloc.schedule.contracts.* {
     public void inject(**);
