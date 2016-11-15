@@ -3,6 +3,8 @@
 	package="be.dealloc.schedule">
 
 	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.READ_CALENDAR" />
+	<uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
 	<application
 		android:name=".system.Application"
@@ -27,7 +29,7 @@
 			android:theme="@style/AppTheme.NoActionBar" />
 		<activity android:name=".activities.DesideriusActivity" />
 		<activity android:name=".activities.SettingsActivity" />
-		<activity android:name=".activities.ShareActivity"></activity>
+		<activity android:name=".activities.ShareActivity" />
 	</application>
 
 </manifest>

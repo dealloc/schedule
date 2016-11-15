@@ -19,4 +19,6 @@
 	<string name="internet_failure">Couldn\'t connect to the server. Check your connection and try again.</string>
 	<string name="generic_web_error">Something went wrong when performing the login. Try again later.</string>
 	<string name="internet_timedout">Connection timed out, that\'s all we know.</string>
+
+	<string name="calendar_denied">Unfortunately we cannot export your courses to the calendar without being granted those permissions…</string>
 </resources>

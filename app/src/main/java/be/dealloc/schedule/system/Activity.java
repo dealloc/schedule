@@ -52,7 +52,7 @@ public class Activity extends AppCompatActivity
 			this.finish();
 	}
 
-	protected void swap(final int container, Fragment fragment)
+	public void swap(final int container, Fragment fragment)
 	{
 		getSupportFragmentManager()
 				.beginTransaction()

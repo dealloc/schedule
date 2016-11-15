@@ -6,6 +6,7 @@ import be.dealloc.schedule.activities.CalendarActivity;
 import be.dealloc.schedule.activities.MainActivity;
 import be.dealloc.schedule.activities.RegistrationActivity;
 import be.dealloc.schedule.activities.fragments.ListFragment;
+import be.dealloc.schedule.activities.fragments.ShareFragment;
 import be.dealloc.schedule.activities.fragments.WeekFragment;
 import be.dealloc.schedule.contracts.network.NetworkService;
 import be.dealloc.schedule.providers.EntityProvider;
@@ -30,6 +31,8 @@ public interface ServiceProvider
 	void inject(WeekFragment activity);
 
 	void inject(ListFragment fragment);
+
+	void inject(ShareFragment fragment);
 
 	NetworkService network();
 

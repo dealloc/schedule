@@ -31,4 +31,10 @@
 
 	<!-- Settings -->
 	<string name="reset_all">Reset all data</string>
+
+	<!-- Share -->
+	<string name="share_google_calendar">Export to Google Calendar</string>
+
+	<!-- TODO: Remove or change this placeholder text -->
+	<string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -30,6 +30,11 @@ public class Fragment extends android.support.v4.app.Fragment
 		return view;
 	}
 
+	protected Activity getParentActivity()
+	{
+		return ((Activity)this.getActivity());
+	}
+
 	private synchronized void inject()
 	{
 		if (!this.injected)
