@@ -31,4 +31,9 @@
 	<string name="reset_all">Wis alle gegevens</string>
 	<string name="theoretical_letter">H</string>
 	<string name="todo_calendar_help">TODO: uitleggen hoe de beveiligingscode kan worden opgevraagd</string>
+	<string name="desiderius_dialog">
+		Deze functionaliteit zal in uw naam inloggen op Desiderius,
+		Uw gegevens worden niet lokaal opgeslagen.
+		Indien u dit niet wilt, dient u nu op annuleren te duwen.
+	</string>
 </resources>
