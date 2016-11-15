@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Schedule</string>
+	<string name="code_help">Ik weet niet wat mijn code is!</string>
+	<string name="desiderius_authenticating">Aanmelden…</string>
+	<string name="desiderius_calendar">Kalender ophalen…</string>
+	<string name="desiderius_connecting">Verbinden met Desiderius…</string>
+	<string name="desiderius_extracting">Ophalen code…</string>
+	<string name="enter_security_code">Voer beveiligings code in</string>
+	<string name="fetch_code">Haal mijn beveilgings code op</string>
+	<string name="fetching_data">Ophalen gegevens…</string>
+	<string name="generic_web_error">Er ging iets met met inloggen. Probeer later opnieuw</string>
+	<string name="hint_password">Voer uw wachtwoord in</string>
+	<string name="hint_studentmail">Voer uw studentenmail in</string>
+	<string name="internet_failure">Kon niet verbinden met de server, controleer uw verbinding en probeer opnieuw.</string>
+	<string name="internet_timedout">Verbinding time-out.</string>
+	<string name="invalid_credentials">Ongeldige gebruikersnaam of wachtwoord</string>
+	<string name="login_desiderius">Aanmelden met Desiderius</string>
+	<string name="menu_calendar">Kalender</string>
+	<string name="menu_list">Lijst</string>
+	<string name="menu_settings">Instellingen</string>
+	<string name="menu_share">Delen</string>
+	<string name="menu_subheader">Systeem</string>
+	<string name="navigation_drawer_close">Sluit menu</string>
+	<string name="navigation_drawer_open">Open menu</string>
+	<string name="navigation_header">@string/app_name</string>
+	<string name="navigation_subheader">Ontwikkeld door Wannes G.</string>
+	<string name="other_letter">A</string>
+	<string name="parsing_data">Verwerken kalender gegevens…</string>
+	<string name="practical_letter">W</string>
+	<string name="reset_all">Wis alle gegevens</string>
+	<string name="theoretical_letter">H</string>
+	<string name="todo_calendar_help">TODO: uitleggen hoe de beveiligingscode kan worden opgevraagd</string>
+</resources>
