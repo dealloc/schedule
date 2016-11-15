@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class Fragment extends android.support.v4.app.Fragment
 {
 	private boolean injected = false;
+	private Unbinder unbinder;
 
 	@Override
 	public void onCreate(@Nullable Bundle bundle)
@@ -23,7 +25,7 @@ public class Fragment extends android.support.v4.app.Fragment
 	{
 		View view = inflater.inflate(layout, group, false);
 
-		ButterKnife.bind(this, view);
+		this.unbinder = ButterKnife.bind(this, view);
 
 		return view;
 	}
@@ -35,5 +37,12 @@ public class Fragment extends android.support.v4.app.Fragment
 			Application.inject(this);
 			this.injected = true;
 		}
+	}
+
+	@Override
+	public void onDestroyView()
+	{
+		super.onDestroyView();
+		this.unbinder.unbind();
 	}
 }
