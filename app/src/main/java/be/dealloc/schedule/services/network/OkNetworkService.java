@@ -1,8 +1,8 @@
 package be.dealloc.schedule.services.network;
 // Created by dealloc. All rights reserved.
 
-import android.os.Looper;
 import be.dealloc.schedule.contracts.network.NetworkService;
+import com.orhanobut.logger.Logger;
 import okhttp3.*;
 
 import javax.inject.Inject;
@@ -21,37 +21,39 @@ public class OkNetworkService implements NetworkService
 	@Override
 	public void download(String url, NetworkCallback callback)
 	{
-		try
+		Request request = new Request.Builder().url(url).build();
+		Call call = this.client.newCall(request);
+
+		call.enqueue(new Callback()
 		{
-			Request request = new Request.Builder().url(url).build();
-			Call call = this.client.newCall(request);
-
-			if (Looper.getMainLooper().getThread() == Thread.currentThread())
+			@Override
+			public void onFailure(Call call, IOException e)
 			{
-				call.enqueue(new Callback()
-				{
-					@Override
-					public void onFailure(Call call, IOException e)
-					{
-						callback.onFailure(e);
-					}
-
-					@Override
-					public void onResponse(Call call, Response response) throws IOException
-					{
-						callback.onSucces(response.code(), response.body().string());
-					}
-				});
+				callback.onFailure(e);
 			}
-			else
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException
 			{
-				Response response = call.execute();
 				callback.onSucces(response.code(), response.body().string());
 			}
-		}
-		catch (IOException e)
+		});
+	}
+
+	@Override
+	public String downloadSynchronous(String url)
+	{
+		Request request = new Request.Builder().url(url).build();
+		Call call = this.client.newCall(request);
+
+		try
 		{
-			callback.onFailure(e);
+			return call.execute().body().string();
+		}
+		catch (IOException exception)
+		{
+			Logger.e(exception, "Failed to download %s", url);
+			return "";
 		}
 	}
 }
