@@ -47,7 +47,7 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 		Logger.i("Purging old entries from calendar %s", calendars[0].getSecurityCode());
 		this.courseManager.purge(calendars[0].getSecurityCode());
 		Logger.i("Fetching ical file from %s", calendars[0].getURl());
-		this.service.downloadSynchronous(calendars[0].getURl(), new NetworkService.NetworkCallback()
+		this.service.download(calendars[0].getURl(), new NetworkService.NetworkCallback()
 		{
 			@Override
 			public void onSucces(int status, String body)
@@ -77,7 +77,7 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 			}
 
 			@Override
-			public void onFailure(int status, String body, Throwable error)
+			public void onFailure(Throwable error)
 			{
 				fail(error);
 			}

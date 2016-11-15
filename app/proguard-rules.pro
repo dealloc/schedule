@@ -1,3 +1,5 @@
+-keepattributes SourceFile,LineNumberTable
+
 ### Dagger inject methods
 -keep class be.dealloc.schedule.contracts.* {
     public void inject(**);
@@ -21,6 +23,8 @@
 # Biweekly
 -dontwarn com.fasterxml.jackson.**
 -dontwarn biweekly.io.json.JCalModule
+# Biweekly uses a resource file that needs to be kept around.
+-keeppackagenames biweekly
 
 # Remove log calls
 -assumenosideeffects class android.util.Log {
@@ -29,3 +33,7 @@
     public static *** i(...);
     public static *** w(...);
 }
+
+# OkHTTP
+-dontwarn okhttp3.**
+-dontwarn okio.**

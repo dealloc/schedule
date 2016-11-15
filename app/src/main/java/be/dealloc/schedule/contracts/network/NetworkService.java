@@ -5,12 +5,10 @@ public interface NetworkService
 {
 	void download(String url, NetworkCallback callback);
 
-	void downloadSynchronous(String url, NetworkCallback callback);
-
 	interface NetworkCallback
 	{
 		void onSucces(int status, String body);
 
-		void onFailure(int status, String body, Throwable error);
+		void onFailure(Throwable error);
 	}
 }
