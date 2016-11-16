@@ -20,4 +20,23 @@
 		android:layout_alignParentLeft="true"
 		android:layout_alignParentStart="true" />
 
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above="@+id/share_spCalendar"
+		android:layout_centerHorizontal="true"
+		android:text="@string/choose_calendar" />
+
+	<Button
+		android:text="@string/share_nfc"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/share_btnGoogleCalendar"
+		android:layout_alignStart="@id/share_btnGoogleCalendar"
+		android:layout_alignEnd="@id/share_btnGoogleCalendar"
+		android:layout_alignLeft="@id/share_btnGoogleCalendar"
+		android:layout_alignRight="@id/share_btnGoogleCalendar"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/share_btnNFC" />
+
 </RelativeLayout>
