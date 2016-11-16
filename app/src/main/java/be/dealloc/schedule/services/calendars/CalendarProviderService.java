@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Calendars;
+import android.provider.CalendarContract.Events;
 import android.support.v4.app.ActivityCompat;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.calendars.CalendarService;
@@ -24,7 +25,7 @@ import static be.dealloc.schedule.system.Application.provider;
 public class CalendarProviderService implements CalendarService
 {
 	private static final String CALENDAR_OWNER = "EHB calendars";
-	private List<String> systemCalendars;
+	private List<SystemCalendar> systemCalendars;
 
 	@Inject
 	public CalendarProviderService()
@@ -41,6 +42,7 @@ public class CalendarProviderService implements CalendarService
 		ContentValues values = this.buildValues(name);
 
 		Uri ui = provider().context().getContentResolver().insert(builder.build(), values);
+		this.systemCalendars.clear(); // Flush cache because it's invalidated.
 	}
 
 	@Override
@@ -52,7 +54,7 @@ public class CalendarProviderService implements CalendarService
 	}
 
 	@Override
-	public List<String> getSystemCalendars()
+	public List<SystemCalendar> getSystemCalendars()
 	{
 		if (this.systemCalendars != null && !this.systemCalendars.isEmpty())
 			return this.systemCalendars;
@@ -84,7 +86,7 @@ public class CalendarProviderService implements CalendarService
 					String owner = cursor.getString(2);
 
 					Logger.i("Retrieved calendar %s with ID %d (owned by %s)", name, id, owner);
-					this.systemCalendars.add(name);
+					this.systemCalendars.add(new GoogleCalendar(id, name, owner));
 				} while (cursor.moveToNext());
 			}
 
@@ -97,7 +99,44 @@ public class CalendarProviderService implements CalendarService
 	@Override
 	public Course addCourseToSystemCalendar(final String name, Course course)
 	{
-		return null;
+		List<SystemCalendar> calendars = this.getSystemCalendars();
+
+		for (SystemCalendar calendar : calendars)
+			if (calendar.getName().equals(name) && calendar.getOwner().equals(CALENDAR_OWNER))
+				return this.addCourseToSystemCalendar(calendar, course);
+
+		return course;
+	}
+
+	@Override
+	public Course addCourseToSystemCalendar(SystemCalendar calendar, Course course)
+	{
+		String description = String.format("%s\nDoor %s\nIn %s", course.getName(), course.getTeacher(), course.getLocation());
+
+		ContentValues values = new ContentValues();
+		values.put(Events.DTSTART, course.getStart().getTime());
+		values.put(Events.DTEND, course.getEnd().getTime());
+		values.put(Events.TITLE, course.getName());
+		values.put(Events.EVENT_LOCATION, course.getLocation());
+		values.put(Events.CALENDAR_ID, calendar.getId());
+		values.put(Events.EVENT_TIMEZONE, "Europe/Brussels");
+		values.put(Events.DESCRIPTION, description);
+		values.put(Events.ACCESS_LEVEL, Events.ACCESS_PRIVATE);
+		values.put(Events.SELF_ATTENDEE_STATUS, Events.STATUS_CONFIRMED);
+		values.put(Events.ALL_DAY, 0);
+		values.put(Events.ORGANIZER, CALENDAR_OWNER);
+		values.put(Events.GUESTS_CAN_INVITE_OTHERS, 0);
+		values.put(Events.GUESTS_CAN_MODIFY, 0);
+		values.put(Events.AVAILABILITY, Events.AVAILABILITY_BUSY);
+
+		if (ActivityCompat.checkSelfPermission(provider().context(), Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED)
+		{
+			Uri uri = provider().context().getContentResolver().insert(Events.CONTENT_URI, values);
+			long eventId = Long.valueOf(uri.getLastPathSegment());
+			// TODO set system calendar ID on course entry
+		}
+
+		return course;
 	}
 
 	private Uri.Builder buildQuery()
@@ -121,8 +160,41 @@ public class CalendarProviderService implements CalendarService
 		values.put(Calendars.OWNER_ACCOUNT, CALENDAR_OWNER);
 		values.put(Calendars.CALENDAR_TIME_ZONE, "Europe/Brussels");
 		values.put(Calendars.CALENDAR_COLOR, Application.color(R.color.primary));
+		values.put(Calendars.VISIBLE, 1);
 		values.put(Calendars.SYNC_EVENTS, 1);
 
 		return values;
+	}
+
+	private class GoogleCalendar implements SystemCalendar
+	{
+		private long id;
+		private String name;
+		private String owner;
+
+		public GoogleCalendar(long id, String name, String owner)
+		{
+			this.id = id;
+			this.name = (name == null ? "" : name);
+			this.owner = owner;
+		}
+
+		@Override
+		public long getId()
+		{
+			return this.id;
+		}
+
+		@Override
+		public String getName()
+		{
+			return this.name;
+		}
+
+		@Override
+		public String getOwner()
+		{
+			return this.owner;
+		}
 	}
 }

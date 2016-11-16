@@ -11,7 +11,18 @@ public interface CalendarService
 
 	void deleteSystemCalendar(final String name);
 
-	List<String> getSystemCalendars();
-
 	Course addCourseToSystemCalendar(final String name, Course course);
+
+	Course addCourseToSystemCalendar(final SystemCalendar calendar, Course course);
+
+	List<SystemCalendar> getSystemCalendars();
+
+	interface SystemCalendar
+	{
+		long getId();
+
+		String getName();
+
+		String getOwner();
+	}
 }
