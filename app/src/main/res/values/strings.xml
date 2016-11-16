@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name">Schedule</string>
+	<string name="app_name" translatable="false">Schedule</string>
 
 	<!-- navigation drawer -->
 	<string name="navigation_drawer_open">Open navigation drawer</string>
@@ -35,8 +35,6 @@
 	<!-- Share -->
 	<string name="share_google_calendar">Export to Google Calendar</string>
 
-	<!-- TODO: Remove or change this placeholder text -->
-	<string name="hello_blank_fragment">Hello blank fragment</string>
 	<string name="choose_calendar">Choose calendar</string>
 	<string name="share_nfc">Export over NFC</string>
 	<string name="export_complete">Export complete!</string>

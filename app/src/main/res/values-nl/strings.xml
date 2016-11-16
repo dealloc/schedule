@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Schedule</string>
 	<string name="code_help">Ik weet niet wat mijn code is!</string>
 	<string name="desiderius_authenticating">Aanmelden…</string>
 	<string name="desiderius_calendar">Kalender ophalen…</string>
@@ -36,4 +35,11 @@
 		Uw gegevens worden niet lokaal opgeslagen.
 		Indien u dit niet wilt, dient u nu op annuleren te duwen.
 	</string>
+	<string name="calendar_denied">Helaas kunnen we zonder toegang tot de kalender geen export doen van uw lessenrooster…</string>
+	<string name="choose_calendar">Kies een kalender</string>
+	<string name="enter_name">Voer een naam in voor de kalender</string>
+	<string name="export_complete">Exort compleet!</string>
+	<string name="name_required">U dient een naam in te voeren voor deze kalender!</string>
+	<string name="share_google_calendar">Exporteer naar Google kalender</string>
+	<string name="share_nfc">Delen over NFC</string>
 </resources>
