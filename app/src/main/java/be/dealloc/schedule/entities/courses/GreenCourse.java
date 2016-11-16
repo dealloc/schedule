@@ -25,20 +25,21 @@ public class GreenCourse implements Course
 	private int type;
 	private String url;
 	private String calendar;
+	private Long systemId;
 
-	@Generated(hash = 1521519760)
-	public GreenCourse(Long id, String name, String teacher, String location,
-					   Date start, Date end, int type, String url, String calendar)
-	{
-		this.id = id;
-		this.name = name;
-		this.teacher = teacher;
-		this.location = location;
-		this.start = start;
-		this.end = end;
-		this.type = type;
-		this.url = url;
-		this.calendar = calendar;
+	@Generated(hash = 654018113)
+	public GreenCourse(Long id, String name, String teacher, String location, Date start, Date end, int type, String url,
+									String calendar, Long systemId) {
+					this.id = id;
+					this.name = name;
+					this.teacher = teacher;
+					this.location = location;
+					this.start = start;
+					this.end = end;
+					this.type = type;
+					this.url = url;
+					this.calendar = calendar;
+					this.systemId = systemId;
 	}
 
 	@Generated(hash = 2103233940)
@@ -85,6 +86,18 @@ public class GreenCourse implements Course
 	public Long getId()
 	{
 		return this.id;
+	}
+
+	@Override
+	public Long systemId()
+	{
+		return this.systemId;
+	}
+
+	@Override
+	public void setSystemId(Long systemId)
+	{
+		this.systemId = systemId;
 	}
 
 	public void setId(Long id)
@@ -161,5 +174,9 @@ public class GreenCourse implements Course
 			return TextDrawable.builder().buildRound(Application.string(R.string.theoretical_letter), Application.color(R.color.primary));
 		else
 			return TextDrawable.builder().buildRound(Application.string(R.string.other_letter), Application.color(R.color.accent));
+	}
+
+	public Long getSystemId() {
+					return this.systemId;
 	}
 }

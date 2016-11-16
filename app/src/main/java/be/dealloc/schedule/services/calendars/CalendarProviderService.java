@@ -133,7 +133,7 @@ public class CalendarProviderService implements CalendarService
 		{
 			Uri uri = provider().context().getContentResolver().insert(Events.CONTENT_URI, values);
 			long eventId = Long.valueOf(uri.getLastPathSegment());
-			// TODO set system calendar ID on course entry
+			course.setSystemId(eventId);
 		}
 
 		return course;

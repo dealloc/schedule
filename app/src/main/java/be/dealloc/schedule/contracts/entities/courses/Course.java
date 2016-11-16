@@ -46,4 +46,8 @@ public interface Course
 	Drawable getIcon();
 
 	Long getId();
+
+	Long systemId();
+
+	void setSystemId(Long systemId);
 }
