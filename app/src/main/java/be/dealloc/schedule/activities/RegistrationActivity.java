@@ -10,13 +10,13 @@ import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
 import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Activity;
 import be.dealloc.schedule.system.Application;
-import be.dealloc.schedule.tasks.ProcessCalendarTask;
+import be.dealloc.schedule.tasks.BasicTask;
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import javax.inject.Inject;
 
-public class RegistrationActivity extends Activity implements ProcessCalendarTask.ProcessCallback
+public class RegistrationActivity extends Activity implements BasicTask.TaskCallback
 {
 	public static final String SECURITYCODE_INTENT = "be.dealloc.schedule.activities.RegistrationActivity.SECURITY_CODE";
 	@Inject CalendarManager manager;

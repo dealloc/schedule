@@ -1,9 +1,6 @@
 package be.dealloc.schedule.tasks;
 // Created by dealloc. All rights reserved.
 
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.calendars.Calendar;
 import be.dealloc.schedule.contracts.entities.courses.Course;
@@ -17,11 +14,10 @@ import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 
-public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
+public class ProcessCalendarTask extends BasicTask<Calendar>
 {
 	private final NetworkService service;
 	private final CourseManager courseManager;
-	private ProcessCallback callback;
 	private final String STR_PARSING;
 	private final String STR_CONNECTING;
 
@@ -34,9 +30,9 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 		this.STR_CONNECTING = Application.string(R.string.fetching_data);
 	}
 
-	public void execute(Calendar calendar, ProcessCallback callback)
+	public void execute(Calendar calendar, BasicTask.TaskCallback callback)
 	{
-		this.callback = callback;
+		this.setCallback(callback);
 		this.execute(calendar);
 	}
 
@@ -68,7 +64,7 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 					}
 
 					System.gc(); // Call a garbage collection to collect all dangling event objects.
-					(new Handler(Looper.getMainLooper())).post(callback::onSucces);
+					finish();
 				}
 				else
 				{
@@ -87,23 +83,9 @@ public class ProcessCalendarTask extends AsyncTask<Calendar, String, Void>
 	}
 
 	@Override
-	protected void onProgressUpdate(String... values)
-	{
-		this.callback.onProgress(values[0]);
-	}
-
-	private void fail(Throwable error)
+	protected void fail(Throwable error)
 	{
 		Logger.e(error, "Failed to process calendar.");
-		new Handler(Looper.getMainLooper()).post(() -> this.callback.onFailure(error));
-	}
-
-	public interface ProcessCallback
-	{
-		void onProgress(String status);
-
-		void onFailure(Throwable error);
-
-		void onSucces();
+		super.fail(error);
 	}
 }

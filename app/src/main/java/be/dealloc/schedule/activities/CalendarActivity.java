@@ -18,7 +18,7 @@ import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Activity;
 import be.dealloc.schedule.system.Application;
 import be.dealloc.schedule.system.Fragment;
-import be.dealloc.schedule.tasks.ProcessCalendarTask;
+import be.dealloc.schedule.tasks.BasicTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -68,7 +68,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 		button.setEnabled(false);
 		Calendar calendar = this.manager.getActiveCalendars().get(0);
 
-		Application.provider().calendarProcessor().execute(calendar, new ProcessCalendarTask.ProcessCallback()
+		Application.provider().calendarProcessor().execute(calendar, new BasicTask.TaskCallback()
 		{
 			@Override
 			public void onProgress(String status)
