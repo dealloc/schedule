@@ -35,7 +35,7 @@ public class CalendarProviderService implements CalendarService
 	@Override
 	public void createSystemCalendar(final String name)
 	{
-		if (this.getSystemCalendars().contains(name))
+		if (this.getSystemCalendars().contains(name)) // TODO fix find algorithm
 			return;
 
 		Uri.Builder builder = this.buildQuery();
@@ -47,6 +47,14 @@ public class CalendarProviderService implements CalendarService
 
 	@Override
 	public void deleteSystemCalendar(String name)
+	{
+		Uri.Builder builder = this.buildQuery();
+
+		provider().context().getContentResolver().delete(builder.build(), Calendars.ACCOUNT_NAME + " = ?", new String[]{name});
+	}
+
+	@Override
+	public void deleteScheduleCalendars()
 	{
 		Uri.Builder builder = this.buildQuery();
 

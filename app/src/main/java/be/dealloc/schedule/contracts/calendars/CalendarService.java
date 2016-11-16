@@ -11,6 +11,8 @@ public interface CalendarService
 
 	void deleteSystemCalendar(final String name);
 
+	void deleteScheduleCalendars();
+
 	Course addCourseToSystemCalendar(final String name, Course course);
 
 	Course addCourseToSystemCalendar(final SystemCalendar calendar, Course course);
