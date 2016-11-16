@@ -111,6 +111,22 @@ public class GreenCourseManager implements CourseManager
 	}
 
 	@Override
+	public List<Course> forCalendar(be.dealloc.schedule.contracts.entities.calendars.Calendar calendar)
+	{
+		return this.forCalendar(calendar.getSecurityCode());
+	}
+
+	@Override
+	public List<Course> forCalendar(String code)
+	{
+		List<GreenCourse> courses = this.dao.queryBuilder()
+				.where(GreenCourseDao.Properties.Calendar.eq(code))
+				.list();
+
+		return new ArrayList<>(courses);
+	}
+
+	@Override
 	public List<Course> getUpcoming()
 	{
 		Date now = new Date();

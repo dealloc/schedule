@@ -78,7 +78,7 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 			this.task = provider().exportProcessor();
 			this.dialog = new ProgressDialog(this.getContext());
 			this.dialog.show();
-			this.task.execute(this, this.manager.getUpcoming());
+			this.task.execute(this, this.manager.forCalendar(this.code));
 		}
 	}
 
