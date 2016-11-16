@@ -21,4 +21,7 @@
 	<string name="internet_timedout">Connection timed out, that\'s all we know.</string>
 
 	<string name="calendar_denied">Unfortunately we cannot export your courses to the calendar without being granted those permissions…</string>
+
+	<string name="enter_name">Enter a name for the calendar</string>
+	<string name="name_required">You must enter a name for this calendar!</string>
 </resources>

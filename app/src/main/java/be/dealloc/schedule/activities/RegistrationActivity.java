@@ -19,6 +19,7 @@ import javax.inject.Inject;
 public class RegistrationActivity extends Activity implements BasicTask.TaskCallback
 {
 	public static final String SECURITYCODE_INTENT = "be.dealloc.schedule.activities.RegistrationActivity.SECURITY_CODE";
+	public static final String CALENDARNAME_INTENT = "be.dealloc.schedule.activities.RegistrationActivity.CALENDAR_NAME";
 	@Inject CalendarManager manager;
 	@BindView(R.id.activity_registration) ViewFlipper flipper;
 	@BindView(R.id.register_txtLoadingStatus) TextView lblStatus;
@@ -35,7 +36,10 @@ public class RegistrationActivity extends Activity implements BasicTask.TaskCall
 		{
 			// The security code has been sent along!
 			this.flipper.showNext();
-			this.createCalendar(intention.getStringExtra(SECURITYCODE_INTENT));
+			if (intention.hasExtra(CALENDARNAME_INTENT))
+				this.createCalendar(intention.getStringExtra(CALENDARNAME_INTENT), intention.getStringExtra(SECURITYCODE_INTENT));
+			else
+				this.createCalendar(intention.getStringExtra(SECURITYCODE_INTENT));
 		}
 	}
 
@@ -63,13 +67,6 @@ public class RegistrationActivity extends Activity implements BasicTask.TaskCall
 		});
 	}
 
-	private void createCalendar(String code)
-	{
-		this.calendar = this.manager.create();
-		this.calendar.setSecurityCode(code);
-		Application.provider().calendarProcessor().execute(this.calendar, this);
-	}
-
 	@Override
 	public void onProgress(String status)
 	{
@@ -89,5 +86,26 @@ public class RegistrationActivity extends Activity implements BasicTask.TaskCall
 		this.calendar.setActive(true);
 		this.manager.save(this.calendar);
 		this.navigate(MainActivity.class);
+	}
+
+	private void createCalendar(String code)
+	{
+		Dialog.input(this, R.string.app_name, R.string.enter_name, (dialog, name) -> this.createCalendar(code, name), null);
+	}
+
+	private void createCalendar(String name, String code)
+	{
+		if (name.isEmpty())
+		{
+			Dialog.error(this, R.string.name_required);
+			this.createCalendar(code);
+		}
+		else
+		{
+			this.calendar = this.manager.create();
+			this.calendar.setName(name);
+			this.calendar.setSecurityCode(code);
+			Application.provider().calendarProcessor().execute(this.calendar, this);
+		}
 	}
 }

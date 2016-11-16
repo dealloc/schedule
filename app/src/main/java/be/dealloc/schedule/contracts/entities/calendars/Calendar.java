@@ -11,5 +11,9 @@ public interface Calendar
 
 	void setSecurityCode(String value);
 
+	void setName(String name);
+
+	String getName();
+
 	String getURl();
 }
