@@ -4,16 +4,6 @@
 	android:layout_height="match_parent"
 	tools:context="be.dealloc.schedule.activities.fragments.GoogleCalendarFragment">
 
-	<pl.droidsonroids.gif.GifImageView
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:src="@drawable/google_calendar"
-		android:layout_alignParentTop="true"
-		android:layout_alignParentLeft="true"
-		android:layout_alignParentStart="true"
-		android:visibility="gone"
-		android:id="@+id/google_gif" />
-
 	<TextView
 		android:text="@string/export_complete"
 		android:layout_width="wrap_content"

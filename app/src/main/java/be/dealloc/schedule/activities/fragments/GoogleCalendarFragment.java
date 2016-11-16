@@ -20,7 +20,6 @@ import be.dealloc.schedule.system.Fragment;
 import be.dealloc.schedule.tasks.BasicTask;
 import be.dealloc.schedule.tasks.ExportCoursesToCalendarTask;
 import butterknife.BindView;
-import pl.droidsonroids.gif.GifImageView;
 
 import javax.inject.Inject;
 
@@ -38,7 +37,6 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 	private ProgressDialog dialog;
 	private String name;
 
-	@BindView(R.id.google_gif) GifImageView googleGif;
 	@BindView(R.id.google_txtDone) TextView txtDone;
 
 	@Override
@@ -108,7 +106,6 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 	public void onSucces()
 	{
 		this.dialog.dismiss();
-		this.googleGif.setVisibility(View.VISIBLE);
 		this.txtDone.setVisibility(View.VISIBLE);
 	}
 }
