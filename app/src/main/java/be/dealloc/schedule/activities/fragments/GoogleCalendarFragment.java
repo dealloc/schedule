@@ -2,7 +2,9 @@ package be.dealloc.schedule.activities.fragments;
 
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,15 +13,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import be.dealloc.schedule.R;
+import be.dealloc.schedule.contracts.entities.courses.CourseManager;
 import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Fragment;
+import be.dealloc.schedule.tasks.BasicTask;
+import be.dealloc.schedule.tasks.ExportCoursesToCalendarTask;
 
-public class GoogleCalendarFragment extends Fragment
+import javax.inject.Inject;
+
+import static be.dealloc.schedule.system.Application.provider;
+
+public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCallback
 {
 	public static final String BUNDLE_CALENDAR = "be.dealloc.schedule.activities.fragments.GoogleCalendarFragment.BUNDLE_CALENDAR";
 	private static final int CALENDAR_PERMISSION_CALLBACK = 0x0001;
 
 	private String code;
+	@Inject CourseManager manager;
+	private ExportCoursesToCalendarTask task;
+	private ProgressDialog dialog;
 
 	@Override
 	public void onCreate(@Nullable Bundle bundle)
@@ -57,6 +69,37 @@ public class GoogleCalendarFragment extends Fragment
 
 	private void exportCalendar()
 	{
-		Dialog.msgbox(this.getContext(), "This functionality is under development!");
+		if (this.task != null && this.task.getStatus() == AsyncTask.Status.RUNNING)
+		{
+			this.dialog.show();
+		}
+		else
+		{
+			this.task = provider().exportProcessor();
+			this.dialog = new ProgressDialog(this.getContext());
+			this.dialog.show();
+			this.task.execute(this, this.manager.getUpcoming());
+		}
+	}
+
+	@Override
+	public void onProgress(String status)
+	{
+		this.dialog.setMessage(status);
+	}
+
+	@Override
+	public void onFailure(Throwable error)
+	{
+		this.dialog.dismiss();
+		Dialog.msgbox(this.getContext(), error.getMessage());
+	}
+
+	@Override
+	public void onSucces()
+	{
+		this.dialog.dismiss();
+		Dialog.msgbox(this.getContext(), "Done!");
+		// Communicate with other fragment to notify we're done!
 	}
 }
