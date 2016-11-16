@@ -26,12 +26,14 @@ import static be.dealloc.schedule.system.Application.provider;
 public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCallback
 {
 	public static final String BUNDLE_CALENDAR = "be.dealloc.schedule.activities.fragments.GoogleCalendarFragment.BUNDLE_CALENDAR";
+	public static final String BUNDLE_CALENDAR_NAME = "be.dealloc.schedule.activities.fragments.GoogleCalendarFragment.BUNDLE_CALENDAR_NAME";
 	private static final int CALENDAR_PERMISSION_CALLBACK = 0x0001;
 
 	private String code;
 	@Inject CourseManager manager;
 	private ExportCoursesToCalendarTask task;
 	private ProgressDialog dialog;
+	private String name;
 
 	@Override
 	public void onCreate(@Nullable Bundle bundle)
@@ -42,6 +44,7 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 			throw new RuntimeException("Invalid bundle options passed!");
 
 		this.code = this.getArguments().getString(BUNDLE_CALENDAR);
+		this.name = this.getArguments().getString(BUNDLE_CALENDAR_NAME);
 
 		if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission_group.CALENDAR) != PackageManager.PERMISSION_GRANTED)
 			this.requestPermissions(new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR}, CALENDAR_PERMISSION_CALLBACK);
@@ -78,7 +81,7 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 			this.task = provider().exportProcessor();
 			this.dialog = new ProgressDialog(this.getContext());
 			this.dialog.show();
-			this.task.execute(this, this.manager.forCalendar(this.code));
+			this.task.execute(this, this.name, this.manager.forCalendar(this.code));
 		}
 	}
 

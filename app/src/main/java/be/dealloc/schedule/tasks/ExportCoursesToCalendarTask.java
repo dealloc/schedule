@@ -10,12 +10,13 @@ import java.util.List;
 
 public class ExportCoursesToCalendarTask extends BasicTask<Course>
 {
-	private static final String CALENDAR_NAME = "calendar.name";
 	private final CourseManager manager;
 	private final CalendarService service;
+	private String name;
 
-	public void execute(BasicTask.TaskCallback callback, List<Course> courses)
+	public void execute(BasicTask.TaskCallback callback, String name, List<Course> courses)
 	{
+		this.name = name;
 		this.setCallback(callback);
 
 		this.execute(courses.toArray(new Course[]{}));
@@ -35,8 +36,8 @@ public class ExportCoursesToCalendarTask extends BasicTask<Course>
 		int current = 0;
 		String template = "Processing (%d/%d)";
 
-		this.service.deleteSystemCalendar(CALENDAR_NAME);
-		this.service.createSystemCalendar(CALENDAR_NAME);
+		this.service.deleteScheduleCalendars();
+		this.service.createSystemCalendar(this.name);
 
 		for (Course course : courses)
 		{
@@ -52,7 +53,7 @@ public class ExportCoursesToCalendarTask extends BasicTask<Course>
 
 	private void processCourse(Course course)
 	{
-		course = this.service.addCourseToSystemCalendar(CALENDAR_NAME, course);
+		course = this.service.addCourseToSystemCalendar(this.name, course);
 
 		this.manager.save(course);
 	}

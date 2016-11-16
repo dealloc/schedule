@@ -23,7 +23,7 @@ public class ShareFragment extends Fragment
 	@Inject CalendarManager calendarManager;
 	@BindView(R.id.share_spCalendar) Spinner spinner;
 	private List<Calendar> calendars;
-	private String active;
+	private Calendar active;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle)
@@ -50,7 +50,8 @@ public class ShareFragment extends Fragment
 	public void onExportToGoogleCalendarClicked()
 	{
 		Bundle bundle = new Bundle();
-		bundle.putString(GoogleCalendarFragment.BUNDLE_CALENDAR, this.active);
+		bundle.putString(GoogleCalendarFragment.BUNDLE_CALENDAR, this.active.getSecurityCode());
+		bundle.putString(GoogleCalendarFragment.BUNDLE_CALENDAR_NAME, this.active.getName());
 		GoogleCalendarFragment fragment = new GoogleCalendarFragment();
 		fragment.setArguments(bundle);
 		this.getParentActivity().swap(R.id.activity_share, fragment);
@@ -59,6 +60,6 @@ public class ShareFragment extends Fragment
 	@OnItemSelected(R.id.share_spCalendar)
 	public void onCalendarSelected(int position)
 	{
-		this.active = this.calendars.get(position).getSecurityCode();
+		this.active = this.calendars.get(position);
 	}
 }
