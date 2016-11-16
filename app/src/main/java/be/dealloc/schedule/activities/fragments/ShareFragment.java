@@ -41,7 +41,7 @@ public class ShareFragment extends Fragment
 	{
 		ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), R.layout.support_simple_spinner_dropdown_item);
 		for (Calendar calendar : this.calendars)
-			adapter.add(calendar.getSecurityCode());
+			adapter.add(calendar.getName());
 
 		this.spinner.setAdapter(adapter);
 	}

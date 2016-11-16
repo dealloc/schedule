@@ -40,7 +40,7 @@ public class ProcessCalendarTask extends BasicTask<Calendar>
 	protected Void doInBackground(Calendar... calendars)
 	{
 		this.publishProgress(STR_CONNECTING);
-		Logger.i("Purging old entries from calendar %s", calendars[0].getSecurityCode());
+		Logger.i("Purging old entries from calendar %s", calendars[0].getName());
 		this.courseManager.purge(calendars[0].getSecurityCode());
 		Logger.i("Fetching ical file from %s", calendars[0].getURl());
 		this.service.download(calendars[0].getURl(), new NetworkService.NetworkCallback()
