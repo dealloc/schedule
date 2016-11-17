@@ -12,14 +12,12 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.courses.CourseManager;
 import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Fragment;
 import be.dealloc.schedule.tasks.BasicTask;
 import be.dealloc.schedule.tasks.ExportCoursesToCalendarTask;
-import butterknife.BindView;
 
 import javax.inject.Inject;
 
@@ -36,8 +34,6 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 	private ExportCoursesToCalendarTask task;
 	private ProgressDialog dialog;
 	private String name;
-
-	@BindView(R.id.google_txtDone) TextView txtDone;
 
 	@Override
 	public void onCreate(@Nullable Bundle bundle)
@@ -106,6 +102,5 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 	public void onSucces()
 	{
 		this.dialog.dismiss();
-		this.txtDone.setVisibility(View.VISIBLE);
 	}
 }
