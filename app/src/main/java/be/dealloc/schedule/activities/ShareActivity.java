@@ -12,6 +12,7 @@ public class ShareActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		this.setLayout(R.layout.activity_share);
+		this.getSupportActionBar().setHomeButtonEnabled(true);
 
 		this.swap(R.id.activity_share, new ShareFragment());
 	}

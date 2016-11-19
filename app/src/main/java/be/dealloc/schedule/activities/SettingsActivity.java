@@ -14,6 +14,7 @@ public class SettingsActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		this.setLayout(R.layout.activity_settings);
+		this.getSupportActionBar().setHomeButtonEnabled(true);
 	}
 
 	@OnClick(R.id.settings_btnReset)
