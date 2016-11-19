@@ -4,6 +4,7 @@ package be.dealloc.schedule.tasks;
 import android.support.test.rule.UiThreadTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import be.dealloc.schedule.contracts.entities.calendars.Calendar;
+import be.dealloc.schedule.contracts.entities.courses.Course;
 import be.dealloc.schedule.contracts.entities.courses.CourseManager;
 import be.dealloc.schedule.contracts.network.NetworkService;
 import junit.framework.Assert;
@@ -61,7 +62,9 @@ public class ProcessCalendarTaskTest
 	{
 		final CountDownLatch signal = new CountDownLatch(1);
 
+		final Course mockCourse = mock(Course.class);
 		when(calendar.getURl()).thenReturn(VALID_URL);
+		when(courseManager.fromRaw(any())).thenReturn(mockCourse);
 
 		doAnswer(invocation -> {
 			fail("onFailure should not have been called!");
@@ -70,6 +73,9 @@ public class ProcessCalendarTaskTest
 
 		doAnswer(invocation -> {
 			signal.countDown();
+			verify(this.courseManager, atLeastOnce()).purge(anyString()); // Verify the calendar is purged.
+			verify(this.courseManager, atLeastOnce()).fromRaw(any()); // Verify events are instantiated.
+			verify(this.courseManager, atLeastOnce()).save(mockCourse); // Verify the events are saved.
 			return null;
 		}).when(this.callback).onSucces();
 
