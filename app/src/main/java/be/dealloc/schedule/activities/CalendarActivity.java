@@ -51,7 +51,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 
 		ButterKnife.<NavigationView>findById(this, R.id.calendar_navview).setNavigationItemSelectedListener(new CalendarNavigationDispatcher(this, drawer));
 
-		if (bundle == null && this.current == null)
+		if (bundle == null)
 			this.swap(R.id.calendar_content, new WeekFragment());
 	}
 
@@ -65,18 +65,6 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle bundle)
-	{
-		super.onSaveInstanceState(bundle);
-		if (this.current != null && this.current.isAdded())
-		{
-			this.current.setRetainInstance(true);
-			this.getSupportFragmentManager()
-					.putFragment(bundle, FRAGMENT_KEY, this.current);
-		}
-	}
-
-	@Override
 	public void onRestoreInstanceState(Bundle bundle)
 	{
 		super.onRestoreInstanceState(bundle);
@@ -84,10 +72,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 				.getFragment(bundle, FRAGMENT_KEY);
 
 		if (fragment != null)
-		{
-			fragment.setRetainInstance(false);
-			this.swap(R.id.calendar_content, fragment);
-		}
+			this.swap(R.id.activity_share, fragment);
 	}
 
 	@OnClick(R.id.calendar_fab)
@@ -161,7 +146,12 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	@Override
 	public synchronized void swap(int container, Fragment fragment)
 	{
+		if (this.current != null)
+			this.current.setRetainInstance(false);
+
+		super.swap(container, fragment, FRAGMENT_KEY);
+
 		this.current = fragment;
-		super.swap(container, fragment);
+		this.current.setRetainInstance(true);
 	}
 }
