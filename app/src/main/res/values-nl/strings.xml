@@ -44,4 +44,5 @@
 	<string name="share_nfc">Delen over NFC</string>
 	<string name="delete_calendar">Verwijder kalenders</string>
 	<string name="calendars_deleted">Kalenders verwijderdt</string>
+	<string name="calendar_processed">Kalenders bijgewerkt!</string>
 </resources>

@@ -3,22 +3,20 @@ package be.dealloc.schedule.activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.activities.dispatchers.CalendarNavigationDispatcher;
 import be.dealloc.schedule.activities.fragments.ListFragment;
+import be.dealloc.schedule.activities.fragments.UpdateCalendarFragment;
 import be.dealloc.schedule.activities.fragments.WeekFragment;
-import be.dealloc.schedule.contracts.entities.calendars.Calendar;
 import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
-import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Activity;
 import be.dealloc.schedule.system.Application;
 import be.dealloc.schedule.system.Fragment;
-import be.dealloc.schedule.tasks.BasicTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,14 +26,15 @@ import javax.inject.Inject;
 
 import static butterknife.ButterKnife.findById;
 
-public class CalendarActivity extends Activity implements CalendarNavigationDispatcher.DispatcherTarget
+public class CalendarActivity extends Activity implements CalendarNavigationDispatcher.DispatcherTarget, UpdateCalendarFragment.CalendarUpdateCallback
 {
 	private static final String FRAGMENT_KEY = CalendarActivity.class.getCanonicalName();
+	private static final String BUTTON_STATE = "be.dealloc.schedule.activities.CalendarActivity.BUTTON_STATE";
 
 	@Inject CalendarManager manager;
 	@BindView(R.id.calendar_drawer) DrawerLayout drawer;
+	@BindView(R.id.calendar_fab) FloatingActionButton btnRefresh;
 	private Fragment current = null;
-	private Snackbar snackbar = null;
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -65,6 +64,13 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	}
 
 	@Override
+	protected void onSaveInstanceState(Bundle state)
+	{
+		super.onSaveInstanceState(state);
+		state.putBoolean(BUTTON_STATE, this.btnRefresh.isEnabled());
+	}
+
+	@Override
 	public void onRestoreInstanceState(Bundle bundle)
 	{
 		super.onRestoreInstanceState(bundle);
@@ -72,43 +78,18 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 				.getFragment(bundle, FRAGMENT_KEY);
 
 		if (fragment != null)
-			this.swap(R.id.activity_share, fragment);
+			this.swap(fragment);
+
+		this.btnRefresh.setEnabled(bundle.getBoolean(BUTTON_STATE, true));
 	}
 
 	@OnClick(R.id.calendar_fab)
 	public void onFloatingButtonClicked(FloatingActionButton button)
 	{
 		button.setEnabled(false);
-		Calendar calendar = this.manager.getActiveCalendars().get(0);
-
-		Application.provider().calendarProcessor().execute(calendar, new BasicTask.TaskCallback()
-		{
-			@Override
-			public void onProgress(String status)
-			{
-				if (snackbar != null)
-					snackbar.dismiss();
-
-				snackbar = Snackbar.make(button, status, Snackbar.LENGTH_INDEFINITE);
-				snackbar.show();
-			}
-
-			@Override
-			public void onFailure(Throwable error)
-			{
-				if (snackbar != null)
-					snackbar.dismiss();
-				button.setEnabled(true);
-				Logger.e(error, "Failed to refresh %s", calendar.getSecurityCode());
-				Dialog.error(CalendarActivity.this, R.string.generic_web_error);
-			}
-
-			@Override
-			public void onSucces()
-			{
-				recreate(); // Restart the acivity. Easiest way to reload everything
-			}
-		});
+		UpdateCalendarFragment fragment = new UpdateCalendarFragment();
+		fragment.setCallback(this);
+		this.swap(fragment);
 	}
 
 	@Override
@@ -116,8 +97,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	{
 		if (!(this.current instanceof WeekFragment))
 		{
-			this.current = new WeekFragment();
-			this.swap(R.id.calendar_content, this.current);
+			this.swap(new WeekFragment());
 		}
 	}
 
@@ -126,8 +106,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	{
 		if (!(this.current instanceof ListFragment))
 		{
-			this.current = new ListFragment();
-			this.swap(R.id.calendar_content, this.current);
+			this.swap(new ListFragment());
 		}
 	}
 
@@ -143,15 +122,30 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 		this.navigate(ShareActivity.class, false);
 	}
 
-	@Override
-	public synchronized void swap(int container, Fragment fragment)
+	public synchronized void swap(Fragment fragment)
 	{
 		if (this.current != null)
 			this.current.setRetainInstance(false);
 
-		super.swap(container, fragment, FRAGMENT_KEY);
-
 		this.current = fragment;
 		this.current.setRetainInstance(true);
+
+		super.swap(R.id.calendar_content, fragment, FRAGMENT_KEY);
+	}
+
+	@Override
+	public void onFailure(Throwable error)
+	{
+		this.btnRefresh.setEnabled(true);
+		Logger.e(error, "Failed to update calendar.");
+		this.swap(new WeekFragment());
+	}
+
+	@Override
+	public void onSuccess()
+	{
+		this.btnRefresh.setEnabled(true);
+		Toast.makeText(this, Application.string(R.string.calendar_processed), Toast.LENGTH_SHORT).show();
+		this.swap(new WeekFragment());
 	}
 }

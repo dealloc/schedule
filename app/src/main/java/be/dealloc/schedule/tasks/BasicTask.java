@@ -10,11 +10,11 @@ public abstract class BasicTask<T> extends AsyncTask<T, String, Void>
 {
 	private TaskCallback callback;
 
-	void setCallback(TaskCallback callback)
+	public void setCallback(TaskCallback callback)
 	{
 		this.callback = callback;
-		if (this.getStatus() == Status.FINISHED)
-			this.finish();
+//		if (this.getStatus() == Status.FINISHED)
+//			this.finish();
 	}
 
 	@Override

@@ -6,10 +6,7 @@ import be.dealloc.schedule.activities.CalendarActivity;
 import be.dealloc.schedule.activities.MainActivity;
 import be.dealloc.schedule.activities.RegistrationActivity;
 import be.dealloc.schedule.activities.SettingsActivity;
-import be.dealloc.schedule.activities.fragments.GoogleCalendarFragment;
-import be.dealloc.schedule.activities.fragments.ListFragment;
-import be.dealloc.schedule.activities.fragments.ShareFragment;
-import be.dealloc.schedule.activities.fragments.WeekFragment;
+import be.dealloc.schedule.activities.fragments.*;
 import be.dealloc.schedule.contracts.network.NetworkService;
 import be.dealloc.schedule.providers.EntityProvider;
 import be.dealloc.schedule.providers.NetworkProvider;
@@ -40,6 +37,8 @@ public interface ServiceProvider
 	void inject(ShareFragment fragment);
 
 	void inject(GoogleCalendarFragment fragment);
+
+	void inject(UpdateCalendarFragment fragment);
 
 	NetworkService network();
 

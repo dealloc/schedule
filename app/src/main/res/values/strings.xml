@@ -40,4 +40,6 @@
 	<string name="export_complete">Export complete!</string>
 	<string name="delete_calendar">Delete calendars</string>
 	<string name="calendars_deleted">Calendars deleted</string>
+
+	<string name="calendar_processed">Calendars refreshed!</string>
 </resources>
