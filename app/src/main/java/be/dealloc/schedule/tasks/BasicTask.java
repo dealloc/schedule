@@ -4,6 +4,7 @@ package be.dealloc.schedule.tasks;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import com.orhanobut.logger.Logger;
 
 public abstract class BasicTask<T> extends AsyncTask<T, String, Void>
 {
@@ -12,6 +13,8 @@ public abstract class BasicTask<T> extends AsyncTask<T, String, Void>
 	void setCallback(TaskCallback callback)
 	{
 		this.callback = callback;
+		if (this.getStatus() == Status.FINISHED)
+			this.finish();
 	}
 
 	@Override
@@ -23,12 +26,16 @@ public abstract class BasicTask<T> extends AsyncTask<T, String, Void>
 
 	protected void fail(Throwable error)
 	{
-		new Handler(Looper.getMainLooper()).post(() -> this.callback.onFailure(error));
+		if (this.callback != null)
+			new Handler(Looper.getMainLooper()).post(() -> this.callback.onFailure(error));
+		else
+			Logger.e(error, "Uncaught task failure.");
 	}
 
 	void finish()
 	{
-		(new Handler(Looper.getMainLooper())).post(this.callback::onSucces);
+		if (this.callback != null)
+			(new Handler(Looper.getMainLooper())).post(this.callback::onSucces);
 	}
 
 	public interface TaskCallback
