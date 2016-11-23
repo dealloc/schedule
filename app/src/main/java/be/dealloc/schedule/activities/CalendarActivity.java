@@ -70,6 +70,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 		super.onSaveInstanceState(bundle);
 		if (this.current != null && this.current.isAdded())
 		{
+			this.current.setRetainInstance(true);
 			this.getSupportFragmentManager()
 					.putFragment(bundle, FRAGMENT_KEY, this.current);
 		}
@@ -83,7 +84,10 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 				.getFragment(bundle, FRAGMENT_KEY);
 
 		if (fragment != null)
+		{
+			fragment.setRetainInstance(false);
 			this.swap(R.id.calendar_content, fragment);
+		}
 	}
 
 	@OnClick(R.id.calendar_fab)
