@@ -40,8 +40,6 @@ public class ProcessCalendarTask extends BasicTask<Calendar>
 	protected Void doInBackground(Calendar... calendars)
 	{
 		this.publishProgress(STR_CONNECTING);
-		Logger.i("Purging old entries from calendar %s", calendars[0].getName());
-		this.courseManager.purge(calendars[0].getSecurityCode());
 		Logger.i("Fetching ical file from %s", calendars[0].getURl());
 		this.service.download(calendars[0].getURl(), new NetworkService.NetworkCallback()
 		{
@@ -51,6 +49,8 @@ public class ProcessCalendarTask extends BasicTask<Calendar>
 				publishProgress(STR_PARSING);
 				if (body.startsWith("BEGIN:VCALENDAR"))
 				{
+					Logger.i("Purging old entries from calendar %s", calendars[0].getName());
+					courseManager.purge(calendars[0].getSecurityCode()); // Purge entries when the new ones have arrived.
 					ICalendar calendar = Biweekly.parse(body).first();
 
 					for (VEvent event : calendar.getEvents())
