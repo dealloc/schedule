@@ -3,6 +3,7 @@ package be.dealloc.schedule.activities.fragments;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 
 		this.code = this.getArguments().getString(BUNDLE_CALENDAR);
 		this.name = this.getArguments().getString(BUNDLE_CALENDAR_NAME);
+		this.dialog = new ProgressDialog(this.getContext());
 
 		if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission_group.CALENDAR) != PackageManager.PERMISSION_GRANTED)
 			this.requestPermissions(new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR}, CALENDAR_PERMISSION_CALLBACK);
@@ -56,6 +58,21 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle)
 	{
 		return this.setLayout(inflater, container, R.layout.fragment_google_calendar);
+	}
+
+	@Override
+	public void onDetach()
+	{
+		super.onDetach();
+		this.dialog.dismiss();
+	}
+
+	@Override
+	public void onAttach(Context context)
+	{
+		super.onAttach(context);
+		if (this.dialog != null)
+			this.dialog.show();
 	}
 
 	@Override
@@ -79,7 +96,6 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 		else
 		{
 			this.task = provider().exportProcessor();
-			this.dialog = new ProgressDialog(this.getContext());
 			this.dialog.show();
 			this.task.execute(this, this.name, this.manager.forCalendar(this.code));
 		}
