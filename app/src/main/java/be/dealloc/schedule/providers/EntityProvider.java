@@ -13,6 +13,7 @@ import dagger.Module;
 import dagger.Provides;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 @Module
 public class EntityProvider
@@ -29,12 +30,14 @@ public class EntityProvider
 	}
 
 	@Provides
+	@Singleton
 	public CourseManager providesCourseManager()
 	{
 		return new GreenCourseManager(this.session);
 	}
 
 	@Provides
+	@Singleton
 	public CalendarManager providesCalendarManager()
 	{
 		return new GreenCalendarManager(this.session);

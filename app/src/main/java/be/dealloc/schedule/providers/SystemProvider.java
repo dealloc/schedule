@@ -8,6 +8,8 @@ import be.dealloc.schedule.system.Application;
 import dagger.Module;
 import dagger.Provides;
 
+import javax.inject.Singleton;
+
 @Module
 public class SystemProvider
 {
@@ -31,6 +33,7 @@ public class SystemProvider
 	}
 
 	@Provides
+	@Singleton
 	public CalendarService providesCalendarService(CalendarProviderService service)
 	{
 		return service;
