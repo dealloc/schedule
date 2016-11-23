@@ -67,21 +67,23 @@ public class UpdateCalendarFragment extends Fragment implements ProcessCalendarT
 	public void onSaveInstanceState(Bundle bundle)
 	{
 		super.onSaveInstanceState(bundle);
-		bundle.putString(STATUS_KEY, this.txtStatus.getText().toString());
+		if (this.txtStatus != null)
+			bundle.putString(STATUS_KEY, this.txtStatus.getText().toString());
 	}
 
 	@Override
 	public void onViewStateRestored(@Nullable Bundle bundle)
 	{
 		super.onViewStateRestored(bundle);
-		if (bundle != null)
+		if (bundle != null && this.txtStatus != null)
 			this.txtStatus.setText(bundle.getString(STATUS_KEY));
 	}
 
 	@Override
 	public void onProgress(String status)
 	{
-		this.txtStatus.setText(status);
+		if (this.txtStatus != null)
+			this.txtStatus.setText(status);
 	}
 
 	@Override

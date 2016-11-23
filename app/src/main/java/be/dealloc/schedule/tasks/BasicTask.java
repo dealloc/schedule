@@ -13,8 +13,8 @@ public abstract class BasicTask<T> extends AsyncTask<T, String, Void>
 	public void setCallback(TaskCallback callback)
 	{
 		this.callback = callback;
-//		if (this.getStatus() == Status.FINISHED)
-//			this.finish();
+		if (this.getStatus() == Status.FINISHED)
+			this.finish();
 	}
 
 	@Override

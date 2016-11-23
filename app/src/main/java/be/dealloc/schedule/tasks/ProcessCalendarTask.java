@@ -13,6 +13,7 @@ import biweekly.component.VEvent;
 import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
+import java.io.IOException;
 
 public class ProcessCalendarTask extends BasicTask<Calendar>
 {
@@ -39,45 +40,40 @@ public class ProcessCalendarTask extends BasicTask<Calendar>
 	@Override
 	protected Void doInBackground(Calendar... calendars)
 	{
-		this.publishProgress(STR_CONNECTING);
-		Logger.i("Fetching ical file from %s", calendars[0].getURl());
-		this.service.download(calendars[0].getURl(), new NetworkService.NetworkCallback()
+		try
 		{
-			@Override
-			public void onSucces(int status, String body)
+			this.publishProgress(STR_CONNECTING);
+			Logger.i("Fetching ical file from %s", calendars[0].getURl());
+			String body = this.service.downloadSynchronous(calendars[0].getURl());
+			publishProgress(STR_PARSING);
+			if (body.startsWith("BEGIN:VCALENDAR"))
 			{
-				publishProgress(STR_PARSING);
-				if (body.startsWith("BEGIN:VCALENDAR"))
-				{
-					Logger.i("Purging old entries from calendar %s", calendars[0].getName());
-					courseManager.purge(calendars[0].getSecurityCode()); // Purge entries when the new ones have arrived.
-					ICalendar calendar = Biweekly.parse(body).first();
+				Logger.i("Purging old entries from calendar %s", calendars[0].getName());
+				courseManager.purge(calendars[0].getSecurityCode()); // Purge entries when the new ones have arrived.
+				ICalendar calendar = Biweekly.parse(body).first();
 
-					for (VEvent event : calendar.getEvents())
+				for (VEvent event : calendar.getEvents())
+				{
+					Course course = courseManager.fromRaw(event);
+					if (course != null) // some events may be dropped.
 					{
-						Course course = courseManager.fromRaw(event);
-						if (course != null) // some events may be dropped.
-						{
-							course.setCalendar(calendars[0].getSecurityCode());
-							courseManager.save(course);
-						}
+						course.setCalendar(calendars[0].getSecurityCode());
+						courseManager.save(course);
 					}
+				}
 
-					System.gc(); // Call a garbage collection to collect all dangling event objects.
-					finish();
-				}
-				else
-				{
-					fail(new Throwable("Invalid ical response returned."));
-				}
+				System.gc(); // Call a garbage collection to collect all dangling event objects.
+				finish();
 			}
-
-			@Override
-			public void onFailure(Throwable error)
+			else
 			{
-				fail(error);
+				fail(new Throwable("Invalid ical response returned."));
 			}
-		});
+		}
+		catch (IOException exception)
+		{
+			fail(exception);
+		}
 
 		return null;
 	}

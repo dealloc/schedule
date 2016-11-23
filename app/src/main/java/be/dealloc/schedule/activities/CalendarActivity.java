@@ -68,6 +68,12 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	{
 		super.onSaveInstanceState(state);
 		state.putBoolean(BUTTON_STATE, this.btnRefresh.isEnabled());
+		if (this.current != null)
+		{
+			this.getSupportFragmentManager().putFragment(state, FRAGMENT_KEY, this.current);
+			if (this.current instanceof UpdateCalendarFragment)
+				((UpdateCalendarFragment) this.current).setCallback(null);
+		}
 	}
 
 	@Override
@@ -78,7 +84,11 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 				.getFragment(bundle, FRAGMENT_KEY);
 
 		if (fragment != null)
+		{
 			this.swap(fragment);
+			if (this.current instanceof UpdateCalendarFragment)
+				((UpdateCalendarFragment) this.current).setCallback(this);
+		}
 
 		this.btnRefresh.setEnabled(bundle.getBoolean(BUTTON_STATE, true));
 	}
