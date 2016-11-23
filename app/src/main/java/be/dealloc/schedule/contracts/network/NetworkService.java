@@ -1,6 +1,9 @@
 package be.dealloc.schedule.contracts.network;
 // Created by dealloc. All rights reserved.
 
+import javax.inject.Singleton;
+
+@Singleton
 public interface NetworkService
 {
 	void download(String url, NetworkCallback callback);

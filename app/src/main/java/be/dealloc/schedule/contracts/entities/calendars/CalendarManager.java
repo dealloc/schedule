@@ -3,8 +3,10 @@ package be.dealloc.schedule.contracts.entities.calendars;
 
 import be.dealloc.schedule.contracts.entities.EntityManager;
 
+import javax.inject.Singleton;
 import java.util.List;
 
+@Singleton
 public interface CalendarManager extends EntityManager<Calendar>
 {
 	List<Calendar> getActiveCalendars();

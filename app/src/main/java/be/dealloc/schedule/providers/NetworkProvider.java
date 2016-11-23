@@ -6,13 +6,10 @@ import be.dealloc.schedule.services.network.OkNetworkService;
 import dagger.Module;
 import dagger.Provides;
 
-import javax.inject.Singleton;
-
 @Module
 public class NetworkProvider
 {
 	@Provides
-	@Singleton
 	public NetworkService providesNetworkService(OkNetworkService service)
 	{
 		return service;

@@ -4,8 +4,10 @@ package be.dealloc.schedule.contracts.entities.courses;
 import be.dealloc.schedule.contracts.entities.EntityManager;
 import be.dealloc.schedule.contracts.entities.calendars.Calendar;
 
+import javax.inject.Singleton;
 import java.util.List;
 
+@Singleton
 public interface CourseManager extends EntityManager<Course>
 {
 	Course fromRaw(Object raw);

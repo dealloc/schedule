@@ -3,8 +3,10 @@ package be.dealloc.schedule.contracts.calendars;
 
 import be.dealloc.schedule.contracts.entities.courses.Course;
 
+import javax.inject.Singleton;
 import java.util.List;
 
+@Singleton
 public interface CalendarService
 {
 	void createSystemCalendar(final String name);
