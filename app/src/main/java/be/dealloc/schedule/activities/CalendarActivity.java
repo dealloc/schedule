@@ -30,15 +30,17 @@ import static butterknife.ButterKnife.findById;
 
 public class CalendarActivity extends Activity implements CalendarNavigationDispatcher.DispatcherTarget
 {
+	private static final String FRAGMENT_KEY = CalendarActivity.class.getCanonicalName();
+
 	@Inject CalendarManager manager;
 	@BindView(R.id.calendar_drawer) DrawerLayout drawer;
 	private Fragment current = null;
 	private Snackbar snackbar = null;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void onCreate(Bundle bundle)
 	{
-		super.onCreate(savedInstanceState);
+		super.onCreate(bundle);
 		this.setLayout(R.layout.activity_calendar);
 		Toolbar toolbar = findById(this, R.id.calendar_toolbar);
 		setSupportActionBar(toolbar);
@@ -49,7 +51,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 
 		ButterKnife.<NavigationView>findById(this, R.id.calendar_navview).setNavigationItemSelectedListener(new CalendarNavigationDispatcher(this, drawer));
 
-		if (this.current == null)
+		if (bundle == null && this.current == null)
 			this.swap(R.id.calendar_content, new WeekFragment());
 	}
 
@@ -60,6 +62,28 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 			this.drawer.closeDrawer(GravityCompat.START);
 		else
 			super.onBackPressed();
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle bundle)
+	{
+		super.onSaveInstanceState(bundle);
+		if (this.current != null && this.current.isAdded())
+		{
+			this.getSupportFragmentManager()
+					.putFragment(bundle, FRAGMENT_KEY, this.current);
+		}
+	}
+
+	@Override
+	public void onRestoreInstanceState(Bundle bundle)
+	{
+		super.onRestoreInstanceState(bundle);
+		Fragment fragment = (Fragment) this.getSupportFragmentManager()
+				.getFragment(bundle, FRAGMENT_KEY);
+
+		if (fragment != null)
+			this.swap(R.id.calendar_content, fragment);
 	}
 
 	@OnClick(R.id.calendar_fab)
@@ -128,5 +152,12 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	public void onShareClicked()
 	{
 		this.navigate(ShareActivity.class, false);
+	}
+
+	@Override
+	public void swap(int container, Fragment fragment)
+	{
+		this.current = fragment;
+		super.swap(container, fragment);
 	}
 }
