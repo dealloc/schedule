@@ -155,7 +155,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	}
 
 	@Override
-	public void swap(int container, Fragment fragment)
+	public synchronized void swap(int container, Fragment fragment)
 	{
 		this.current = fragment;
 		super.swap(container, fragment);
