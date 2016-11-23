@@ -42,4 +42,6 @@
 	<string name="name_required">U dient een naam in te voeren voor deze kalender!</string>
 	<string name="share_google_calendar">Exporteer naar Google kalender</string>
 	<string name="share_nfc">Delen over NFC</string>
+	<string name="delete_calendar">Verwijder kalenders</string>
+	<string name="calendars_deleted">Kalenders verwijderdt</string>
 </resources>

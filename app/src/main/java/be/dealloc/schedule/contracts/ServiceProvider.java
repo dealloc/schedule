@@ -5,6 +5,7 @@ import android.content.Context;
 import be.dealloc.schedule.activities.CalendarActivity;
 import be.dealloc.schedule.activities.MainActivity;
 import be.dealloc.schedule.activities.RegistrationActivity;
+import be.dealloc.schedule.activities.SettingsActivity;
 import be.dealloc.schedule.activities.fragments.GoogleCalendarFragment;
 import be.dealloc.schedule.activities.fragments.ListFragment;
 import be.dealloc.schedule.activities.fragments.ShareFragment;
@@ -31,6 +32,8 @@ public interface ServiceProvider
 	void inject(CalendarActivity activity);
 
 	void inject(WeekFragment activity);
+
+	void inject(SettingsActivity activity);
 
 	void inject(ListFragment fragment);
 

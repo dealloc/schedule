@@ -38,4 +38,6 @@
 	<string name="choose_calendar">Choose calendar</string>
 	<string name="share_nfc">Export over NFC</string>
 	<string name="export_complete">Export complete!</string>
+	<string name="delete_calendar">Delete calendars</string>
+	<string name="calendars_deleted">Calendars deleted</string>
 </resources>

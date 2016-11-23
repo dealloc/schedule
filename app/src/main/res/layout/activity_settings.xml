@@ -17,4 +17,12 @@
 		android:layout_centerVertical="true"
 		android:layout_centerHorizontal="true"
 		android:id="@+id/settings_btnReset" />
+
+	<Button
+		android:text="@string/delete_calendar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_above="@+id/settings_btnReset"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/settings_btnDeleteCalendar" />
 </RelativeLayout>
