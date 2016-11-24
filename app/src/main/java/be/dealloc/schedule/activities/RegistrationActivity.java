@@ -15,9 +15,11 @@ import javax.inject.Inject;
 public class RegistrationActivity extends Activity implements RegistrationFragment.RegistrationHost, UpdateCalendarFragment.CalendarUpdateCallback
 {
 	private static final String FRAGMENT_KEY = "be.dealloc.schedule.activities.RegistrationActivity.FRAGMENT_KEY";
+	private static final String PROCESSING_KEY = "be.dealloc.schedule.activities.RegistrationActivity.PROCESSING_KEY";
 
 	protected Fragment current;
 	@Inject CalendarManager manager;
+	private String processingCode;
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -41,6 +43,8 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 
 		if (this.current instanceof UpdateCalendarFragment)
 			((UpdateCalendarFragment) this.current).setCallback(null);
+
+		bundle.putString(PROCESSING_KEY, processingCode);
 	}
 
 	@Override
@@ -54,6 +58,8 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 			if (fragment instanceof UpdateCalendarFragment)
 				((UpdateCalendarFragment) fragment).setCallback(this);
 		}
+
+		this.processingCode = bundle.getString(PROCESSING_KEY);
 	}
 
 	public synchronized void swap(Fragment fragment)
@@ -86,6 +92,7 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 		calendar.setName("EHB calendar"); // TODO fetch from user?
 		calendar.setSecurityCode(code);
 		calendar.setActive(true);
+		this.processingCode = code;
 		this.manager.save(calendar);
 
 		this.swap(fragment);
@@ -96,6 +103,11 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 	{
 		Toast.makeText(this, R.string.token_error, Toast.LENGTH_SHORT).show();
 		this.swap(new RegistrationFragment());
+		if (this.processingCode != null)
+		{
+			Calendar calendar = this.manager.findBySecurityCode(this.processingCode);
+			this.manager.delete(calendar);
+		}
 	}
 
 	@Override
