@@ -10,4 +10,6 @@ import java.util.List;
 public interface CalendarManager extends EntityManager<Calendar>
 {
 	List<Calendar> getActiveCalendars();
+
+	Calendar findBySecurityCode(String code);
 }

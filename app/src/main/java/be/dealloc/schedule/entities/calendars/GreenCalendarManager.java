@@ -61,4 +61,13 @@ public class GreenCalendarManager implements CalendarManager
 
 		return new ArrayList<>(calendars); // Downcast the collection
 	}
+
+	@Override
+	public Calendar findBySecurityCode(String code)
+	{
+		return this.dao.queryBuilder()
+				.where(GreenCalendarDao.Properties.SecurityCode.eq(code))
+				.build()
+				.uniqueOrThrow();
+	}
 }

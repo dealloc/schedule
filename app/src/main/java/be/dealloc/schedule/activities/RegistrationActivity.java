@@ -1,111 +1,106 @@
 package be.dealloc.schedule.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.ViewFlipper;
+import android.widget.Toast;
 import be.dealloc.schedule.R;
+import be.dealloc.schedule.activities.fragments.RegistrationFragment;
+import be.dealloc.schedule.activities.fragments.UpdateCalendarFragment;
 import be.dealloc.schedule.contracts.entities.calendars.Calendar;
 import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
-import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Activity;
-import be.dealloc.schedule.system.Application;
-import be.dealloc.schedule.tasks.BasicTask;
-import butterknife.BindView;
-import butterknife.OnClick;
+import be.dealloc.schedule.system.Fragment;
 
 import javax.inject.Inject;
 
-public class RegistrationActivity extends Activity implements BasicTask.TaskCallback
+public class RegistrationActivity extends Activity implements RegistrationFragment.RegistrationHost, UpdateCalendarFragment.CalendarUpdateCallback
 {
-	public static final String SECURITYCODE_INTENT = "be.dealloc.schedule.activities.RegistrationActivity.SECURITY_CODE";
-	public static final String CALENDARNAME_INTENT = "be.dealloc.schedule.activities.RegistrationActivity.CALENDAR_NAME";
+	private static final String FRAGMENT_KEY = "be.dealloc.schedule.activities.RegistrationActivity.FRAGMENT_KEY";
+
+	protected Fragment current;
 	@Inject CalendarManager manager;
-	@BindView(R.id.activity_registration) ViewFlipper flipper;
-	@BindView(R.id.register_txtLoadingStatus) TextView lblStatus;
-	Calendar calendar;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void onCreate(Bundle bundle)
 	{
-		super.onCreate(savedInstanceState);
+		super.onCreate(bundle);
 		this.setLayout(R.layout.activity_registration);
-
-		Intent intention = this.getIntent();
-		if (intention.hasExtra(SECURITYCODE_INTENT))
+		if (bundle == null)
 		{
-			// The security code has been sent along!
-			this.flipper.showNext();
-			if (intention.hasExtra(CALENDARNAME_INTENT))
-				this.createCalendar(intention.getStringExtra(CALENDARNAME_INTENT), intention.getStringExtra(SECURITYCODE_INTENT));
-			else
-				this.createCalendar(intention.getStringExtra(SECURITYCODE_INTENT));
+			RegistrationFragment fragment = new RegistrationFragment();
+			fragment.setHost(this);
+			this.swap(fragment);
 		}
 	}
 
-	@OnClick(R.id.registration_lblHelp)
-	public void onHelpClicked()
+	@Override
+	public void onSaveInstanceState(Bundle bundle)
 	{
-		Dialog.msgbox(this, R.string.app_name, R.string.todo_calendar_help);
-	}
+		super.onSaveInstanceState(bundle);
+		this.getSupportFragmentManager()
+				.putFragment(bundle, FRAGMENT_KEY, this.current);
 
-	@OnClick(R.id.registration_btnEnterCode)
-	public void onRegisterClicked()
-	{
-		Dialog.input(this, R.string.app_name, R.string.enter_security_code, (d, code) ->
-		{
-			this.flipper.showNext(); // Show the loading part of the web
-			this.createCalendar(code);
-		}, null);
-	}
-
-	@OnClick(R.id.registration_btnDesiderius)
-	public void onDesideriusClicked()
-	{
-		Dialog.warning(this, R.string.desiderius_dialog, (d, i) -> {
-			navigate(DesideriusActivity.class);
-		});
+		if (this.current instanceof UpdateCalendarFragment)
+			((UpdateCalendarFragment) this.current).setCallback(null);
 	}
 
 	@Override
-	public void onProgress(String status)
+	protected void onRestoreInstanceState(Bundle bundle)
 	{
-		this.lblStatus.setText(status);
+		super.onRestoreInstanceState(bundle);
+		Fragment fragment = (Fragment) this.getSupportFragmentManager().getFragment(bundle, FRAGMENT_KEY);
+		if (fragment != null)
+		{
+			this.swap(fragment);
+			if (fragment instanceof UpdateCalendarFragment)
+				((UpdateCalendarFragment) fragment).setCallback(this);
+		}
+	}
+
+	public synchronized void swap(Fragment fragment)
+	{
+		if (this.current != null)
+			this.current.setRetainInstance(false);
+
+		this.current = fragment;
+		this.current.setRetainInstance(true);
+
+		super.swap(R.id.registration_layout, fragment);
+	}
+
+	@Override
+	public void startDesiderius()
+	{
+		this.navigate(DesideriusActivity.class);
+	}
+
+	@Override
+	public void initCalendar(String code)
+	{
+		Bundle bundle = new Bundle();
+		bundle.putString(UpdateCalendarFragment.SECURITY_CODE, code);
+		UpdateCalendarFragment fragment = new UpdateCalendarFragment();
+		fragment.setCallback(this);
+		fragment.setArguments(bundle);
+
+		Calendar calendar = this.manager.create();
+		calendar.setName("EHB calendar"); // TODO fetch from user?
+		calendar.setSecurityCode(code);
+		calendar.setActive(true);
+		this.manager.save(calendar);
+
+		this.swap(fragment);
 	}
 
 	@Override
 	public void onFailure(Throwable error)
 	{
-		Dialog.msgbox(this, error.getMessage()); // TODO convert to error dialog
-		this.flipper.showNext();
+		Toast.makeText(this, R.string.token_error, Toast.LENGTH_SHORT).show();
+		this.swap(new RegistrationFragment());
 	}
 
 	@Override
-	public void onSucces()
+	public void onSuccess()
 	{
-		this.calendar.setActive(true);
-		this.manager.save(this.calendar);
 		this.navigate(MainActivity.class);
-	}
-
-	private void createCalendar(String code)
-	{
-		Dialog.input(this, R.string.app_name, R.string.enter_name, (dialog, name) -> this.createCalendar(code, name), null);
-	}
-
-	private void createCalendar(String name, String code)
-	{
-		if (name.isEmpty())
-		{
-			Dialog.error(this, R.string.name_required);
-			this.createCalendar(code);
-		}
-		else
-		{
-			this.calendar = this.manager.create();
-			this.calendar.setName(name);
-			this.calendar.setSecurityCode(code);
-			Application.provider().calendarProcessor().execute(this.calendar, this);
-		}
 	}
 }

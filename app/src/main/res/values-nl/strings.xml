@@ -45,4 +45,5 @@
 	<string name="delete_calendar">Verwijder kalenders</string>
 	<string name="calendars_deleted">Kalenders verwijderdt</string>
 	<string name="calendar_processed">Kalenders bijgewerkt!</string>
+	<string name="token_error">Ongeldige sleutel of Verbindingsfout!</string>
 </resources>

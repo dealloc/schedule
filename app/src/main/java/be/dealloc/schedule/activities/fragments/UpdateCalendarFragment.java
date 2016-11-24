@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import be.dealloc.schedule.R;
+import be.dealloc.schedule.contracts.entities.calendars.Calendar;
 import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
 import be.dealloc.schedule.contracts.entities.courses.CourseManager;
 import be.dealloc.schedule.contracts.network.NetworkService;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
 
 public class UpdateCalendarFragment extends Fragment implements ProcessCalendarTask.TaskCallback
 {
+	public static final String SECURITY_CODE = "be.dealloc.schedule.activities.fragments.UpdateCalendarFragment.SECURITY_CODE";
 	private static final String STATUS_KEY = "be.dealloc.schedule.activities.fragments.UpdateCalendarFragment.STATUS_KEY";
 
 	@BindView(R.id.update_txtStatus) TextView txtStatus;
@@ -38,7 +40,18 @@ public class UpdateCalendarFragment extends Fragment implements ProcessCalendarT
 		super.onCreate(bundle);
 
 		this.task = new ProcessCalendarTask(this.service, this.courseManager);
-		this.task.execute(this.calendarManager.getActiveCalendars().get(0), this);
+
+		if (bundle == null)
+		{
+			this.task.execute(this.calendarManager.getActiveCalendars().get(0), this);
+		}
+		else
+		{
+			String code = bundle.getString(SECURITY_CODE);
+			Calendar calendar = this.calendarManager.findBySecurityCode(code);
+			this.task.execute(calendar, this);
+		}
+
 		Logger.i("Starting execution of calendar processing.");
 	}
 

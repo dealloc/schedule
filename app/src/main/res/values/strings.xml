@@ -42,4 +42,5 @@
 	<string name="calendars_deleted">Calendars deleted</string>
 
 	<string name="calendar_processed">Calendars refreshed!</string>
+	<string name="token_error">Invalid token or connection error.</string>
 </resources>
