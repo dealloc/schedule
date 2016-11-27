@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.calendars.Calendar;
 import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
+import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Fragment;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -55,6 +57,31 @@ public class ShareFragment extends Fragment
 		GoogleCalendarFragment fragment = new GoogleCalendarFragment();
 		fragment.setArguments(bundle);
 		this.getParentActivity().swap(R.id.activity_share, fragment);
+	}
+
+	@OnClick(R.id.share_btnNFC)
+	public void onExportNFCClicked()
+	{
+		Toast.makeText(this.getContext(), "Not implemented yet!", Toast.LENGTH_SHORT).show();
+	}
+
+	@OnClick(R.id.share_btnRename)
+	public void onRenameClicked()
+	{
+		Dialog.input(this.getContext(), R.string.app_name, R.string.enter_name, (dialog, content) -> {
+			if (content.trim().isEmpty())
+			{
+				Dialog.error(this.getContext(), R.string.name_required);
+			}
+			else
+			{
+				this.active.setName(content.trim());
+				this.calendarManager.save(this.active);
+				this.calendars = this.calendarManager.getActiveCalendars();
+				this.setupSpinner();
+				Dialog.msgbox(this.getContext(), R.string.app_name, R.string.calendar_saved);
+			}
+		}, null);
 	}
 
 	@OnItemSelected(R.id.share_spCalendar)

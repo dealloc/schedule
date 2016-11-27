@@ -46,4 +46,6 @@
 	<string name="calendar_processed">Kalenders bijgewerkt!</string>
 	<string name="token_error">Ongeldige sleutel of Verbindingsfout!</string>
 	<string name="menu_calendars">Kalenders</string>
+	<string name="calendar_saved">Kalender opgeslagen!</string>
+	<string name="rename_calendar">Hernoem kalender</string>
 </resources>

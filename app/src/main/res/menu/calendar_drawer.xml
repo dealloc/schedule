@@ -21,7 +21,7 @@
 
 			<item
 				android:id="@+id/nav_share"
-				android:icon="@drawable/ic_share"
+				android:icon="@drawable/ic_event"
 				android:title="@string/menu_calendars" />
 		</menu>
 	</item>
