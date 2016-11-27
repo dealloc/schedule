@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Fragment;
@@ -26,6 +27,8 @@ public class RegistrationFragment extends Fragment
 	{
 		if (this.host != null)
 			this.host.startDesiderius();
+		else
+			Toast.makeText(this.getContext(), "No host was set for registration", Toast.LENGTH_SHORT).show();
 	}
 
 	@OnClick(R.id.registration_btnEnterCode)
@@ -41,6 +44,10 @@ public class RegistrationFragment extends Fragment
 					host.initCalendar(content);
 				}
 			}, null);
+		}
+		else
+		{
+			Toast.makeText(this.getContext(), "No host was set for registration", Toast.LENGTH_SHORT).show();
 		}
 	}
 

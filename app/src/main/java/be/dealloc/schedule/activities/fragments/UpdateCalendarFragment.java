@@ -41,13 +41,13 @@ public class UpdateCalendarFragment extends Fragment implements ProcessCalendarT
 
 		this.task = new ProcessCalendarTask(this.service, this.courseManager);
 
-		if (bundle == null)
+		if (this.getArguments() == null)
 		{
 			this.task.execute(this.calendarManager.getActiveCalendars().get(0), this);
 		}
 		else
 		{
-			String code = bundle.getString(SECURITY_CODE);
+			String code = this.getArguments().getString(SECURITY_CODE);
 			Calendar calendar = this.calendarManager.findBySecurityCode(code);
 			this.task.execute(calendar, this);
 		}

@@ -72,8 +72,8 @@ public class DesideriusActivity extends Activity
 			String securityCode = matcher.group();
 
 			Intent intention = new Intent(this, RegistrationActivity.class);
-//			intention.putExtra(RegistrationActivity.SECURITYCODE_INTENT, securityCode); // TODO restore passing security code to activity.
-//			intention.putExtra(RegistrationActivity.CALENDARNAME_INTENT, this.txtEmail.getText().toString());
+			intention.putExtra(RegistrationActivity.SECURITYCODE_INTENT, securityCode);
+			intention.putExtra(RegistrationActivity.CALENDARNAME_INTENT, this.txtEmail.getText().toString());
 			startActivity(intention);
 			this.finish();
 		}

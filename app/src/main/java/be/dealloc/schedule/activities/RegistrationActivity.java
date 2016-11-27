@@ -14,11 +14,13 @@ import javax.inject.Inject;
 
 public class RegistrationActivity extends Activity implements RegistrationFragment.RegistrationHost, UpdateCalendarFragment.CalendarUpdateCallback
 {
+	public static final String SECURITYCODE_INTENT = "be.dealloc.schedule.activities.RegistrationActivity.SECURITYCODE_INTENT";
+	public static final String CALENDARNAME_INTENT = "be.dealloc.schedule.activities.RegistrationActivity.CALENDARNAME_INTENT";
 	private static final String FRAGMENT_KEY = "be.dealloc.schedule.activities.RegistrationActivity.FRAGMENT_KEY";
 	private static final String PROCESSING_KEY = "be.dealloc.schedule.activities.RegistrationActivity.PROCESSING_KEY";
 
 	protected Fragment current;
-	@Inject CalendarManager manager;
+	@Inject CalendarManager calendarManager;
 	private String processingCode;
 
 	@Override
@@ -26,12 +28,9 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 	{
 		super.onCreate(bundle);
 		this.setLayout(R.layout.activity_registration);
-		if (bundle == null)
-		{
-			RegistrationFragment fragment = new RegistrationFragment();
-			fragment.setHost(this);
-			this.swap(fragment);
-		}
+		RegistrationFragment fragment = new RegistrationFragment();
+		fragment.setHost(this);
+		this.swap(fragment);
 	}
 
 	@Override
@@ -40,26 +39,17 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 		super.onSaveInstanceState(bundle);
 		this.getSupportFragmentManager()
 				.putFragment(bundle, FRAGMENT_KEY, this.current);
-
-		if (this.current instanceof UpdateCalendarFragment)
-			((UpdateCalendarFragment) this.current).setCallback(null);
-
-		bundle.putString(PROCESSING_KEY, processingCode);
+		bundle.putString(PROCESSING_KEY, this.processingCode);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle bundle)
 	{
 		super.onRestoreInstanceState(bundle);
+		this.processingCode = bundle.getString(PROCESSING_KEY);
 		Fragment fragment = (Fragment) this.getSupportFragmentManager().getFragment(bundle, FRAGMENT_KEY);
 		if (fragment != null)
-		{
 			this.swap(fragment);
-			if (fragment instanceof UpdateCalendarFragment)
-				((UpdateCalendarFragment) fragment).setCallback(this);
-		}
-
-		this.processingCode = bundle.getString(PROCESSING_KEY);
 	}
 
 	public synchronized void swap(Fragment fragment)
@@ -82,37 +72,33 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 	@Override
 	public void initCalendar(String code)
 	{
+		Calendar calendar = this.calendarManager.create();
+		calendar.setName("EHB");
+		calendar.setSecurityCode(code);
+		calendar.setActive(false); // In case shit goes downhill
+		this.calendarManager.save(calendar);
+
+		this.processingCode = code;
 		Bundle bundle = new Bundle();
 		bundle.putString(UpdateCalendarFragment.SECURITY_CODE, code);
 		UpdateCalendarFragment fragment = new UpdateCalendarFragment();
 		fragment.setCallback(this);
 		fragment.setArguments(bundle);
-
-		Calendar calendar = this.manager.create();
-		calendar.setName("EHB calendar"); // TODO fetch from user?
-		calendar.setSecurityCode(code);
-		calendar.setActive(true);
-		this.processingCode = code;
-		this.manager.save(calendar);
-
 		this.swap(fragment);
 	}
 
 	@Override
 	public void onFailure(Throwable error)
 	{
-		Toast.makeText(this, R.string.token_error, Toast.LENGTH_SHORT).show();
-		this.swap(new RegistrationFragment());
-		if (this.processingCode != null)
-		{
-			Calendar calendar = this.manager.findBySecurityCode(this.processingCode);
-			this.manager.delete(calendar);
-		}
+		Toast.makeText(this, "Shit broke: " + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public void onSuccess()
 	{
+		Calendar calendar = this.calendarManager.findBySecurityCode(this.processingCode);
+		calendar.setActive(true);
+		this.calendarManager.save(calendar);
 		this.navigate(MainActivity.class);
 	}
 }
