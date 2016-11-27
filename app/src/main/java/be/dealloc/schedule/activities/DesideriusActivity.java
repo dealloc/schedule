@@ -72,8 +72,10 @@ public class DesideriusActivity extends Activity
 			String securityCode = matcher.group();
 
 			Intent intention = new Intent(this, RegistrationActivity.class);
-			intention.putExtra(RegistrationActivity.SECURITYCODE_INTENT, securityCode);
-			intention.putExtra(RegistrationActivity.CALENDARNAME_INTENT, this.txtEmail.getText().toString());
+			Bundle bundle = new Bundle();
+			bundle.putString(RegistrationActivity.SECURITYCODE_INTENT, securityCode);
+			bundle.putString(RegistrationActivity.CALENDARNAME_INTENT, this.txtEmail.getText().toString());
+			intention.putExtras(bundle);
 			startActivity(intention);
 			this.finish();
 		}

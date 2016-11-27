@@ -28,9 +28,19 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 	{
 		super.onCreate(bundle);
 		this.setLayout(R.layout.activity_registration);
-		RegistrationFragment fragment = new RegistrationFragment();
-		fragment.setHost(this);
-		this.swap(fragment);
+		if (this.getIntent().getExtras() == null)
+		{
+			RegistrationFragment fragment = new RegistrationFragment();
+			fragment.setHost(this);
+			this.swap(fragment);
+		}
+		else
+		{
+			String name = this.getIntent().getExtras().getString(CALENDARNAME_INTENT);
+			String code = this.getIntent().getExtras().getString(SECURITYCODE_INTENT);
+
+			this.createCalendar(code, name, true);
+		}
 	}
 
 	@Override
@@ -79,19 +89,7 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 	@Override
 	public void initCalendar(String code)
 	{
-		Calendar calendar = this.calendarManager.create();
-		calendar.setName("EHB");
-		calendar.setSecurityCode(code);
-		calendar.setActive(false); // In case shit goes downhill
-		this.calendarManager.save(calendar);
-
-		this.processingCode = code;
-		Bundle bundle = new Bundle();
-		bundle.putString(UpdateCalendarFragment.SECURITY_CODE, code);
-		UpdateCalendarFragment fragment = new UpdateCalendarFragment();
-		fragment.setCallback(this);
-		fragment.setArguments(bundle);
-		this.swap(fragment);
+		this.createCalendar(code, "EHB", false);
 	}
 
 	@Override
@@ -107,5 +105,22 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 		calendar.setActive(true);
 		this.calendarManager.save(calendar);
 		this.navigate(MainActivity.class);
+	}
+
+	private void createCalendar(String code, String name, boolean active)
+	{
+		Calendar calendar = this.calendarManager.create();
+		calendar.setName(name);
+		calendar.setSecurityCode(code);
+		calendar.setActive(active);
+		this.calendarManager.save(calendar);
+
+		this.processingCode = code;
+		Bundle bundle = new Bundle();
+		bundle.putString(UpdateCalendarFragment.SECURITY_CODE, code);
+		UpdateCalendarFragment fragment = new UpdateCalendarFragment();
+		fragment.setCallback(this);
+		fragment.setArguments(bundle);
+		this.swap(fragment);
 	}
 }
