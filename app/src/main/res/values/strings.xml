@@ -22,7 +22,7 @@
 	<string name="menu_list">List of events</string>
 	<string name="menu_subheader">System</string>
 	<string name="menu_settings">Configuration</string>
-	<string name="menu_share">Share</string>
+	<string name="menu_calendars">Calendars</string>
 
 	<!-- Calendar list image letters -->
 	<string name="practical_letter">P</string>

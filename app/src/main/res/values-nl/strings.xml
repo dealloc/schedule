@@ -18,7 +18,6 @@
 	<string name="menu_calendar">Kalender</string>
 	<string name="menu_list">Lijst</string>
 	<string name="menu_settings">Instellingen</string>
-	<string name="menu_share">Delen</string>
 	<string name="menu_subheader">Systeem</string>
 	<string name="navigation_drawer_close">Sluit menu</string>
 	<string name="navigation_drawer_open">Open menu</string>
@@ -46,4 +45,5 @@
 	<string name="calendars_deleted">Kalenders verwijderdt</string>
 	<string name="calendar_processed">Kalenders bijgewerkt!</string>
 	<string name="token_error">Ongeldige sleutel of Verbindingsfout!</string>
+	<string name="menu_calendars">Kalenders</string>
 </resources>
