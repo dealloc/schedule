@@ -39,6 +39,9 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 		super.onSaveInstanceState(bundle);
 		this.getSupportFragmentManager()
 				.putFragment(bundle, FRAGMENT_KEY, this.current);
+		if (current instanceof RegistrationFragment)
+			((RegistrationFragment) this.current).setHost(null); // No dangling references to destroyed activity
+
 		bundle.putString(PROCESSING_KEY, this.processingCode);
 	}
 
@@ -49,7 +52,11 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 		this.processingCode = bundle.getString(PROCESSING_KEY);
 		Fragment fragment = (Fragment) this.getSupportFragmentManager().getFragment(bundle, FRAGMENT_KEY);
 		if (fragment != null)
+		{
 			this.swap(fragment);
+			if (fragment instanceof RegistrationFragment)
+				((RegistrationFragment) fragment).setHost(this);
+		}
 	}
 
 	public synchronized void swap(Fragment fragment)
