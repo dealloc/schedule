@@ -80,7 +80,7 @@ public class ShareFragment extends Fragment implements CreateNdefMessageCallback
 		{
 			if (adapter.isNdefPushEnabled())
 			{
-				Toast.makeText(this.getContext(), "Set callbacks!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this.getContext(), R.string.nfc_sending, Toast.LENGTH_SHORT).show();
 				adapter.setNdefPushMessageCallback(this, this.getParentActivity());
 
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)

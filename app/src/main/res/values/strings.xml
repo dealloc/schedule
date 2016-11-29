@@ -48,4 +48,5 @@
 
 	<string name="nfc_unavailable">NFC not available!</string>
 	<string name="nfc_disabled">NFC is not enabled!</string>
+	<string name="nfc_sending">Sending over NFC…</string>
 </resources>
