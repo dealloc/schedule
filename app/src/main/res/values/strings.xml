@@ -45,4 +45,7 @@
 	<string name="token_error">Invalid token or connection error.</string>
 	<string name="rename_calendar">Rename calendar</string>
 	<string name="calendar_saved">Calendar saved!</string>
+
+	<string name="nfc_unavailable">NFC not available!</string>
+	<string name="nfc_disabled">NFC is not enabled!</string>
 </resources>

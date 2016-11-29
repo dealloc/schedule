@@ -1,7 +1,15 @@
 package be.dealloc.schedule.activities.fragments;
 
 
+import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.NfcAdapter.CreateNdefMessageCallback;
+import android.nfc.NfcEvent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +28,7 @@ import butterknife.OnItemSelected;
 import javax.inject.Inject;
 import java.util.List;
 
-public class ShareFragment extends Fragment
+public class ShareFragment extends Fragment implements CreateNdefMessageCallback
 {
 	@Inject CalendarManager calendarManager;
 	@BindView(R.id.share_spCalendar) Spinner spinner;
@@ -62,7 +70,29 @@ public class ShareFragment extends Fragment
 	@OnClick(R.id.share_btnNFC)
 	public void onExportNFCClicked()
 	{
-		Toast.makeText(this.getContext(), "Not implemented yet!", Toast.LENGTH_SHORT).show();
+		NfcAdapter adapter = NfcAdapter.getDefaultAdapter(this.getContext());
+		if (adapter == null)
+		{
+			Toast.makeText(this.getContext(), R.string.nfc_unavailable, Toast.LENGTH_SHORT).show();
+			// TODO navigate away
+		}
+		else
+		{
+			if (adapter.isNdefPushEnabled())
+			{
+				Toast.makeText(this.getContext(), "Set callbacks!", Toast.LENGTH_SHORT).show();
+				adapter.setNdefPushMessageCallback(this, this.getParentActivity());
+
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+					NfcAdapter.getDefaultAdapter(this.getContext()).invokeBeam(this.getParentActivity()); // TODO doesn't seem to work without it, but only available from API 21
+				else
+					adapter.setNdefPushMessage(this.createNdefMessage(null), this.getParentActivity());
+			}
+			else
+			{
+				Toast.makeText(this.getContext(), R.string.nfc_disabled, Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 	@OnClick(R.id.share_btnRename)
@@ -88,5 +118,29 @@ public class ShareFragment extends Fragment
 	public void onCalendarSelected(int position)
 	{
 		this.active = this.calendars.get(position);
+	}
+
+	@Override
+	public NdefMessage createNdefMessage(NfcEvent nfcEvent)
+	{
+		String message = "Hello world!";
+
+		return new NdefMessage(NdefRecord.createMime("text/plain", message.getBytes()));
+	}
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(this.getActivity().getIntent().getAction()))
+		{
+			Intent intent = this.getActivity().getIntent();
+			Parcelable[] parcels = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES); // TODO check if array lookup is needed (there's getter for single instance)
+			NdefMessage message = (NdefMessage) parcels[0];
+
+			String code = new String(message.getRecords()[0].getPayload());
+
+			Toast.makeText(this.getContext(), "Received message over NFC: " + code, Toast.LENGTH_SHORT).show();
+		}
 	}
 }
