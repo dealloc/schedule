@@ -48,4 +48,6 @@
 	<string name="menu_calendars">Kalenders</string>
 	<string name="calendar_saved">Kalender opgeslagen!</string>
 	<string name="rename_calendar">Hernoem kalender</string>
+	<string name="nfc_disabled">NFC is niet ingeschakeld</string>
+	<string name="nfc_unavailable">NFC is niet beshikbaar</string>
 </resources>

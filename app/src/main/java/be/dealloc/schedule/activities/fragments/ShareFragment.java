@@ -125,7 +125,10 @@ public class ShareFragment extends Fragment implements CreateNdefMessageCallback
 	{
 		String message = "Hello world!";
 
-		return new NdefMessage(NdefRecord.createMime("text/plain", message.getBytes()));
+		return new NdefMessage(
+				NdefRecord.createMime("text/plain", message.getBytes()),
+				NdefRecord.createApplicationRecord(this.getContext().getPackageName())
+		);
 	}
 
 	@Override
