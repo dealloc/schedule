@@ -1,7 +1,6 @@
 package be.dealloc.schedule.activities.fragments;
 
 
-import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -9,7 +8,6 @@ import android.nfc.NfcAdapter.CreateNdefMessageCallback;
 import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +17,7 @@ import android.widget.Toast;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.calendars.Calendar;
 import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
+import be.dealloc.schedule.contracts.network.NfcService;
 import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Fragment;
 import butterknife.BindView;
@@ -31,6 +30,7 @@ import java.util.List;
 public class ShareFragment extends Fragment implements CreateNdefMessageCallback
 {
 	@Inject CalendarManager calendarManager;
+	@Inject NfcService nfcService;
 	@BindView(R.id.share_spCalendar) Spinner spinner;
 	private List<Calendar> calendars;
 	private Calendar active;
@@ -123,27 +123,10 @@ public class ShareFragment extends Fragment implements CreateNdefMessageCallback
 	@Override
 	public NdefMessage createNdefMessage(NfcEvent nfcEvent)
 	{
-		String message = "Hello world!";
+		String message = this.nfcService.encode(this.active);
 
 		return new NdefMessage(
-				NdefRecord.createMime("text/plain", message.getBytes()),
-				NdefRecord.createApplicationRecord(this.getContext().getPackageName())
+				NdefRecord.createMime("application/be.dealloc.schedule", message.getBytes())
 		);
-	}
-
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(this.getActivity().getIntent().getAction()))
-		{
-			Intent intent = this.getActivity().getIntent();
-			Parcelable[] parcels = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES); // TODO check if array lookup is needed (there's getter for single instance)
-			NdefMessage message = (NdefMessage) parcels[0];
-
-			String code = new String(message.getRecords()[0].getPayload());
-
-			Toast.makeText(this.getContext(), "Received message over NFC: " + code, Toast.LENGTH_SHORT).show();
-		}
 	}
 }

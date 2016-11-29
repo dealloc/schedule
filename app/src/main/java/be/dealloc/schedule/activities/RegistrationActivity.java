@@ -1,12 +1,17 @@
 package be.dealloc.schedule.activities;
 
+import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.Toast;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.activities.fragments.RegistrationFragment;
 import be.dealloc.schedule.activities.fragments.UpdateCalendarFragment;
 import be.dealloc.schedule.contracts.entities.calendars.Calendar;
 import be.dealloc.schedule.contracts.entities.calendars.CalendarManager;
+import be.dealloc.schedule.contracts.network.NfcService;
 import be.dealloc.schedule.system.Activity;
 import be.dealloc.schedule.system.Fragment;
 
@@ -21,6 +26,7 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 
 	protected Fragment current;
 	@Inject CalendarManager calendarManager;
+	@Inject NfcService nfcService;
 	private String processingCode;
 
 	@Override
@@ -28,7 +34,19 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 	{
 		super.onCreate(bundle);
 		this.setLayout(R.layout.activity_registration);
-		if (this.getIntent().getExtras() == null)
+
+		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(this.getIntent().getAction()))
+		{
+			Intent intent = this.getIntent();
+			Parcelable[] parcels = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES); // TODO check if array lookup is needed (there's getter for single instance)
+			NdefMessage message = (NdefMessage) parcels[0];
+
+			String payload = new String(message.getRecords()[0].getPayload());
+			NfcService.NfcResult parsed = this.nfcService.decode(payload);
+
+			this.createCalendar(parsed.getCode(), parsed.getName(), true);
+		}
+		else if (this.getIntent().getExtras() == null)
 		{
 			RegistrationFragment fragment = new RegistrationFragment();
 			fragment.setHost(this);
