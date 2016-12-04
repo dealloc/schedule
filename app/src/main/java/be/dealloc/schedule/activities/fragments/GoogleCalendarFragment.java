@@ -13,12 +13,15 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.courses.CourseManager;
 import be.dealloc.schedule.facades.Dialog;
 import be.dealloc.schedule.system.Fragment;
 import be.dealloc.schedule.tasks.BasicTask;
 import be.dealloc.schedule.tasks.ExportCoursesToCalendarTask;
+import butterknife.BindView;
 
 import javax.inject.Inject;
 
@@ -32,6 +35,8 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 
 	private String code;
 	@Inject CourseManager manager;
+	@BindView(R.id.google_prgExporting) ProgressBar prgExporting;
+	@BindView(R.id.google_txtReady) TextView txtReady;
 	private ExportCoursesToCalendarTask task;
 	private ProgressDialog dialog;
 	private String name;
@@ -47,6 +52,7 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 		this.code = this.getArguments().getString(BUNDLE_CALENDAR);
 		this.name = this.getArguments().getString(BUNDLE_CALENDAR_NAME);
 		this.dialog = new ProgressDialog(this.getContext());
+		this.dialog.setCancelable(false);
 
 		if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission_group.CALENDAR) != PackageManager.PERMISSION_GRANTED)
 			this.requestPermissions(new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR}, CALENDAR_PERMISSION_CALLBACK);
@@ -111,6 +117,7 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 	public void onFailure(Throwable error)
 	{
 		this.dialog.dismiss();
+		this.prgExporting.setVisibility(View.GONE);
 		Dialog.msgbox(this.getContext(), error.getMessage());
 	}
 
@@ -118,5 +125,7 @@ public class GoogleCalendarFragment extends Fragment implements BasicTask.TaskCa
 	public void onSucces()
 	{
 		this.dialog.dismiss();
+		this.prgExporting.setVisibility(View.GONE);
+		this.txtReady.setVisibility(View.VISIBLE);
 	}
 }

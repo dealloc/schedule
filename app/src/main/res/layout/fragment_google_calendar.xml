@@ -4,4 +4,22 @@
 	android:layout_height="match_parent"
 	tools:context="be.dealloc.schedule.activities.fragments.GoogleCalendarFragment">
 
+	<TextView
+		android:text="@string/export_complete"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerVertical="true"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/google_txtReady"
+		android:visibility="gone"
+		android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+	<ProgressBar
+		style="?android:attr/progressBarStyleHorizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/google_prgExporting"
+		android:indeterminate="true" />
 </RelativeLayout>
