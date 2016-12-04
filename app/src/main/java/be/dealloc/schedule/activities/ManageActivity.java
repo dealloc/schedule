@@ -2,13 +2,13 @@ package be.dealloc.schedule.activities;
 
 import android.os.Bundle;
 import be.dealloc.schedule.R;
-import be.dealloc.schedule.activities.fragments.ShareFragment;
+import be.dealloc.schedule.activities.fragments.CalendarManagerFragment;
 import be.dealloc.schedule.system.Activity;
 import be.dealloc.schedule.system.Fragment;
 
-public class ShareActivity extends Activity
+public class ManageActivity extends Activity
 {
-	private static final String FRAGMENT_KEY = ShareActivity.class.getName();
+	private static final String FRAGMENT_KEY = ManageActivity.class.getName();
 	protected Fragment current;
 
 	@Override
@@ -19,7 +19,7 @@ public class ShareActivity extends Activity
 		this.getSupportActionBar().setHomeButtonEnabled(true);
 
 		if (bundle == null)
-			this.swap(R.id.activity_share, new ShareFragment());
+			this.swap(R.id.activity_share, new CalendarManagerFragment());
 	}
 
 	@Override

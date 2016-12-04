@@ -129,7 +129,7 @@ public class CalendarActivity extends Activity implements CalendarNavigationDisp
 	@Override
 	public void onShareClicked()
 	{
-		this.navigate(ShareActivity.class, false);
+		this.navigate(ManageActivity.class, false);
 	}
 
 	public synchronized void swap(Fragment fragment)

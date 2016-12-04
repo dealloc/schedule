@@ -34,7 +34,7 @@ public interface ServiceProvider
 
 	void inject(ListFragment fragment);
 
-	void inject(ShareFragment fragment);
+	void inject(CalendarManagerFragment fragment);
 
 	void inject(GoogleCalendarFragment fragment);
 

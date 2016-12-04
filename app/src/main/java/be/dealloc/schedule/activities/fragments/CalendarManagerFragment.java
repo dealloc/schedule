@@ -27,7 +27,7 @@ import butterknife.OnItemSelected;
 import javax.inject.Inject;
 import java.util.List;
 
-public class ShareFragment extends Fragment implements CreateNdefMessageCallback
+public class CalendarManagerFragment extends Fragment implements CreateNdefMessageCallback
 {
 	@Inject CalendarManager calendarManager;
 	@Inject NfcService nfcService;
@@ -38,7 +38,7 @@ public class ShareFragment extends Fragment implements CreateNdefMessageCallback
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle)
 	{
-		View view = this.setLayout(inflater, container, R.layout.fragment_share);
+		View view = this.setLayout(inflater, container, R.layout.fragment_calendar_manager);
 
 		this.calendars = this.calendarManager.getActiveCalendars();
 
