@@ -51,4 +51,5 @@
 	<string name="nfc_disabled">NFC is niet ingeschakeld</string>
 	<string name="nfc_unavailable">NFC is niet beshikbaar</string>
 	<string name="nfc_sending">Bezig met verzenden over NFC…</string>
+	<string name="pick_colour">Kies een kleur</string>
 </resources>

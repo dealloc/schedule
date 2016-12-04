@@ -23,6 +23,10 @@ import be.dealloc.schedule.system.Fragment;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
+import com.flask.colorpicker.ColorPickerView;
+import com.flask.colorpicker.OnColorSelectedListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
+import com.orhanobut.logger.Logger;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -112,6 +116,22 @@ public class CalendarManagerFragment extends Fragment implements CreateNdefMessa
 				Dialog.msgbox(this.getContext(), R.string.app_name, R.string.calendar_saved);
 			}
 		}, null);
+	}
+
+	@OnClick(R.id.manage_pickColour)
+	public void onPickColourClicked()
+	{
+		OnColorSelectedListener listener = i -> {
+			Logger.i("Selected %d", i);
+		};
+
+		ColorPickerDialogBuilder.with(this.getContext())
+				.setTitle(R.string.pick_colour)
+				.wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
+				.density(12)
+				.setOnColorSelectedListener(listener)
+				.build()
+				.show();
 	}
 
 	@OnItemSelected(R.id.share_spCalendar)

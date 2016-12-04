@@ -4,13 +4,12 @@
 	android:layout_height="match_parent"
 	tools:context="be.dealloc.schedule.activities.fragments.CalendarManagerFragment">
 
-	<Button
-		android:text="@string/share_google_calendar"
+	<TextView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_centerVertical="true"
+		android:layout_above="@+id/share_spCalendar"
 		android:layout_centerHorizontal="true"
-		android:id="@+id/share_btnGoogleCalendar" />
+		android:text="@string/choose_calendar" />
 
 	<Spinner
 		android:layout_width="match_parent"
@@ -20,20 +19,21 @@
 		android:layout_alignParentLeft="true"
 		android:layout_alignParentStart="true" />
 
-	<TextView
+	<Button
+		android:text="@string/share_google_calendar"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_above="@+id/share_spCalendar"
-		android:layout_centerHorizontal="true"
-		android:text="@string/choose_calendar" />
+		android:id="@+id/share_btnGoogleCalendar"
+		android:layout_above="@+id/share_btnRename"
+		android:layout_centerHorizontal="true" />
 
 	<Button
 		android:text="@string/rename_calendar"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_below="@+id/share_btnGoogleCalendar"
-		android:layout_centerHorizontal="true"
 		android:id="@+id/share_btnRename"
+		android:layout_centerVertical="true"
+		android:layout_centerHorizontal="true"
 		android:layout_alignLeft="@id/share_btnGoogleCalendar"
 		android:layout_alignStart="@id/share_btnGoogleCalendar"
 		android:layout_alignRight="@id/share_btnGoogleCalendar"
@@ -50,5 +50,17 @@
 		android:layout_alignStart="@id/share_btnRename"
 		android:layout_alignRight="@id/share_btnRename"
 		android:layout_alignEnd="@id/share_btnRename" />
+
+	<Button
+		android:text="@string/pick_colour"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/share_btnNFC"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/manage_pickColour"
+		android:layout_alignLeft="@id/share_btnNFC"
+		android:layout_alignStart="@id/share_btnNFC"
+		android:layout_alignRight="@id/share_btnNFC"
+		android:layout_alignEnd="@id/share_btnNFC" />
 
 </RelativeLayout>
