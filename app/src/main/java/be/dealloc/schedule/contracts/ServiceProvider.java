@@ -13,6 +13,7 @@ import be.dealloc.schedule.providers.NetworkProvider;
 import be.dealloc.schedule.providers.SystemProvider;
 import be.dealloc.schedule.tasks.ExportCoursesToCalendarTask;
 import be.dealloc.schedule.tasks.ProcessCalendarTask;
+import be.dealloc.schedule.tasks.UpdateColoursTask;
 import dagger.Component;
 
 @Component(modules = {
@@ -45,6 +46,8 @@ public interface ServiceProvider
 	ProcessCalendarTask calendarProcessor();
 
 	ExportCoursesToCalendarTask exportProcessor();
+
+	UpdateColoursTask colourProcessor();
 
 	Context context();
 }
