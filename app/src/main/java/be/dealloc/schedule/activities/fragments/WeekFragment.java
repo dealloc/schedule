@@ -10,7 +10,6 @@ import be.dealloc.schedule.R;
 import be.dealloc.schedule.contracts.entities.courses.Course;
 import be.dealloc.schedule.contracts.entities.courses.CourseManager;
 import be.dealloc.schedule.facades.Dialog;
-import be.dealloc.schedule.system.Application;
 import be.dealloc.schedule.system.Fragment;
 import butterknife.BindView;
 import com.alamkanak.weekview.MonthLoader;
@@ -53,12 +52,7 @@ public class WeekFragment extends Fragment implements MonthLoader.MonthChangeLis
 			Calendar end = Calendar.getInstance();
 			end.setTime(course.getEnd());
 
-			if (course.getType() == Course.PRACTICAL)
-				event.setColor(Application.color(R.color.primary_dark));
-			else if (course.getType() == Course.THEORETICAL)
-				event.setColor(Application.color(R.color.primary));
-			else
-				event.setColor(Application.color(R.color.accent));
+			event.setColor(course.getColour());
 			event.setName(course.getName());
 			event.setStartTime(start);
 			event.setEndTime(end);

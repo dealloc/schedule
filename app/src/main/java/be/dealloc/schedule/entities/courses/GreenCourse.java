@@ -32,16 +32,16 @@ public class GreenCourse implements Course
 	public GreenCourse(Long id, String name, String teacher, String location, Date start, Date end, int type, String url,
 					   String calendar, Long systemId, Integer colour)
 	{
-					this.id = id;
-					this.name = name;
-					this.teacher = teacher;
-					this.location = location;
-					this.start = start;
-					this.end = end;
-					this.type = type;
-					this.url = url;
-					this.calendar = calendar;
-					this.systemId = systemId;
+		this.id = id;
+		this.name = name;
+		this.teacher = teacher;
+		this.location = location;
+		this.start = start;
+		this.end = end;
+		this.type = type;
+		this.url = url;
+		this.calendar = calendar;
+		this.systemId = systemId;
 		this.colour = colour;
 	}
 
@@ -172,11 +172,11 @@ public class GreenCourse implements Course
 	public Drawable getIcon()
 	{
 		if (this.getType() == Course.PRACTICAL)
-			return TextDrawable.builder().buildRound(Application.string(R.string.practical_letter), Application.color(R.color.primary_dark));
+			return TextDrawable.builder().buildRound(Application.string(R.string.practical_letter), this.getColour());
 		else if (this.getType() == Course.THEORETICAL)
-			return TextDrawable.builder().buildRound(Application.string(R.string.theoretical_letter), Application.color(R.color.primary));
+			return TextDrawable.builder().buildRound(Application.string(R.string.theoretical_letter), this.getColour());
 		else
-			return TextDrawable.builder().buildRound(Application.string(R.string.other_letter), Application.color(R.color.accent));
+			return TextDrawable.builder().buildRound(Application.string(R.string.other_letter), this.getColour());
 	}
 
 	@Override
@@ -191,8 +191,9 @@ public class GreenCourse implements Course
 		this.colour = colour;
 	}
 
-	public Long getSystemId() {
-					return this.systemId;
+	public Long getSystemId()
+	{
+		return this.systemId;
 	}
 
 	public void setColour(Integer colour)

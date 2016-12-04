@@ -6,6 +6,7 @@ import be.dealloc.schedule.contracts.entities.calendars.Calendar;
 import be.dealloc.schedule.contracts.entities.courses.Course;
 import be.dealloc.schedule.contracts.entities.courses.CourseManager;
 import be.dealloc.schedule.contracts.network.NetworkService;
+import be.dealloc.schedule.facades.Colour;
 import be.dealloc.schedule.system.Application;
 import biweekly.Biweekly;
 import biweekly.ICalendar;
@@ -48,6 +49,10 @@ public class ProcessCalendarTask extends BasicTask<Calendar>
 			publishProgress(STR_PARSING);
 			if (body.startsWith("BEGIN:VCALENDAR"))
 			{
+				int colour = Application.color(R.color.primary);
+				int darker = Colour.darken(colour);
+				int inverse = Colour.inverse(colour);
+
 				Logger.i("Purging old entries from calendar %s", calendars[0].getName());
 				courseManager.purge(calendars[0].getSecurityCode()); // Purge entries when the new ones have arrived.
 				ICalendar calendar = Biweekly.parse(body).first();
@@ -59,11 +64,11 @@ public class ProcessCalendarTask extends BasicTask<Calendar>
 					{
 						course.setCalendar(calendars[0].getSecurityCode());
 						if (course.getType() == Course.PRACTICAL)
-							course.setColour(Application.color(R.color.primary_dark));
+							course.setColour(darker);
 						else if (course.getType() == Course.THEORETICAL)
-							course.setColour(Application.color(R.color.primary_light));
+							course.setColour(colour);
 						else
-							course.setColour(Application.color(R.color.accent));
+							course.setColour(inverse);
 
 						courseManager.save(course);
 					}
