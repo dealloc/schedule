@@ -110,7 +110,6 @@ public class CalendarManagerFragment extends Fragment implements CreateNdefMessa
 		if (adapter == null)
 		{
 			Toast.makeText(this.getContext(), R.string.nfc_unavailable, Toast.LENGTH_SHORT).show();
-			// TODO navigate away
 		}
 		else
 		{
@@ -120,7 +119,7 @@ public class CalendarManagerFragment extends Fragment implements CreateNdefMessa
 				adapter.setNdefPushMessageCallback(this, this.getParentActivity());
 
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-					NfcAdapter.getDefaultAdapter(this.getContext()).invokeBeam(this.getParentActivity()); // TODO doesn't seem to work without it, but only available from API 21
+					NfcAdapter.getDefaultAdapter(this.getContext()).invokeBeam(this.getParentActivity());
 				else
 					adapter.setNdefPushMessage(this.createNdefMessage(null), this.getParentActivity());
 			}

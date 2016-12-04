@@ -34,7 +34,7 @@ public class DesideriusActivity extends Activity
 	private ProgressDialog progressDialog;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) // TODO buttons should not enable themselves when orientation changes etc.
+	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		this.setLayout(R.layout.activity_desiderius);

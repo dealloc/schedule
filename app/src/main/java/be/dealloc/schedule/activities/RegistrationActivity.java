@@ -38,7 +38,7 @@ public class RegistrationActivity extends Activity implements RegistrationFragme
 		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(this.getIntent().getAction()))
 		{
 			Intent intent = this.getIntent();
-			Parcelable[] parcels = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES); // TODO check if array lookup is needed (there's getter for single instance)
+			Parcelable[] parcels = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
 			NdefMessage message = (NdefMessage) parcels[0];
 
 			String payload = new String(message.getRecords()[0].getPayload());
