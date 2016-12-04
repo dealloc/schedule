@@ -58,6 +58,13 @@ public class ProcessCalendarTask extends BasicTask<Calendar>
 					if (course != null) // some events may be dropped.
 					{
 						course.setCalendar(calendars[0].getSecurityCode());
+						if (course.getType() == Course.PRACTICAL)
+							course.setColour(Application.color(R.color.primary_dark));
+						else if (course.getType() == Course.THEORETICAL)
+							course.setColour(Application.color(R.color.primary_light));
+						else
+							course.setColour(Application.color(R.color.accent));
+
 						courseManager.save(course);
 					}
 				}

@@ -24,7 +24,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
 import com.flask.colorpicker.ColorPickerView;
-import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.orhanobut.logger.Logger;
 
@@ -121,15 +120,14 @@ public class CalendarManagerFragment extends Fragment implements CreateNdefMessa
 	@OnClick(R.id.manage_pickColour)
 	public void onPickColourClicked()
 	{
-		OnColorSelectedListener listener = i -> {
-			Logger.i("Selected %d", i);
-		};
-
 		ColorPickerDialogBuilder.with(this.getContext())
 				.setTitle(R.string.pick_colour)
 				.wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
 				.density(12)
-				.setOnColorSelectedListener(listener)
+				.setPositiveButton(android.R.string.ok, (dialogInterface, selectedColour, integers) -> {
+					Logger.i("Selected %d", selectedColour);
+					// TODO set this colour on all courses in the selected calendar.
+				})
 				.build()
 				.show();
 	}

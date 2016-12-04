@@ -45,6 +45,10 @@ public interface Course
 
 	Drawable getIcon();
 
+	int getColour();
+
+	void setColour(int colour);
+
 	Long getId();
 
 	Long systemId();

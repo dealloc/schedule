@@ -26,10 +26,12 @@ public class GreenCourse implements Course
 	private String url;
 	private String calendar;
 	private Long systemId;
+	private Integer colour;
 
-	@Generated(hash = 654018113)
+	@Generated(hash = 1213956852)
 	public GreenCourse(Long id, String name, String teacher, String location, Date start, Date end, int type, String url,
-									String calendar, Long systemId) {
+					   String calendar, Long systemId, Integer colour)
+	{
 					this.id = id;
 					this.name = name;
 					this.teacher = teacher;
@@ -40,6 +42,7 @@ public class GreenCourse implements Course
 					this.url = url;
 					this.calendar = calendar;
 					this.systemId = systemId;
+		this.colour = colour;
 	}
 
 	@Generated(hash = 2103233940)
@@ -176,7 +179,24 @@ public class GreenCourse implements Course
 			return TextDrawable.builder().buildRound(Application.string(R.string.other_letter), Application.color(R.color.accent));
 	}
 
+	@Override
+	public int getColour()
+	{
+		return this.colour;
+	}
+
+	@Override
+	public void setColour(int colour)
+	{
+		this.colour = colour;
+	}
+
 	public Long getSystemId() {
 					return this.systemId;
+	}
+
+	public void setColour(Integer colour)
+	{
+		this.colour = colour;
 	}
 }
