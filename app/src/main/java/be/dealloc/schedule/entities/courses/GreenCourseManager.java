@@ -65,11 +65,11 @@ public class GreenCourseManager implements CourseManager
 			throw new RuntimeException("Invalid event type passed to manager.");
 
 		VEvent event = (VEvent) raw;
-		/*if (!event.getSummary().getValue().startsWith("[H]") &&
+		if (!event.getSummary().getValue().startsWith("[H]") &&
 				!event.getSummary().getValue().startsWith("[W]") &&
 				!event.getSummary().getValue().startsWith("[V]")) // Drop non courses
 			return null; // TODO build support for non-course entries (they're usually deadlines)
-		*/
+
 		Course course = this.create();
 
 		// Summary contains meta data like [H] and the location. The regex below strips the meta data leaving only the classname
