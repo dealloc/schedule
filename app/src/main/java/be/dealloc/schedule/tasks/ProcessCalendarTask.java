@@ -67,6 +67,8 @@ public class ProcessCalendarTask extends BasicTask<Calendar>
 							course.setColour(darker);
 						else if (course.getType() == Course.THEORETICAL)
 							course.setColour(colour);
+						else if (course.getType() == Course.MEETING)
+							course.setColour(colour);
 						else
 							course.setColour(inverse);
 

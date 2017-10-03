@@ -42,6 +42,8 @@ public class UpdateColoursTask extends BasicTask<Calendar>
 				course.setColour(Colour.darken(this.colour));
 			else if (course.getType() == Course.THEORETICAL)
 				course.setColour(this.colour);
+			else if (course.getType() == Course.MEETING)
+				course.setColour(Colour.darken(Colour.darken(this.colour)));
 			else
 				course.setColour(Colour.inverse(this.colour));
 

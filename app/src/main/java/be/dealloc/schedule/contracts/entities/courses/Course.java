@@ -10,6 +10,7 @@ public interface Course
 	int PRACTICAL = 1;
 	int THEORETICAL = 2;
 	int OTHER = 3;
+	int MEETING = 4;
 
 	String getName();
 

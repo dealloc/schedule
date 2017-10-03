@@ -38,7 +38,8 @@
 		android:layout_height="wrap_content"
 		android:id="@+id/detail_txtLocation"
 		android:textStyle="italic"
-		android:layout_marginStart="@dimen/course_icon_margin"
+		android:layout_marginTop="10dp"
+		android:layout_marginStart="10dp"
 		android:layout_marginLeft="@dimen/course_icon_margin"
 		android:layout_below="@+id/detail_txtName"
 		android:layout_toRightOf="@+id/detail_imgType"
@@ -46,24 +47,28 @@
 
 	<TextView
 		android:text="@string/app_name"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:minHeight="@dimen/course_icon_size"
-		android:layout_below="@+id/detail_imgType"
-		android:layout_marginTop="@dimen/course_icon_margin"
-		android:layout_centerHorizontal="true"
-		android:textAlignment="center"
-		android:id="@+id/detail_txtTeacher" />
-
-	<TextView
-		android:text="@string/app_name"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:id="@+id/detail_txtWhen"
-		android:layout_above="@+id/detail_txtTeacher"
+		android:layout_below="@+id/detail_txtLocation"
+		android:layout_marginTop="10dp"
 		android:layout_toRightOf="@+id/detail_imgType"
 		android:layout_toEndOf="@+id/detail_imgType"
 		android:layout_marginStart="@dimen/course_icon_margin"
 		android:layout_marginLeft="@dimen/course_icon_margin" />
+
+	<TextView
+		android:text="@string/app_name"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:minHeight="@dimen/course_icon_size"
+		android:layout_marginTop="12dp"
+		android:textAlignment="center"
+		android:id="@+id/detail_txtTeacher"
+		android:layout_below="@+id/detail_txtWhen"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentStart="true" />
+
+
 
 </RelativeLayout>
