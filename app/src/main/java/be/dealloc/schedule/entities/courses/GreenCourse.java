@@ -175,6 +175,8 @@ public class GreenCourse implements Course
 			return TextDrawable.builder().buildRound(Application.string(R.string.practical_letter), this.getColour());
 		else if (this.getType() == Course.THEORETICAL)
 			return TextDrawable.builder().buildRound(Application.string(R.string.theoretical_letter), this.getColour());
+		else if (this.getType() == Course.MEETING)
+			return TextDrawable.builder().buildRound(Application.string(R.string.meeting_letter), this.getColour());
 		else
 			return TextDrawable.builder().buildRound(Application.string(R.string.other_letter), this.getColour());
 	}

@@ -27,6 +27,7 @@
 	<!-- Calendar list image letters -->
 	<string name="practical_letter">P</string>
 	<string name="theoretical_letter">T</string>
+	<string name="meeting_letter">M</string>
 	<string name="other_letter">O</string>
 
 	<!-- Settings -->

@@ -65,13 +65,15 @@ public class GreenCourseManager implements CourseManager
 			throw new RuntimeException("Invalid event type passed to manager.");
 
 		VEvent event = (VEvent) raw;
-		if (!event.getSummary().getValue().startsWith("[H]") && !event.getSummary().getValue().startsWith("[W]")) // Drop non courses
+		/*if (!event.getSummary().getValue().startsWith("[H]") &&
+				!event.getSummary().getValue().startsWith("[W]") &&
+				!event.getSummary().getValue().startsWith("[V]")) // Drop non courses
 			return null; // TODO build support for non-course entries (they're usually deadlines)
-
+		*/
 		Course course = this.create();
 
 		// Summary contains meta data like [H] and the location. The regex below strips the meta data leaving only the classname
-		String name = event.getSummary().getValue().replaceAll("((\\[(W|H)\\])\\s|\\s\\((DT\\/([A-Z0-9]\\.?)*\\s?([a-z]*)?)\\))", "");
+		String name = event.getSummary().getValue().replaceAll("((\\[(W|H|V)\\])\\s|\\s\\((DT\\/([A-Z0-9]\\.?)*\\s?([a-z]*)?)\\))", "");
 		String teacher = event.getDescription().getValue().split("\n")[1].replace("door", "").trim();
 		String location = event.getLocation().getValue();
 		Date start = event.getDateStart().getValue().getRawComponents().toDate();
@@ -81,6 +83,8 @@ public class GreenCourseManager implements CourseManager
 			type = Course.THEORETICAL;
 		else if (event.getSummary().getValue().startsWith("[W]"))
 			type = Course.PRACTICAL;
+		else if (event.getSummary().getValue().startsWith("[V]"))
+			type = Course.MEETING;
 
 		course.setName(name);
 		course.setTeacher(teacher);
